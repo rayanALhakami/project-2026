@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تعلم PHP للانتقال من Java</title>
+<style>
+  :root{
+    --bg:#0f172a;
+    --card:#1e293b;
+    --card2:#252f3f;
+    --accent:#38bdf8;
+    --accent2:#34d399;
+    --warn:#fbbf24;
+    --danger:#f87171;
+    --purple:#c084fc;
+    --text:#e2e8f0;
+    --muted:#94a3b8;
+    --border:#334155;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:"Segoe UI",Tahoma,Arial,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    line-height:1.8;
+    padding-bottom:60px;
+  }
+  .header{
+    background:linear-gradient(135deg,#0ea5e9,#4f46e5);
+    padding:50px 20px;
+    text-align:center;
+    color:#fff;
+  }
+  .header h1{font-size:2.4rem;margin-bottom:10px}
+  .header p{font-size:1.1rem;opacity:.95}
+  .container{max-width:1000px;margin:0 auto;padding:0 20px}
+  section{margin:40px 0}
+  .card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:24px;
+    margin-bottom:20px;
+  }
+  .card h2{
+    color:var(--accent);
+    font-size:1.6rem;
+    margin-bottom:16px;
+    border-bottom:2px solid var(--border);
+    padding-bottom:10px;
+  }
+  .card h3{color:var(--accent2);margin:18px 0 10px;font-size:1.2rem}
+  p{color:var(--text);margin-bottom:12px}
+  .muted{color:var(--muted)}
+  .highlight{
+    background:linear-gradient(135deg,#0ea5e9,#4f46e5);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    font-weight:700;
+  }
+  /* Tables */
+  table{width:100%;border-collapse:collapse;margin:16px 0;border-radius:8px;overflow:hidden}
+  th{background:var(--purple);color:#0f172a;padding:12px;text-align:right;font-weight:700}
+  td{padding:10px 12px;border-bottom:1px solid var(--border);background:var(--card2)}
+  tr:hover td{background:#2f3a4d}
+  code{
+    background:#0a0f1c;
+    padding:2px 6px;
+    border-radius:5px;
+    color:#fbbf24;
+    font-family:"Consolas","Cascadia Code",monospace;
+    font-size:.9em;
+  }
+  pre{
+    background:#0a0f1c;
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:18px;
+    overflow-x:auto;
+    direction:ltr;
+    text-align:left;
+    margin:16px 0;
+    font-family:"Consolas","Cascadia Code",monospace;
+    font-size:.92rem;
+    line-height:1.6;
+    position:relative;
+  }
+  pre .lang{
+    position:absolute;
+    top:0;left:0;
+    background:var(--border);
+    color:var(--muted);
+    font-size:.75rem;
+    padding:3px 10px;
+    border-radius:0 0 0 10px;
+    display:none;
+  }
+  pre::before{
+    content:attr(data-lang);
+    position:absolute;
+    top:0;left:0;
+    background:var(--border);
+    color:var(--muted);
+    font-size:.75rem;
+    padding:3px 10px;
+    border-radius:0 0 0 10px;
+  }
+  /* syntax colors */
+  .kw{color:#c084fc;font-weight:bold}
+  .fn{color:#38bdf8}
+  .str{color:#34d399}
+  .num{color:#fbbf24}
+  .com{color:#64748b;font-style:italic}
+  .var{color:#f87171}
+  .type{color:#facc15}
+  .tag{color:#f87171}
+  .attr{color:#fbbf24}
+  /* Flow diagram */
+  .flow{display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap;margin:20px 0}
+  .flow-box{
+    background:var(--card2);
+    border:2px solid var(--accent);
+    border-radius:10px;
+    padding:14px 18px;
+    text-align:center;
+    min-width:130px;
+    font-weight:700;
+  }
+  .flow-box.green{border-color:var(--accent2)}
+  .flow-arrow{color:var(--muted);font-size:1.4rem}
+  /* badges */
+  .badge{display:inline-block;background:var(--accent);color:#0f172a;border-radius:20px;padding:2px 12px;font-size:.8rem;font-weight:700;margin:2px}
+  .badge.gray{background:var(--card2)}
+  .badge.green{background:var(--accent2)}
+  /* callout */
+  .callout{
+    border-right:4px solid var(--warn);
+    background:rgba(251,191,36,.1);
+    padding:14px 18px;
+    border-radius:8px;
+    margin:16px 0;
+  }
+  .callout.green{border-right-color:var(--accent2);background:rgba(52,211,153,.1)}
+  /* ascii art box */
+  .ascii{
+    background:#0a0f1c;
+    font-family:"Consolas",monospace;
+    font-size:.8rem;
+    color:var(--accent2);
+    padding:16px;
+    border-radius:8px;
+    overflow-x:auto;
+    direction:ltr;text-align:left;
+    margin:16px 0;
+  }
+  .colon{color:#38bdf8}
+  .pill{
+    display:inline-block;padding:4px 14px;border-radius:20px;
+    background:var(--purple);color:#0f172a;font-weight:700;margin:4px;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🚀 تعلم PHP للمبرمجين القادمين من Java</h1>
+  <p>دليل مبسّط للانتقال بين اللغتين + أساسيات PHP + ميزات Laravel</p>
+</div>
+
+<div class="container">
+
+<!-- ===================== CHAPTER 1 ===================== -->
+<section>
+  <div class="card">
+    <h2>📌 1. لماذا الانتقال من Java إلى PHP؟</h2>
+    <p>قريب جدًا فكريًا! كل من Java و PHP لغتان للويب مع كائنات (Objects) وأنواع قوية، لكن الاختلاف في الفلسفة:</p>
+    <table>
+      <tr><th>الوجه</th><th>Java</th><th>PHP</th></tr>
+      <tr><td>الهدف الرئيسي</td><td>لغة عامة + Enterprise</td><td>لغة ويب خالصة (server-side)</td></tr>
+      <tr><td>الأمان الصارم للأنواع</td><td>ثابت (Strict)</td><td>ديناميكي (Dynamic) ولطيف</td></tr>
+      <tr><td>الكتابة</td><td>Boilerplate كثير</td><td>أقل وأسرع</td></tr>
+      <tr><td>نقطة البداية</td><td>فئة + مقسم</td><td>لا يلزم شيء، سكريبت يبدأ مباشرة</td></tr>
+    </table>
+    <p class="muted">الفكرة الذهبية: <span class="highlight">ما ترثه من Java يبقى مفيدًا — المفاهيم نفسها، والأدوات مختلفة.</span></p>
+  </div>
+</section>
+
+<!-- ===================== CHAPTER 2 ===================== -->
+<section>
+  <div class="card">
+    <h2>⚙️ 2. أساسيات PHP — الجملة الأولى</h2>
+    <p>في PHP لا يوجد <code>main</code> ولا تحتاج فئة لتشغيل الكود، الملف يبدأ بـ <code>&lt;?php</code> وينتهي:</p>
+    <pre data-lang="PHP"><?php
+// أول مقطع في PHP (لا حاجة لـ main أو كلاس)
+echo "مرحبًا بالعالم! 🎉";
+?></pre>
+
+    <h3>المتغيرات — علامة $ هي الفارق الأكبر</h3>
+    <pre data-lang="PHP"><span class="kw">$name</span> = <span class="str">"Yara"</span>;      <span class="com">// سلسلة</span>
+<span class="kw">$age</span>  = <span class="num">25</span>;          <span class="com">// عدد صحيح</span>
+<span class="kw">$pi</span>   = <span class="num">3.14</span>;       <span class="com">// عائم</span>
+<span class="kw">$ok</span>   = <span class="kw">true</span>;       <span class="com">// منطقي</span>
+<span class="kw">$arr</span>  = [<span class="num">1</span>, <span class="num">2</span>, <span class="num">3</span>]; <span class="com">// مصفوفة</span></pre>
+
+    <h3>مقارنة سريعة بين المتغيرات</h3>
+    <table>
+      <tr><th>Java</th><th>PHP</th></tr>
+      <tr><td><code>String name = "Yara";</code></td><td><code>$name = "Yara";</code></td></tr>
+      <tr><td><code>int age = 25;</code></td><td><code>$age = 25;</code></td></tr>
+      <tr><td>النوع إلزامي</td><td>النوع اختياري (يُستدل عليه)</td></tr>
+      <tr><td>امامك: <code>int</code>, <code>String</code></td><td>امامك: <code>int</code>, <code>string</code>, <code>float</code>, <code>bool</code>, <code>array</code></td></tr>
+    </table>
+    <div class="callout green">🙂 <strong>تلميح:</strong> كل متغير PHP يبدأ بـ <code>$</code> — صرّح بدون ذكر النوع، واترك PHP يكتشفه تلقائيًا.</div>
+  </div>
+</section>
+
+<!-- ===================== CHAPTER 3 (types) ===================== -->
+<section>
+  <div class="card">
+    <h2>🔢 3. الأنواع (Types) في PHP</h2>
+    <p>تشبه Java لكن أسماءها صغيرة وبلا فاصلة منقوطة داخل تعريف:</p>
+    <pre data-lang="PHP"><span class="kw">$a</span> = <span class="num">10</span>;          <span class="com">// int</span>
+<span class="kw">$b</span> = <span class="num">3.14</span>;       <span class="com">// float</span>
+<span class="kw">$s</span> = <span class="str">"hello"</span>;      <span class="com">// string</span>
+<span class="kw">$flag</span> = <span class="kw">false</span>;    <span class="com">// bool</span>
+<span class="kw">$list</span> = [<span class="num">1</span>,<span class="num">2</span>,<span class="num">3</span>]; <span class="com">// array</span>
+<span class="kw">$obj</span> = <span class="kw">new</span> <span class="type">User</span>(); <span class="com">// object</span></pre>
+    <div class="callout">⚠️ بعد هذا: لا تنسَ نقطة للفصل <code>;</code>! وكل السطور تنتهي بها، لكن بدون أقواس مفصلة كما في Java.</div>
+  </div>
+</section>
+
+<!-- ===================== CHAPTER 4 (control) ===================== -->
+<section>
+  <div class="card">
+    <h2>🔀 4. التحكم في التدفق (If / Loop)</h2>
+    <p>نفس المنطق تمامًا كـ Java، لكن لا حاجة للأقواس المضغوطة في الطباعة — نستبدل <code>System.out.println()</code> بـ <code>echo</code>:</p>
+    <h3>الشرط (if)</h3>
+    <pre data-lang="PHP"><span class="kw">if</span>(<span class="kw">$age</span> &gt;= <span class="num">18</span>){
+    <span class="fn">echo</span> <span class="str">"بالغ 🧑"</span>;
+} <span class="kw">elseif</span>(<span class="kw">$age</span> &gt;= <span class="num">13</span>){
+    <span class="fn">echo</span> <span class="str">"مراهق 👦"</span>;
+} <span class="kw">else</span>{
+    <span class="fn">echo</span> <span class="str">"طفل 👶"</span>;
+}</pre>
+
+    <h3>الحلقات (for / foreach)</h3>
+    <pre data-lang="PHP"><span class="com">// for — نفس Java</span>
+<span class="kw">for</span>(<span class="kw">$i</span>=<span class="num">0</span>; <span class="kw">$i</span>&lt;<span class="num">5</span>; <span class="kw">$i</span>++){
+    <span class="fn">echo</span> <span class="kw">$i</span>.<span class="str">"باك</span>\n<span class="str">"</span>;
+}
+
+<span class="com">// foreach — مثل enhanced-for في Java</span>
+<span class="kw">$colors</span> = [<span class="str">"أحمر"</span>, <span class="str">"أزرق"</span>, <span class="str">"أخضر"</span>];
+<span class="kw">foreach</span>(<span class="kw">$colors</span> <span class="kw">as</span> <span class="kw">$color</span>){
+    <span class="fn">echo</span> <span class="kw">$color</span>.<span class="str">", "</span>;
+}</pre>
+    <div class="callout green">🧪 <strong>لاحظ:</strong> <code>echo</code> تعرض النص. ودمج النصوص في PHP يكون بالنقطة <code>.</code> وليس علامة <code>+</code>!</div>
+  </div>
+</section>
+
+<!-- ===================== CHAPTER 5 (arrays) ===================== -->
+<section>
+  <div class="card">
+    <h2>📦 5. المصفوفات (Arrays)</h2>
+    <p>في PHP المصفوفات مرنة جدًا وأقرب لـ <code>ArrayList</code> + خريطة كمفاتيح:</p>
+    <table>
+      <tr><th>Java</th><th>PHP</th></tr>
+      <tr><td><code>int[] a = {1,2,3};</code></td><td><code>$a = [1,2,3];</code></td></tr>
+      <tr><td><code>map.put("k", v)</code></td><td><code>$map["k"] = v;</code></td></tr>
+      <tr><td><code>arr.length</code></td><td><code>count($arr)</code></td></tr>
+    </table>
+    <pre data-lang="PHP"><span class="kw">$users</span> = [<span class="str">"Ali"</span>, <span class="str">"Mona"</span>, <span class="str">"Sara"</span>];
+<span class="fn">echo</span> <span class="kw">$users</span>[<span class="num">0</span>];                 <span class="com">// Ali</span>
+<span class="fn">echo</span> <span class="fn">count</span>(<span class="kw">$users</span>);          <span class="com">// 3</span>
+
+<span class="com">// مصفوفة بمفاتيح (Associative)</span>
+<span class="kw">$person</span> = [<span class="str">"name"</span> =&gt; <span class="str">"Yara"</span>, <span class="str">"age"</span> =&gt; <span class="num">25</span>];
+<span class="fn">echo</span> <span class="kw">$person</span>[<span class="str">"name"</span>];   <span class="com">// Yara</span>
+
+<span class="com">// إضافة عنصر</span>
+<span class="kw">$users</span>[] = <span class="str">"Nour"</span>;</pre>
+  </div>
+</section>
+
+<!-- ===================== CHAPTER 6 (functions) ===================== -->
+<section>
+  <div class="card">
+    <h2>🧩 6. الدوال (Functions)</h2>
+    <p>يمكن تعريف دالة في أي مكان، ولا حاجة لـ <code>public static</code>:</p>
+    <pre data-lang="PHP"><span class="kw">function</span> <span class="fn">add</span>(<span class="kw">$a</span>, <span class="kw">$b</span>){
+    <span class="kw">return</span> <span class="kw">$a</span> + <span class="kw">$b</span>;
+}
+<span class="fn">echo</span> <span class="fn">add</span>(<span class="num">5</span>, <span class="num">3</span>);  <span class="com">// 8</span>
+
+<span class="com">// قيمة افتراضية</span>
+<span class="kw">function</span> <span class="fn">greet</span>(<span class="kw">$name</span> = <span class="str">"زميل"</span>){
+    <span class="kw">return</span> <span class="str">"أهلًا "</span> . <span class="kw">$name</span>;
+}
+<span class="fn">echo</span> <span class="fn">greet</span>();            <span class="com">// أهلًا زميل</span>
+<span class="fn">echo</span> <span class="fn">greet</span>(<span class="str">"Mona"</span>);    <span class="com">// أهلًا Mona</span></pre>
+  </div>
+</section>
+
+<!-- ===================== CHAPTER 7 (OOP) ===================== -->
+<section>
+  <div class="card">
+    <h2>🏗️ 7. البرمجة كائنية التوجه (OOP)</h2>
+    <p>سيماء مألوفة من Java — <code>class</code>, <code>extends</code>, <code>new</code>, <code>public/private</code>. لكن الفرق الكبير في المصفوفات والجدول:</p>
+    <h3>مقارنة تعريف كلاس</h3>
+    <pre data-lang="JAVA"><span class="kw">public class</span> <span class="type">User</span> {
+    <span class="kw">private</span> <span class="type">String</span> name;
+    <span class="kw">public</span> <span class="type">User</span>(<span class="type">String</span> name) { <span class="kw">this</span>.name = name; }
+}</pre>
+    <pre data-lang="PHP"><span class="kw">class</span> <span class="type">User</span> {
+    <span class="kw">public</span> <span class="kw">$name</span>;          <span class="com">// الاسم</span>
+
+    <span class="kw">public function</span> <span class="fn">__construct</span>(<span class="kw">$name</span>){
+        <span class="kw">$this</span>-&gt;name = <span class="kw">$name</span>;
+    }
+
+    <span class="kw">public function</span> <span class="fn">getName</span>(){
+        <span class="kw">return</span> <span class="kw">$this</span>-&gt;name;
+    }
+}</pre>
+    <div class="callout green">✅ <strong>لاحظ:</strong> بدل <code>this.name</code> نكتب <code>$this-&gt;name</code>، وبدل <code>new User(...)</code> نفسها <code>new User(...)</code>.</div>
+
+    <h3>مقارنة OOP</h3>
+    <table>
+      <tr><th>المفهوم</th><th>Java</th><th>PHP</th></tr>
+      <tr><td>الوصول</td><td><code>.</code></td><td><code>-&gt;</code></td></tr>
+      <tr><td>هذه الكلمة</td><td><code>this</code></td><td><code>$this</code></td></tr>
+      <tr><td>البناء</td><td><code>Constructor</code></td><td><code>__construct()</code></td></tr>
+      <tr><td>الوراثة</td><td><code>extends</code></td><td><code>extends</code></td></tr>
+      <tr><td>الواجهة</td><td><code>implements</code></td><td><code>implements</code></td></tr>
+      <tr><td>الستاتيك} }</td><td><code>static</code></td><td><code>static</code></td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ===================== CHAPTER 8 (Laravel) ===================== -->
+<section>
+  <div class="card">
+    <h2>⚡ 8. ميزات Laravel الأكثر استخدامًا</h2>
+    <p>Laravel أقوى إطار PHP للويب. إليك أبرز ما ستستخدمه يوميًا كقادم من Java:</p>
+
+    <div class="badge">Routes</div>
+    <div class="badge">Controllers</div>
+    <div class="badge">Models & Eloquent</div>
+    <div class="badge">Migrations</div>
+    <div class="badge">Blade</div>
+    <div class="badge">Middleware</div>
+    <div class="badge">Service Provider</div>
+    <div class="badge">Validators</div>
+
+    <h3>🔀 A. المسارات (Routes)</h3>
+    <p>بدل Servlet / Spring Controller، نعرّف المسارات في <code>routes/web.php</code>:</p>
+    <pre data-lang="PHP"><span class="kw">use</span> <span class="type">App\Http\Controllers\UserController</span>;
+
+<span class="type">Route</span>::<span class="fn">get</span>(<span class="str">'/users'</span>, [<span class="type">UserController</span>::<span class="kw">class</span>, <span class="str">'index'</span>]);
+<span class="type">Route</span>::<span class="fn">post</span>(<span class="str">'/users'</span>, [<span class="type">UserController</span>::<span class="kw">class</span>, <span class="str">'store'</span>]);
+<span class="type">Route</span>::<span class="fn">get</span>(<span class="str">'/user/{id}'</span>, [<span class="type">UserController</span>::<span class="kw">class</span>, <span class="str">'show'</span>]);</pre>
+
+    <h3>🖥️ B. الكنترولر (Controller)</h3>
+    <pre data-lang="PHP"><span class="kw">class</span> <span class="type">UserController</span> <span class="kw">extends</span> <span class="type">Controller</span>
+{
+    <span class="kw">public function</span> <span class="fn">index</span>() {
+        <span class="kw">$users</span> = <span class="type">User</span>::<span class="fn">all</span>();          <span class="com">// خذ كل المستخدمين</span>
+        <span class="kw">return</span> <span class="fn">view</span>(<span class="str">'users.index'</span>, [<span class="str">'users'</span> =&gt; <span class="kw">$users</span>]);
+    }
+}</pre>
+
+    <h3>🗄️ C. Eloquent ORM (مثل JPA/Hibernate)</h3>
+    <p>الموديل يقابلك بالموديل الخام ولكنه أسهل — الصف هو الطاولة في قاعدة البيانات تلقائيًا:</p>
+    <pre data-lang="PHP"><span class="kw">use</span> <span class="type">Illuminate\Database\Eloquent\Model</span>;
+
+<span class="kw">class</span> <span class="type">User</span> <span class="kw">extends</span> <span class="type">Model</span> {
+    <span class="kw">protected</span> <span class="kw">$fillable</span> = [<span class="str">'name'</span>, <span class="str">'email'</span>];
+}
+
+<span class="com">// الاستعلامات</span>
+<span class="kw">$user</span> = <span class="type">User</span>::<span class="fn">find</span>(<span class="num">1</span>);                 <span class="com">// مثل find</span>
+<span class="kw">$user</span>-&gt;<span class="fn">update</span>([<span class="str">'name'</span> =&gt; <span class="str">'Yara'</span>]);  <span class="com">// يشبه الملف</span>
+<span class="type">User</span>::<span class="fn">create</span>([<span class="str">'name'</span> =&gt; <span class="str">'Ali'</span>]);   <span class="com">// save مع create</span></pre>
+
+    <div class="ascii">
+┌──────────────┐      ┌──────────────┐
+│  Java (JPA)  │      │  Laravel     │
+│  .find(id)   │  →   │  .find(id)   │
+│  .save(obj)  │  →   │  .save()     │
+│  @Entity     │  →   │  Model class │
+│  @Table      │  →   │  $table      │
+└──────────────┘      └──────────────┘
+    </div>
+
+    <h3>🕹️ D. Blade — نظام القوالب (مثل Thymeleaf)</h3>
+    <pre data-lang="HTML"><span class="tag">&lt;ul&gt;</span>
+    <span class="attr">@foreach</span>(<span class="var">$users</span> <span class="kw">as</span> <span class="var">$user</span>)
+        <span class="tag">&lt;li&gt;</span>{{ <span class="var">$user</span>-&gt;name }}<span class="tag">&lt;/li&gt;</span>
+    <span class="attr">@endforeach</span>
+<span class="tag">&lt;/ul&gt;</span></pre>
+
+    <h3>🛡️ E. الميدلوير (Middleware)</h3>
+    <p>يشتغل مثل Filters في Servlets — يُطبّق عبر المسار:</p>
+    <pre data-lang="PHP"><span class="type">Route</span>::<span class="fn">get</span>(<span class="str">'/admin'</span>, [<span class="type">AdminController</span>::<span class="kw">class</span>, <span class="str">'index'</span>])
+    -&gt;<span class="fn">middleware</span>(<span class="str">'auth'</span>);   <span class="com">// يتطلب تسجيل دخول</span></pre>
+
+    <h3>📄 F. Migrations — إدارة الجداول</h3>
+    <p>تكتب التغيير في كود، وLaravel ينفّذه على قاعدة البيانات (بدل SQL يدوي):</p>
+    <pre data-lang="PHP"><span class="kw">public function</span> <span class="fn">up</span>() {
+    <span class="type">Schema</span>::<span class="fn">create</span>(<span class="str">'users'</span>, <span class="kw">function</span> (<span class="type">Blueprint</span> <span class="kw">$table</span>) {
+        <span class="kw">$table</span>-&gt;<span class="fn">id</span>();
+        <span class="kw">$table</span>-&gt;<span class="fn">string</span>(<span class="str">'name'</span>);
+        <span class="kw">$table</span>-&gt;<span class="fn">email</span>()-><span class="fn">unique</span>();
+        <span class="kw">$table</span>-&gt;<span class="fn">timestamps</span>();
+    });
+}</pre>
+  </div>
+</section>
+
+<!-- ===================== CHAPTER 9 (summary) ===================== -->
+<section>
+  <div class="card">
+    <h2>🎯 9. ملخص سريع للتحويل</h2>
+    <div class="flow">
+      <div class="flow-box green">Java<br><span class="muted">public static void main</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box">PHP<br><span class="muted">&lt;?php ... ?&gt;</span></div>
+    </div>
+    <table>
+      <tr><th>Java</th><th>PHP</th><th>ملاحظة</th></tr>
+      <tr><td><code>System.out.println(x)</code></td><td><code>echo x</code></td><td>طباعة</td></tr>
+      <tr><td><code>this.name</code></td><td><code>$this-&gt;name</code></td><td>وصول</td></tr>
+      <tr><td><code>String s</code></td><td><code>$s</code></td><td>متغير</td></tr>
+      <tr><td><code>map.containsKey(k)</code></td><td><code>isset($m[k])</code></td><td>تحقق</td></tr>
+      <tr><td><code>arr.length</code></td><td><code>count($arr)</code></td><td>الطول</td></tr>
+      <tr><td><code>new Date()</code></td><td><code>new DateTime()</code></td><td>التاريخ</td></tr>
+      <tr><td><code>ArrayList&lt;T&gt;</code></td><td><code>array</code></td><td>قائمة</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ===================== CHAPTER 10 (commands) ===================== -->
+<section>
+  <div class="card">
+    <h2>🧰 10. الأدوات الذي ستحتاجها (Commands)</h2>
+    <p>للتحقق من syntax قبل التشغيل مثل تمرير <code>classpath</code>/<code>javac</code>:</p>
+    <table>
+      <tr><th>العملية</th><th>Java</th><th>PHP</th></tr>
+      <tr><td>تشغيل سكريبت</td><td><code>java Main</code></td><td><code>php main.php</code></td></tr>
+      <tr><td>فحص syntax</td><td><code>javac Main.java</code></td><td><code>php -l main.php</code></td></tr>
+      <tr><td>خادم تطوير</td><td><code>mvn spring-boot:run</code></td><td><code>php artisan serve</code></td></tr>
+      <tr><td>أوامر المزامنة</td><td><code>mvn ...</code>/<code>gradle</code></td><td><code>composer ...</code>/<code>artisan</code></td></tr>
+      <tr><td>أدوات إدارة}</td><td><code>Maven/Gradle</code></td><td><code>Composer</code></td></tr>
+    </table>
+    <div class="callout green">🛠️ <strong>نصيحة:</strong> بدل <code>Maven</code> ستستخدم <code>Composer</code>، وبدل Spring Boot ستستخدم <code>Laravel</code>، والمجلدات تعمل بنفس الفكرة.</div>
+  </div>
+</section>
+
+<!-- ===================== footer ===================== -->
+<div style="text-align:center;color:var(--muted);margin-top:40px;">
+  <p>&copy; 2026 — مرجع تعليمي للانتقال من Java إلى PHP</p>
+</div>
+
+</div>
+</body>
+</html>
