@@ -82,5 +82,5 @@
 - Laravel
 - Inertia (Laravel svelte template)
 - TailwindCSS
-
+ 
 
