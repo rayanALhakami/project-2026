@@ -20,11 +20,11 @@
         DropdownMenuTrigger,
     } from '@/components/ui/dropdown-menu';
     import {
-        NavigationMenu,
+        NavigationMenuRoot,
         NavigationMenuItem,
         NavigationMenuList,
-        navigationMenuTriggerStyle,
     } from '@/components/ui/navigation-menu';
+    import { navigationMenuTriggerStyle } from '@/components/ui/navigation-menu/navigation-menu-trigger.svelte';
     import {
         Sheet,
         SheetContent,
@@ -85,14 +85,13 @@
             <!-- Mobile Menu -->
             <div class="lg:hidden">
                 <Sheet>
-                    <SheetTrigger asChild>
-                        {#snippet children(props)}
+                    <SheetTrigger>
+                        {#snippet child({ props })}
                             <Button
                                 variant="ghost"
                                 size="icon"
                                 class="mr-2 h-9 w-9"
-                                onclick={props.onclick}
-                                aria-expanded={props['aria-expanded']}
+                                {...props}
                             >
                                 <Menu class="h-5 w-5" />
                             </Button>
@@ -152,7 +151,7 @@
 
             <!-- Desktop Menu -->
             <div class="hidden h-full lg:flex lg:flex-1">
-                <NavigationMenu class="ml-10 flex h-full items-stretch">
+                <NavigationMenuRoot class="ml-10 flex h-full items-stretch">
                     <NavigationMenuList
                         class="flex h-full items-stretch space-x-2"
                     >
@@ -182,7 +181,7 @@
                             </NavigationMenuItem>
                         {/each}
                     </NavigationMenuList>
-                </NavigationMenu>
+                </NavigationMenuRoot>
             </div>
 
             <div class="ml-auto flex items-center space-x-2">
@@ -229,15 +228,13 @@
                 </div>
 
                 <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        {#snippet children(props)}
+                    <DropdownMenuTrigger>
+                        {#snippet child({ props })}
                             <Button
                                 variant="ghost"
                                 size="icon"
                                 class="relative size-10 w-auto rounded-full p-1 focus-within:ring-2 focus-within:ring-primary"
-                                onclick={props.onclick}
-                                aria-expanded={props['aria-expanded']}
-                                data-state={props['data-state']}
+                                {...props}
                             >
                                 <Avatar
                                     class="size-8 overflow-hidden rounded-full"

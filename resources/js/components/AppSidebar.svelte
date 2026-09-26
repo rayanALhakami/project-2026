@@ -1,8 +1,11 @@
 <script lang="ts">
     import { Link } from '@inertiajs/svelte';
-    import BookOpen from '@lucide/svelte/icons/book-open';
-    import FolderGit2 from '@lucide/svelte/icons/folder-git-2';
+    import ChartPie from '@lucide/svelte/icons/chart-pie';
     import LayoutGrid from '@lucide/svelte/icons/layout-grid';
+    import Receipt from '@lucide/svelte/icons/receipt';
+    import Settings from '@lucide/svelte/icons/settings';
+    import Sparkles from '@lucide/svelte/icons/sparkles';
+    import Tags from '@lucide/svelte/icons/tags';
     import type { Snippet } from 'svelte';
     import AppLogo from '@/components/AppLogo.svelte';
     import NavFooter from '@/components/NavFooter.svelte';
@@ -18,7 +21,10 @@
         SidebarMenuItem,
     } from '@/components/ui/sidebar';
     import { toUrl } from '@/lib/utils';
-    import { dashboard } from '@/routes';
+    import { assistant, dashboard, reports } from '@/routes';
+    import categories from '@/routes/categories';
+    import { edit } from '@/routes/profile';
+    import transactions from '@/routes/transactions';
     import type { NavItem } from '@/types';
 
     let {
@@ -29,22 +35,37 @@
 
     const mainNavItems: NavItem[] = [
         {
-            title: 'Dashboard',
+            title: 'الرئيسية',
             href: dashboard(),
             icon: LayoutGrid,
+        },
+        {
+            title: 'المساعد',
+            href: assistant(),
+            icon: Sparkles,
+        },
+        {
+            title: 'المعاملات',
+            href: transactions.index(),
+            icon: Receipt,
+        },
+        {
+            title: 'التقارير',
+            href: reports(),
+            icon: ChartPie,
+        },
+        {
+            title: 'الفئات',
+            href: categories.index(),
+            icon: Tags,
         },
     ];
 
     const footerNavItems: NavItem[] = [
         {
-            title: 'Repository',
-            href: 'https://github.com/laravel/svelte-starter-kit',
-            icon: FolderGit2,
-        },
-        {
-            title: 'Documentation',
-            href: 'https://laravel.com/docs/starter-kits#svelte',
-            icon: BookOpen,
+            title: 'الإعدادات',
+            href: edit(),
+            icon: Settings,
         },
     ];
 </script>
@@ -53,13 +74,9 @@
     <SidebarHeader>
         <SidebarMenu>
             <SidebarMenuItem>
-                <SidebarMenuButton size="lg" asChild>
-                    {#snippet children(props)}
-                        <Link
-                            {...props}
-                            href={toUrl(dashboard())}
-                            class={props.class}
-                        >
+                <SidebarMenuButton size="lg">
+                    {#snippet child({ props })}
+                        <Link {...props} href={toUrl(dashboard())}>
                             <AppLogo />
                         </Link>
                     {/snippet}

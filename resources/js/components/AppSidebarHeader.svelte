@@ -1,5 +1,6 @@
 <script lang="ts">
     import Breadcrumbs from '@/components/Breadcrumbs.svelte';
+    import ThemeToggle from '@/components/ThemeToggle.svelte';
     import { SidebarTrigger } from '@/components/ui/sidebar';
     import type { BreadcrumbItem } from '@/types';
 
@@ -18,5 +19,8 @@
         {#if breadcrumbs && breadcrumbs.length > 0}
             <Breadcrumbs {breadcrumbs} />
         {/if}
+    </div>
+    <div class="ms-auto flex items-center gap-2">
+        <ThemeToggle />
     </div>
 </header>

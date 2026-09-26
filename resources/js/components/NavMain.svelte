@@ -21,21 +21,16 @@
 </script>
 
 <SidebarGroup class="px-2 py-0">
-    <SidebarGroupLabel>Platform</SidebarGroupLabel>
+    <SidebarGroupLabel>القائمة</SidebarGroupLabel>
     <SidebarMenu>
         {#each items as item (toUrl(item.href))}
             <SidebarMenuItem>
                 <SidebarMenuButton
-                    asChild
                     isActive={url.isCurrentUrl(item.href, url.currentUrl)}
-                    tooltip={item.title}
+                    tooltipContent={item.title}
                 >
-                    {#snippet children(props)}
-                        <Link
-                            {...props}
-                            href={toUrl(item.href)}
-                            class={props.class}
-                        >
+                    {#snippet child({ props })}
+                        <Link {...props} href={toUrl(item.href)}>
                             {#if item.icon}
                                 <item.icon class="size-4 shrink-0" />
                             {/if}

@@ -2,9 +2,12 @@
 
 namespace App\Providers;
 
+use App\Models\Category;
+use App\Models\Transaction;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
 
@@ -24,6 +27,14 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->configureDefaults();
+
+        Route::bind('transaction', fn (string $value) => Transaction::query()
+            ->where('user_id', auth()->id())
+            ->findOrFail($value));
+
+        Route::bind('category', fn (string $value) => Category::query()
+            ->where('user_id', auth()->id())
+            ->findOrFail($value));
     }
 
     /**

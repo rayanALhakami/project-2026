@@ -2,7 +2,7 @@
     import { Link } from '@inertiajs/svelte';
     import type { Snippet } from 'svelte';
     import Heading from '@/components/Heading.svelte';
-    import { Button } from '@/components/ui/button';
+    import { buttonVariants } from '@/components/ui/button';
     import { Separator } from '@/components/ui/separator';
     import { currentUrlState } from '@/lib/currentUrl.svelte';
     import { toUrl } from '@/lib/utils';
@@ -48,22 +48,20 @@
                 aria-label="Settings"
             >
                 {#each sidebarNavItems as item (toUrl(item.href))}
-                    <Button
-                        variant="ghost"
-                        class="w-full justify-start {url.isCurrentUrl(
-                            item.href,
-                            url.currentUrl,
-                        )
-                            ? 'bg-muted'
-                            : ''}"
-                        asChild
+                    <Link
+                        href={toUrl(item.href)}
+                        class={buttonVariants({
+                            variant: 'ghost',
+                            class: `w-full justify-start ${url.isCurrentUrl(
+                                item.href,
+                                url.currentUrl,
+                            )
+                                ? 'bg-muted'
+                                : ''}`,
+                        })}
                     >
-                        {#snippet children(props)}
-                            <Link href={toUrl(item.href)} class={props.class}>
-                                {item.title}
-                            </Link>
-                        {/snippet}
-                    </Button>
+                        {item.title}
+                    </Link>
                 {/each}
             </nav>
         </aside>
