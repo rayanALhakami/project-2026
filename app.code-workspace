@@ -1,0 +1,37 @@
+{
+    "folders": [
+        {
+            "path": "../example-aoo/app",
+        },
+        {
+            "path": "../example-aoo/bootstrap",
+        },
+        {
+            "path": "../example-aoo/config",
+        },
+        {
+            "path": "../example-aoo/database",
+        },
+        {
+            "path": "../example-aoo/node_modules",
+        },
+        {
+            "path": "../example-aoo/public",
+        },
+        {
+            "path": "../example-aoo/resources",
+        },
+        {
+            "path": "../example-aoo/routes",
+        },
+        {
+            "path": "../example-aoo/storage",
+        },
+        {
+            "path": "../example-aoo/tests",
+        },
+        {
+            "path": "../example-aoo/vendor",
+        },
+    ],
+}

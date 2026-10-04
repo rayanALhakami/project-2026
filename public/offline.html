@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="theme-color" content="#08131f" />
+        <meta name="robots" content="noindex" />
+        <title>لا يوجد اتصال بالإنترنت</title>
+        <style>
+            :root {
+                color-scheme: dark;
+                --emerald: #34d399;
+                --teal: #0f766e;
+            }
+
+            * {
+                box-sizing: border-box;
+            }
+
+            body {
+                margin: 0;
+                min-height: 100dvh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 1.5rem;
+                font-family:
+                    -apple-system, 'SF Pro Display', 'SF Pro Text', Inter,
+                    'IBM Plex Sans Arabic', system-ui, 'Segoe UI', sans-serif;
+                background:
+                    radial-gradient(
+                        120% 120% at 85% 0%,
+                        rgba(52, 211, 153, 0.18) 0%,
+                        transparent 45%
+                    ),
+                    linear-gradient(135deg, #16344f 0%, #0b2337 55%, #071523 100%);
+                color: #0f172a;
+            }
+
+            .card {
+                width: 100%;
+                max-width: 26rem;
+                background: #ffffff;
+                border-radius: 1.5rem;
+                padding: 2rem 1.75rem;
+                text-align: center;
+                box-shadow:
+                    0 24px 60px -20px rgba(2, 6, 23, 0.6),
+                    0 0 0 1px rgba(255, 255, 255, 0.08);
+            }
+
+            .icon {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                width: 4rem;
+                height: 4rem;
+                border-radius: 9999px;
+                color: #ffffff;
+                background: linear-gradient(135deg, var(--emerald), var(--teal));
+                box-shadow: 0 12px 24px -10px rgba(15, 118, 110, 0.7);
+            }
+
+            .icon svg {
+                width: 2rem;
+                height: 2rem;
+            }
+
+            h1 {
+                margin: 1.25rem 0 0;
+                font-size: 1.4rem;
+                font-weight: 700;
+                line-height: 1.35;
+                text-wrap: balance;
+            }
+
+            h1 span[lang='en'] {
+                display: block;
+                font-size: 1.05rem;
+                margin-top: 0.35rem;
+            }
+
+            p {
+                margin: 0.75rem 0 0;
+                font-size: 0.95rem;
+                line-height: 1.7;
+                color: #475569;
+                text-wrap: pretty;
+            }
+
+            p span[lang='en'] {
+                display: block;
+                margin-top: 0.35rem;
+                font-size: 0.85rem;
+                line-height: 1.6;
+                color: #64748b;
+            }
+
+            .retry {
+                margin-top: 1.5rem;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                gap: 0.5rem;
+                width: 100%;
+                min-height: 3rem;
+                padding: 0 1.5rem;
+                border: 0;
+                border-radius: 0.85rem;
+                font: inherit;
+                font-size: 0.95rem;
+                font-weight: 700;
+                color: #ffffff;
+                cursor: pointer;
+                background: linear-gradient(135deg, var(--emerald), var(--teal));
+                box-shadow: 0 16px 30px -12px rgba(15, 118, 110, 0.65);
+                transition:
+                    filter 0.15s ease,
+                    transform 0.1s ease;
+            }
+
+            .retry:hover {
+                filter: brightness(1.08);
+            }
+
+            .retry:active {
+                transform: scale(0.98);
+            }
+
+            .note {
+                margin-top: 1.25rem;
+                padding-top: 1rem;
+                border-top: 1px solid #e2e8f0;
+                font-size: 0.8rem;
+                color: #64748b;
+            }
+        </style>
+    </head>
+    <body>
+        <main class="card">
+            <span class="icon" aria-hidden="true">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                >
+                    <path d="M12 20h.01" />
+                    <path d="M8.5 16.429a5 5 0 0 1 7 0" />
+                    <path d="M5 12.859a10 10 0 0 1 5.17-2.69" />
+                    <path d="M19 12.859a10 10 0 0 0-2.007-1.523" />
+                    <path d="M2 8.82a15 15 0 0 1 4.177-2.643" />
+                    <path d="M22 8.82a15 15 0 0 0-11.288-3.764" />
+                    <path d="m2 2 20 20" />
+                </svg>
+            </span>
+
+            <h1>
+                لا يوجد اتصال بالإنترنت
+                <span lang="en" dir="ltr">You are offline</span>
+            </h1>
+
+            <p>
+                تحقق من اتصالك ثم أعد المحاولة. بعض الصفحات التي زرتها سابقاً قد
+                تبقى متاحة دون اتصال.
+                <span lang="en" dir="ltr">
+                    Check your connection and try again. Some previously visited
+                    pages may still be available offline.
+                </span>
+            </p>
+
+            <button class="retry" type="button" onclick="location.reload()">
+                إعادة المحاولة
+            </button>
+
+            <p class="note">
+                وجهتك الأولى في السياحة السعودية
+                <span lang="en" dir="ltr">
+                    Your First Destination in Saudi Tourism
+                </span>
+            </p>
+        </main>
+    </body>
+</html>

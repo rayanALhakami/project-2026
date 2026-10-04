@@ -1,0 +1,954 @@
+@import 'tailwindcss';
+
+@import 'tw-animate-css';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+    --font-sans:
+        -apple-system, 'SF Pro Display', 'SF Pro Text', Inter,
+        'IBM Plex Sans Arabic', system-ui, 'Segoe UI', Helvetica, Arial,
+        sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+        'Noto Color Emoji';
+
+    --radius-lg: var(--radius);
+    --radius-md: calc(var(--radius) - 2px);
+    --radius-sm: calc(var(--radius) - 4px);
+
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+
+    --color-hero: var(--hero);
+    --color-hero-to: var(--hero-to);
+    --color-hero-foreground: var(--hero-foreground);
+
+    --color-chart-1: var(--chart-1);
+    --color-chart-2: var(--chart-2);
+    --color-chart-3: var(--chart-3);
+    --color-chart-4: var(--chart-4);
+    --color-chart-5: var(--chart-5);
+
+    --color-sidebar: var(--sidebar-background);
+    --color-sidebar-foreground: var(--sidebar-foreground);
+    --color-sidebar-primary: var(--sidebar-primary);
+    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+    --color-sidebar-accent: var(--sidebar-accent);
+    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+    --color-sidebar-border: var(--sidebar-border);
+    --color-sidebar-ring: var(--sidebar-ring);
+}
+
+/*
+  The default border color has changed to `currentColor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+    *,
+    ::after,
+    ::before,
+    ::backdrop,
+    ::file-selector-button {
+        border-color: var(--color-gray-200, currentColor);
+    }
+}
+
+@layer utilities {
+    body,
+    html {
+        --font-sans:
+            -apple-system, 'SF Pro Display', 'SF Pro Text', 'Inter',
+            'IBM Plex Sans Arabic', system-ui, 'Segoe UI', Helvetica, Arial,
+            sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+            'Segoe UI Symbol', 'Noto Color Emoji';
+    }
+}
+
+:root {
+    /*
+      Apple design language (white/parchment surfaces, hairlines, pill CTAs,
+      SF/Inter type) carrying the Saudi identity — flag green as the single
+      accent, warm ivory and sand surfaces. See DESIGN.md.
+    */
+    --app-font-size: 17px; /* Apple body size, user-adjustable (A- / A+) */
+    --flag-green: #006c35; /* Saudi flag green — fixed in both themes */
+    --flag-ink: #ffffff; /* Saudi flag script */
+    --hero: #0f5e37; /* deep Saudi green product tile */
+    --hero-to: #0f5e37; /* flat tile — Apple uses no decorative gradients */
+    --hero-foreground: #ffffff;
+    --weather-sky: #124b3c; /* weather tile — clear emerald sky */
+    --weather-sky-to: #286653; /* horizon */
+    --weather-ink: #ffffff;
+    --background: #fbf8f2; /* warm Saudi ivory canvas */
+    --foreground: #1f1b16; /* warm near-black ink */
+    --card: #ffffff;
+    --card-foreground: #1f1b16;
+    --popover: #ffffff;
+    --popover-foreground: #1f1b16;
+    --primary: #006c35; /* Saudi flag green — the single accent */
+    --primary-foreground: #ffffff;
+    --secondary: #f2ece1; /* light sand */
+    --secondary-foreground: #3a3228;
+    --muted: #f4efe6;
+    --muted-foreground: #6e6559; /* warm stone, AA on ivory */
+    --accent: #f4efe6;
+    --accent-foreground: #1f1b16;
+    --destructive: #b3261e;
+    --destructive-foreground: #ffffff;
+    --border: #e7e0d3; /* warm hairline */
+    --input: #d9d0c1;
+    --ring: #0a8a49; /* brighter focus green */
+    --chart-1: #136b3f;
+    --chart-2: #b4692f;
+    --chart-3: #c99a5b;
+    --chart-4: #0e6e8c;
+    --chart-5: #b3261e;
+    --radius: 0.5rem; /* 8px — compact utility grammar */
+    --sidebar-background: #ffffff;
+    --sidebar-foreground: #1f1b16;
+    --sidebar-primary: #006c35;
+    --sidebar-primary-foreground: #ffffff;
+    --sidebar-accent: #f4efe6;
+    --sidebar-accent-foreground: #1f1b16;
+    --sidebar-border: #e7e0d3;
+    --sidebar-ring: #0a8a49;
+    --sidebar: #ffffff;
+}
+
+.dark {
+    /* Saudi night: warm dark surfaces with a bright palm-green accent. */
+    --hero: #0b3d24;
+    --hero-to: #0b3d24;
+    --hero-foreground: #ffffff;
+    --weather-sky: #0b2b21; /* weather tile — night sky */
+    --weather-sky-to: #174234;
+    --weather-ink: #f4f6fb;
+    --background: #14110d;
+    --foreground: #f4efe6;
+    --card: #1f1b16;
+    --card-foreground: #f4efe6;
+    --popover: #1f1b16;
+    --popover-foreground: #f4efe6;
+    --primary: #46b877;
+    --primary-foreground: #07160d;
+    --secondary: #2a241d;
+    --secondary-foreground: #f4efe6;
+    --muted: #241f19;
+    --muted-foreground: #c7bca8;
+    --accent: #2a241d;
+    --accent-foreground: #f4efe6;
+    --destructive: #ff6b5e;
+    --destructive-foreground: #1f1408;
+    --border: #3a3228;
+    --input: #3a3228;
+    --ring: #46b877;
+    --chart-1: #46b877;
+    --chart-2: #d9975c;
+    --chart-3: #e0b877;
+    --chart-4: #4bb3d4;
+    --chart-5: #ff6b5e;
+    --sidebar-background: #1a1611;
+    --sidebar-foreground: #f4efe6;
+    --sidebar-primary: #46b877;
+    --sidebar-primary-foreground: #07160d;
+    --sidebar-accent: #2a241d;
+    --sidebar-accent-foreground: #f4efe6;
+    --sidebar-border: #3a3228;
+    --sidebar-ring: #46b877;
+    --sidebar: #1a1611;
+}
+
+/*
+  City identity tokens live in CSS (never inline styles) so every tint/ink
+  has an explicit dark-mode counterpart with accessible contrast.
+*/
+[data-city='1'] {
+    --city: #8a5a12;
+    --city-tint: #f6ecdd;
+}
+[data-city='2'] {
+    --city: #0e6e8c;
+    --city-tint: #e1f0f4;
+}
+[data-city='3'] {
+    --city: #9a5a1e;
+    --city-tint: #f5e9da;
+}
+[data-city='4'] {
+    --city: #1c7a4a;
+    --city-tint: #e4f2e7;
+}
+[data-city='5'] {
+    --city: #a13b6a;
+    --city-tint: #f7e6ef;
+}
+[data-city='6'] {
+    --city: #0b5e8a;
+    --city-tint: #e2eef6;
+}
+[data-city='7'] {
+    --city: #0b5a3c;
+    --city-tint: #e6f0ea;
+}
+[data-city='8'] {
+    --city: #0f6f5c;
+    --city-tint: #e3f1ee;
+}
+[data-city='9'] {
+    --city: #0d7a72;
+    --city-tint: #e0f2f0;
+}
+
+.dark [data-city='1'] {
+    --city: #e0b877;
+    --city-tint: #2a2115;
+}
+.dark [data-city='2'] {
+    --city: #6cc7e0;
+    --city-tint: #14262c;
+}
+.dark [data-city='3'] {
+    --city: #e0a06a;
+    --city-tint: #2b2016;
+}
+.dark [data-city='4'] {
+    --city: #6fd39c;
+    --city-tint: #16281d;
+}
+.dark [data-city='5'] {
+    --city: #e58cb4;
+    --city-tint: #2b1a22;
+}
+.dark [data-city='6'] {
+    --city: #63b6e0;
+    --city-tint: #132630;
+}
+.dark [data-city='7'] {
+    --city: #5fc79b;
+    --city-tint: #13251d;
+}
+.dark [data-city='8'] {
+    --city: #60cdb6;
+    --city-tint: #132722;
+}
+.dark [data-city='9'] {
+    --city: #5fd3c9;
+    --city-tint: #122624;
+}
+
+@layer base {
+    * {
+        @apply border-border outline-ring/50;
+    }
+
+    /* Larger, comfortable base type for effortless reading (all ages). */
+    html {
+        font-size: var(--app-font-size, 17px);
+        -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+        @apply bg-background text-foreground;
+        /* Apple body: 17px / 1.47 with Inter substituting for SF Pro. */
+        line-height: 1.47;
+        font-feature-settings:
+            'ss03' 1,
+            'lnum' 1,
+            'locl' 1;
+    }
+
+    h1,
+    h2,
+    h3 {
+        text-wrap: balance;
+    }
+
+    p {
+        text-wrap: pretty;
+    }
+
+    :focus-visible {
+        outline: 3px solid var(--ring);
+        outline-offset: 2px;
+    }
+}
+
+@layer utilities {
+    /* Reserve room above the fixed mobile bottom navigation + iOS safe area. */
+    .pb-bottom-nav {
+        padding-bottom: calc(6rem + env(safe-area-inset-bottom));
+    }
+
+    .pb-safe {
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+
+    /* City identity helpers driven by [data-city] tokens defined in CSS. */
+    .city-tint {
+        background-color: var(--city-tint, var(--secondary));
+    }
+
+    .city-ink {
+        color: var(--city, var(--primary));
+    }
+
+    .city-border {
+        border-color: var(--city, var(--primary));
+    }
+}
+
+[dir='rtl'] :where(.tracking-tighter, .tracking-tight) {
+    letter-spacing: normal;
+}
+
+[dir='rtl'] body {
+    line-height: 1.6;
+}
+
+/*
+  Apple elevation: the system has exactly one drop-shadow and it belongs to
+  product imagery resting on a surface. UI hierarchy comes from surface-colour
+  changes and backdrop-blur sticky bars instead.
+*/
+@utility product-shadow {
+    box-shadow: 3px 5px 30px 0 rgb(0 0 0 / 0.22);
+}
+
+/* Reserved for floating overlays (dialogs) that must clear their scrim. */
+@utility elevation-raised {
+    box-shadow:
+        0 0.175px 1.041px rgb(0 0 0 / 0.01),
+        0 0.8px 2.925px rgb(0 0 0 / 0.02),
+        0 2.025px 7.847px rgb(0 0 0 / 0.027),
+        0 8px 28px rgb(0 0 0 / 0.04),
+        0 23px 52px rgb(0 0 0 / 0.05);
+}
+
+/*
+  Markdown rendering for assistant chat messages. Scoped to .md-body so it
+  never leaks into the rest of the application.
+*/
+.md-body > :first-child {
+    margin-top: 0;
+}
+
+.md-body > :last-child {
+    margin-bottom: 0;
+}
+
+.md-body p {
+    margin-block: 0.5rem;
+}
+
+.md-body h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-block: 0.75rem 0.4rem;
+}
+
+.md-body h4 {
+    font-size: 0.975rem;
+    font-weight: 600;
+    margin-block: 0.65rem 0.35rem;
+}
+
+.md-body strong {
+    font-weight: 600;
+}
+
+.md-body ul,
+.md-body ol {
+    margin-block: 0.5rem;
+    padding-inline-start: 1.25rem;
+}
+
+.md-body ul {
+    list-style: disc;
+}
+
+.md-body ol {
+    list-style: decimal;
+}
+
+.md-body li {
+    margin-block: 0.2rem;
+}
+
+.md-body a {
+    color: var(--primary);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+.md-body blockquote {
+    margin-block: 0.5rem;
+    padding-inline-start: 0.75rem;
+    border-inline-start: 3px solid var(--border);
+    color: var(--muted-foreground);
+}
+
+.md-body code {
+    direction: ltr;
+    unicode-bidi: embed;
+    background: var(--secondary);
+    padding: 0.1rem 0.3rem;
+    border-radius: 6px;
+    font-size: 0.85em;
+}
+
+.md-body pre {
+    direction: ltr;
+    text-align: left;
+    background: var(--secondary);
+    padding: 0.75rem;
+    border-radius: 12px;
+    overflow-x: auto;
+    margin-block: 0.5rem;
+}
+
+.md-body pre code {
+    background: transparent;
+    padding: 0;
+}
+
+.md-body table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    border-collapse: collapse;
+    margin-block: 0.5rem;
+}
+
+.md-body th,
+.md-body td {
+    border: 1px solid var(--border);
+    padding: 0.4rem 0.6rem;
+    text-align: start;
+    white-space: nowrap;
+}
+
+.md-body thead th {
+    background: var(--secondary);
+    font-weight: 600;
+}
+
+.md-body hr {
+    border: 0;
+    border-top: 1px solid var(--border);
+    margin-block: 0.75rem;
+}
+
+/*
+  Respect the user's motion preference: keep state changes instant and
+  disable decorative loops (skeletons, bouncing dots, slide-ins).
+*/
+/*
+  Weather tile art (decorative). Daylight sky with sun and drifting clouds;
+  the dark theme swaps to a night sky with moon and stars. Loops are disabled
+  automatically by the prefers-reduced-motion rule below.
+*/
+.weather-sky {
+    background: linear-gradient(
+        180deg,
+        var(--weather-sky) 0%,
+        var(--weather-sky-to) 100%
+    );
+    color: var(--weather-ink);
+}
+
+.weather-sun {
+    position: absolute;
+    inset-inline-end: -1.25rem;
+    top: -1.5rem;
+    width: 7.5rem;
+    height: 7.5rem;
+    border-radius: 9999px;
+    background: radial-gradient(
+        circle,
+        #fff8d6 0%,
+        #ffd76e 42%,
+        rgb(255 215 110 / 0) 72%
+    );
+    filter: drop-shadow(0 0 20px rgb(255 214 110 / 0.55));
+    pointer-events: none;
+}
+
+.weather-moon {
+    position: absolute;
+    inset-inline-end: -0.75rem;
+    top: -1rem;
+    width: 7rem;
+    height: 7rem;
+    border-radius: 9999px;
+    background: #f6f1df;
+    box-shadow: inset -1.6rem 0.6rem 0 0.05rem var(--weather-sky);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.dark .weather-moon {
+    opacity: 1;
+}
+
+.dark .weather-sun {
+    opacity: 0;
+}
+
+.weather-stars {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.dark .weather-stars {
+    opacity: 1;
+}
+
+.weather-star {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    border-radius: 9999px;
+    background: #ffffff;
+    animation: weather-twinkle 3.6s ease-in-out infinite;
+}
+
+.weather-star:nth-child(1) {
+    inset-inline-start: 14%;
+    top: 18%;
+    animation-delay: 0.3s;
+}
+
+.weather-star:nth-child(2) {
+    inset-inline-start: 40%;
+    top: 8%;
+    width: 2px;
+    height: 2px;
+    animation-delay: 1.1s;
+}
+
+.weather-star:nth-child(3) {
+    inset-inline-start: 66%;
+    top: 26%;
+    animation-delay: 1.8s;
+}
+
+.weather-star:nth-child(4) {
+    inset-inline-start: 86%;
+    top: 12%;
+    width: 2px;
+    height: 2px;
+    animation-delay: 2.5s;
+}
+
+.weather-clouds {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.dark .weather-clouds {
+    opacity: 0.35;
+}
+
+.weather-cloud {
+    position: absolute;
+    color: #ffffff;
+    animation: weather-drift 16s ease-in-out infinite alternate;
+}
+
+@keyframes weather-drift {
+    from {
+        transform: translateX(-7%);
+    }
+
+    to {
+        transform: translateX(7%);
+    }
+}
+
+@keyframes weather-twinkle {
+    0%,
+    100% {
+        opacity: 0.35;
+    }
+
+    50% {
+        opacity: 0.9;
+    }
+}
+
+[data-weather='partly-cloudy'].weather-sky {
+    --weather-sky: #294c4b;
+    --weather-sky-to: #45645f;
+}
+
+[data-weather='cloudy'].weather-sky {
+    --weather-sky: #333f42;
+    --weather-sky-to: #4d5c5d;
+}
+
+[data-weather='fog'].weather-sky {
+    --weather-sky: #354548;
+    --weather-sky-to: #526262;
+}
+
+[data-weather='rain'].weather-sky {
+    --weather-sky: #243c43;
+    --weather-sky-to: #3b555a;
+}
+
+[data-weather='thunder'].weather-sky {
+    --weather-sky: #1d2a31;
+    --weather-sky-to: #35434a;
+}
+
+[data-weather='dust'].weather-sky {
+    --weather-sky: #504128;
+    --weather-sky-to: #735e39;
+}
+
+[data-weather='hot'].weather-sky {
+    --weather-sky: #60331d;
+    --weather-sky-to: #804a2a;
+}
+
+.dark [data-weather='partly-cloudy'].weather-sky {
+    --weather-sky: #102822;
+    --weather-sky-to: #1a3e34;
+}
+
+.dark [data-weather='cloudy'].weather-sky {
+    --weather-sky: #1a2421;
+    --weather-sky-to: #303b35;
+}
+
+.dark [data-weather='fog'].weather-sky {
+    --weather-sky: #1c2624;
+    --weather-sky-to: #35413d;
+}
+
+.dark [data-weather='rain'].weather-sky {
+    --weather-sky: #111d20;
+    --weather-sky-to: #26383a;
+}
+
+.dark [data-weather='thunder'].weather-sky {
+    --weather-sky: #11191e;
+    --weather-sky-to: #252f38;
+}
+
+.dark [data-weather='dust'].weather-sky {
+    --weather-sky: #221b11;
+    --weather-sky-to: #3b3020;
+}
+
+.dark [data-weather='hot'].weather-sky {
+    --weather-sky: #28170e;
+    --weather-sky-to: #4b2e1c;
+}
+
+[data-weather='cloudy'] .weather-sun,
+[data-weather='fog'] .weather-sun,
+[data-weather='rain'] .weather-sun,
+[data-weather='thunder'] .weather-sun,
+[data-weather='dust'] .weather-sun,
+[data-weather='cloudy'] .weather-moon,
+[data-weather='fog'] .weather-moon,
+[data-weather='rain'] .weather-moon,
+[data-weather='thunder'] .weather-moon,
+[data-weather='dust'] .weather-moon,
+[data-weather='cloudy'] .weather-stars,
+[data-weather='fog'] .weather-stars,
+[data-weather='rain'] .weather-stars,
+[data-weather='thunder'] .weather-stars,
+[data-weather='dust'] .weather-stars {
+    opacity: 0;
+}
+
+[data-weather='clear'] .weather-sun,
+[data-weather='partly-cloudy'] .weather-sun,
+[data-weather='hot'] .weather-sun {
+    animation: weather-sun-pulse 6s ease-in-out infinite;
+}
+
+@keyframes weather-sun-pulse {
+    0%,
+    100% {
+        filter: drop-shadow(0 0 20px rgb(255 214 110 / 0.55));
+    }
+
+    50% {
+        filter: drop-shadow(0 0 34px rgb(255 214 110 / 0.9));
+    }
+}
+
+[data-weather='cloudy'] .weather-cloud,
+[data-weather='rain'] .weather-cloud,
+[data-weather='thunder'] .weather-cloud {
+    color: #dbe3ea;
+}
+
+[data-weather='rain'] .weather-clouds,
+[data-weather='thunder'] .weather-clouds {
+    opacity: 0.5;
+}
+
+.weather-rain {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.weather-rain span {
+    position: absolute;
+    top: -12%;
+    inset-inline-start: calc(var(--i) * 6.25% + 2%);
+    width: 2px;
+    height: 0.9rem;
+    border-radius: 9999px;
+    background: rgb(255 255 255 / 0.7);
+    transform: rotate(10deg);
+    animation: weather-fall 0.9s linear infinite;
+    animation-delay: calc(var(--i) * -0.11s);
+}
+
+@keyframes weather-fall {
+    from {
+        top: -12%;
+    }
+
+    to {
+        top: 112%;
+    }
+}
+
+.weather-lightning {
+    position: absolute;
+    inset: 0;
+    background: #eef2ff;
+    opacity: 0;
+    pointer-events: none;
+    animation: weather-flash 7s ease-in-out infinite;
+}
+
+@keyframes weather-flash {
+    0%,
+    84%,
+    100% {
+        opacity: 0;
+    }
+
+    85% {
+        opacity: 0.65;
+    }
+
+    86% {
+        opacity: 0.08;
+    }
+
+    87% {
+        opacity: 0.8;
+    }
+
+    89% {
+        opacity: 0;
+    }
+}
+
+.weather-fog,
+.weather-dust {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.weather-fog span,
+.weather-dust span {
+    position: absolute;
+    width: 75%;
+    height: 45%;
+    border-radius: 9999px;
+    filter: blur(18px);
+    animation: weather-mist 12s ease-in-out infinite alternate;
+}
+
+.weather-fog span {
+    background: rgb(255 255 255 / 0.32);
+}
+
+.weather-dust span {
+    background: rgb(196 160 100 / 0.42);
+}
+
+.weather-fog span:nth-child(1),
+.weather-dust span:nth-child(1) {
+    top: 16%;
+    inset-inline-start: -18%;
+}
+
+.weather-fog span:nth-child(2),
+.weather-dust span:nth-child(2) {
+    top: 44%;
+    inset-inline-end: -22%;
+    opacity: 0.7;
+    animation-delay: -4s;
+}
+
+.weather-fog span:nth-child(3) {
+    bottom: 4%;
+    inset-inline-start: 8%;
+    opacity: 0.5;
+    animation-delay: -8s;
+}
+
+@keyframes weather-mist {
+    from {
+        transform: translateX(-8%);
+    }
+
+    to {
+        transform: translateX(8%);
+    }
+}
+
+.weather-heat {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+        circle at 85% -10%,
+        rgb(255 190 80 / 0.5),
+        transparent 60%
+    );
+    pointer-events: none;
+    animation: weather-heat-pulse 5s ease-in-out infinite;
+}
+
+@keyframes weather-heat-pulse {
+    0%,
+    100% {
+        opacity: 0.5;
+    }
+
+    50% {
+        opacity: 0.95;
+    }
+}
+
+/*
+  Animated Saudi flag (decorative). The wave + sheen loops are disabled
+  automatically by the prefers-reduced-motion rule below.
+*/
+.saudi-flag {
+    container-type: inline-size;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: 6px;
+    background-color: var(--flag-green);
+    color: var(--flag-ink);
+    outline: 1px solid var(--border);
+    outline-offset: -1px;
+    transform-origin: right center;
+    animation: saudi-flag-wave 4.5s ease-in-out infinite;
+}
+
+.saudi-flag::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        100deg,
+        transparent 42%,
+        rgb(255 255 255 / 0.2) 50%,
+        transparent 58%
+    );
+    background-size: 240% 100%;
+    animation: saudi-flag-sheen 4.5s ease-in-out infinite;
+    pointer-events: none;
+}
+
+.saudi-flag-text {
+    font-size: 9cqw;
+    font-weight: 700;
+    line-height: 1;
+    white-space: nowrap;
+}
+
+.saudi-flag-sword {
+    width: 58%;
+    margin-top: 4cqw;
+}
+
+@keyframes saudi-flag-wave {
+    0%,
+    100% {
+        transform: perspective(320px) rotateY(0deg) skewY(0deg);
+    }
+
+    30% {
+        transform: perspective(320px) rotateY(-8deg) skewY(-1.2deg);
+    }
+
+    70% {
+        transform: perspective(320px) rotateY(8deg) skewY(1.2deg);
+    }
+}
+
+@keyframes saudi-flag-sheen {
+    0% {
+        background-position: 130% 0;
+    }
+
+    100% {
+        background-position: -30% 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}

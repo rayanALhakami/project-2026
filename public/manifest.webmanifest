@@ -1,0 +1,26 @@
+{
+    "name": "وجهتك الأولى في السياحة السعودية",
+    "short_name": "وجهتك",
+    "description": "مرشد سياحي ذكي يرافقك في رحلتك داخل المملكة العربية السعودية",
+    "lang": "ar",
+    "dir": "rtl",
+    "start_url": "/",
+    "scope": "/",
+    "display": "standalone",
+    "background_color": "#08131f",
+    "theme_color": "#08131f",
+    "icons": [
+        {
+            "src": "/icons/icon.svg",
+            "sizes": "any",
+            "type": "image/svg+xml",
+            "purpose": "any"
+        },
+        {
+            "src": "/icons/maskable.svg",
+            "sizes": "any",
+            "type": "image/svg+xml",
+            "purpose": "maskable"
+        }
+    ]
+}

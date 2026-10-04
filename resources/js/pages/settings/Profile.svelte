@@ -1,0 +1,112 @@
+<script module lang="ts">
+    import { edit } from '@/routes/profile';
+
+    export const layout = {
+        breadcrumbs: [
+            {
+                title: 'Profile settings',
+                href: edit(),
+            },
+        ],
+    };
+</script>
+
+<script lang="ts">
+    import { Form, page } from '@inertiajs/svelte';
+    import ProfileController from '@/actions/App/Http/Controllers/Settings/ProfileController';
+    import AppHead from '@/components/AppHead.svelte';
+    import DeleteUser from '@/components/DeleteUser.svelte';
+    import InputError from '@/components/InputError.svelte';
+    import TextLink from '@/components/TextLink.svelte';
+    import { Button } from '@/components/ui/button';
+    import { Input } from '@/components/ui/input';
+    import { Label } from '@/components/ui/label';
+    import { send } from '@/routes/verification';
+
+    const user = $derived(page.props.auth.user);
+
+    const inputClass =
+        'mt-1 h-11 w-full rounded-xl border-border bg-muted/60 text-foreground transition placeholder:text-muted-foreground focus-visible:border-emerald-500 focus-visible:ring-emerald-100 dark:focus-visible:ring-emerald-900/50';
+    const labelClass = 'text-sm font-bold text-secondary-foreground';
+    const submitClass =
+        'h-11 rounded-xl bg-gradient-to-br from-emerald-400 to-teal-700 px-6 text-sm font-bold text-white shadow-lg shadow-emerald-900/20 hover:brightness-110';
+</script>
+
+<AppHead title="Profile settings" />
+
+<h1 class="sr-only">Profile settings</h1>
+
+<div
+    class="rounded-[20px] bg-card p-6 shadow-sm ring-1 ring-border sm:p-8"
+>
+    <h2 class="text-lg font-bold text-foreground">Profile</h2>
+    <p class="mt-1 text-sm text-muted-foreground">
+        Update your name and email address
+    </p>
+
+    <Form
+        {...ProfileController.update.form()}
+        class="mt-6 space-y-6"
+        options={{ preserveScroll: true }}
+    >
+        {#snippet children({ errors, processing })}
+            <div class="grid gap-2">
+                <Label for="name" class={labelClass}>Name</Label>
+                <Input
+                    id="name"
+                    name="name"
+                    class={inputClass}
+                    value={user.name}
+                    required
+                    autocomplete="name"
+                    placeholder="Full name"
+                />
+                <InputError class="mt-2" message={errors.name} />
+            </div>
+
+            <div class="grid gap-2">
+                <Label for="email" class={labelClass}>Email address</Label>
+                <Input
+                    id="email"
+                    type="email"
+                    name="email"
+                    class={inputClass}
+                    value={user.email}
+                    required
+                    autocomplete="username"
+                    placeholder="Email address"
+                />
+                <InputError class="mt-2" message={errors.email} />
+            </div>
+
+            {#if Boolean(page.props.mustVerifyEmail) && !user.email_verified_at}
+                <div>
+                    <p class="-mt-4 text-sm text-muted-foreground">
+                        Your email address is unverified.
+                        <TextLink href={send()} as="button">
+                            Click here to re-send the verification email.
+                        </TextLink>
+                    </p>
+
+                    {#if page.props.status === 'verification-link-sent'}
+                        <div class="mt-2 text-sm font-bold text-emerald-600 dark:text-emerald-400">
+                            A new verification link has been sent to your email
+                            address.
+                        </div>
+                    {/if}
+                </div>
+            {/if}
+
+            <div class="flex items-center gap-4">
+                <Button
+                    type="submit"
+                    class={submitClass}
+                    disabled={processing}
+                    data-test="update-profile-button">Save</Button
+                >
+            </div>
+        {/snippet}
+    </Form>
+</div>
+
+<DeleteUser />
