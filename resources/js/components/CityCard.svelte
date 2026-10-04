@@ -31,7 +31,7 @@
         ? 'border-primary'
         : 'border-border'}"
 >
-    <CityArt cityId={city.id} class="h-32" motifClass="h-24">
+    <CityArt cityId={city.id} image={city.image} class="h-32" motifClass="h-24">
         <div class="flex h-full flex-col justify-between p-4">
             <span
                 class="self-start rounded-full bg-card/85 px-3 py-1 text-sm font-semibold text-foreground"

@@ -538,6 +538,33 @@ const en = {
     'admin.fields.wheelchair': 'Wheelchair accessible',
     'admin.fields.prayerFacilities': 'Prayer facilities',
     'admin.fields.closedFriday': 'Closed on Friday',
+
+    'reviews.title': 'Reviews',
+    'reviews.empty': 'No reviews yet — be the first to share your experience.',
+    'reviews.write': 'Write a review',
+    'reviews.yourRating': 'Your rating',
+    'reviews.placeholder': 'Share your experience...',
+    'reviews.submit': 'Submit review',
+    'reviews.saved': 'Thanks! Your review was saved.',
+    'reviews.login': 'Log in to write a review',
+    'reviews.count': '{count} reviews',
+
+    'crowd.title': 'Expected crowd',
+    'crowd.low': 'Low',
+    'crowd.medium': 'Medium',
+    'crowd.high': 'High',
+    'crowd.advice': 'Early morning and late evening are usually quieter.',
+
+    'pwa.install': 'Install app',
+    'pwa.hint': 'Add the guide to your home screen for faster access.',
+
+    'admin.requests': 'Planning requests',
+    'admin.fields.phone': 'Phone',
+    'admin.fields.notes': 'Notes',
+    'admin.handled': 'Handled',
+    'admin.pending': 'Pending',
+    'admin.markHandled': 'Mark handled',
+    'admin.markPending': 'Reopen',
 };
 
 export type MessageKey = keyof typeof en;
@@ -1034,6 +1061,33 @@ const ar: Record<MessageKey, string> = {
     'admin.fields.wheelchair': 'مناسب للكراسي المتحركة',
     'admin.fields.prayerFacilities': 'مرافق الصلاة',
     'admin.fields.closedFriday': 'مغلق الجمعة',
+
+    'reviews.title': 'المراجعات',
+    'reviews.empty': 'لا توجد مراجعات بعد — كن أول من يشارك تجربته.',
+    'reviews.write': 'اكتب مراجعة',
+    'reviews.yourRating': 'تقييمك',
+    'reviews.placeholder': 'شاركنا تجربتك...',
+    'reviews.submit': 'إرسال المراجعة',
+    'reviews.saved': 'شكراً لك! تم حفظ مراجعتك.',
+    'reviews.login': 'سجّل الدخول لكتابة مراجعة',
+    'reviews.count': '{count} مراجعة',
+
+    'crowd.title': 'الازدحام المتوقع',
+    'crowd.low': 'منخفض',
+    'crowd.medium': 'متوسط',
+    'crowd.high': 'مرتفع',
+    'crowd.advice': 'الصباح الباكر والمساء المتأخر عادة أهدأ.',
+
+    'pwa.install': 'ثبّت التطبيق',
+    'pwa.hint': 'أضف المرشد إلى شاشتك الرئيسية لوصول أسرع.',
+
+    'admin.requests': 'طلبات التخطيط',
+    'admin.fields.phone': 'الجوال',
+    'admin.fields.notes': 'ملاحظات',
+    'admin.handled': 'تم التعامل',
+    'admin.pending': 'قيد الانتظار',
+    'admin.markHandled': 'تحديد كمُعالج',
+    'admin.markPending': 'إعادة فتح',
 };
 
 const fr: Partial<Record<MessageKey, string>> = {
@@ -1158,6 +1212,28 @@ const fr: Partial<Record<MessageKey, string>> = {
         'Un résumé de vos voyages, lieux et centres d’intérêt.',
     'analytics.upcoming': 'Voyages à venir',
     'analytics.completion': 'Taux d’achèvement',
+
+    'reviews.title': 'Avis',
+    'reviews.empty':
+        'Pas encore d’avis — soyez le premier à partager votre expérience.',
+    'reviews.write': 'Écrire un avis',
+    'reviews.yourRating': 'Votre note',
+    'reviews.placeholder': 'Partagez votre expérience...',
+    'reviews.submit': 'Publier l’avis',
+    'reviews.saved': 'Merci ! Votre avis a été enregistré.',
+    'reviews.login': 'Connectez-vous pour écrire un avis',
+    'reviews.count': '{count} avis',
+
+    'crowd.title': 'Affluence prévue',
+    'crowd.low': 'Faible',
+    'crowd.medium': 'Moyenne',
+    'crowd.high': 'Élevée',
+    'crowd.advice':
+        'Le début de matinée et la fin de soirée sont généralement plus calmes.',
+
+    'pwa.install': 'Installer l’application',
+    'pwa.hint':
+        'Ajoutez le guide à votre écran d’accueil pour un accès plus rapide.',
 };
 
 const es: Partial<Record<MessageKey, string>> = {
@@ -1279,6 +1355,28 @@ const es: Partial<Record<MessageKey, string>> = {
     'analytics.subtitle': 'Un resumen de tus viajes, lugares e intereses.',
     'analytics.upcoming': 'Próximos viajes',
     'analytics.completion': 'Tasa de finalización',
+
+    'reviews.title': 'Reseñas',
+    'reviews.empty':
+        'Aún no hay reseñas: sé el primero en compartir tu experiencia.',
+    'reviews.write': 'Escribir una reseña',
+    'reviews.yourRating': 'Tu valoración',
+    'reviews.placeholder': 'Comparte tu experiencia...',
+    'reviews.submit': 'Enviar reseña',
+    'reviews.saved': '¡Gracias! Tu reseña se guardó.',
+    'reviews.login': 'Inicia sesión para escribir una reseña',
+    'reviews.count': '{count} reseñas',
+
+    'crowd.title': 'Afluencia prevista',
+    'crowd.low': 'Baja',
+    'crowd.medium': 'Media',
+    'crowd.high': 'Alta',
+    'crowd.advice':
+        'A primera hora y al final del día suele haber menos gente.',
+
+    'pwa.install': 'Instalar aplicación',
+    'pwa.hint':
+        'Añade la guía a tu pantalla de inicio para un acceso más rápido.',
 };
 
 const de: Partial<Record<MessageKey, string>> = {
@@ -1399,6 +1497,26 @@ const de: Partial<Record<MessageKey, string>> = {
     'analytics.subtitle': 'Eine Übersicht deiner Reisen, Orte und Interessen.',
     'analytics.upcoming': 'Kommende Reisen',
     'analytics.completion': 'Abschlussquote',
+
+    'reviews.title': 'Bewertungen',
+    'reviews.empty':
+        'Noch keine Bewertungen – teile als Erste(r) deine Erfahrung.',
+    'reviews.write': 'Bewertung schreiben',
+    'reviews.yourRating': 'Deine Bewertung',
+    'reviews.placeholder': 'Teile deine Erfahrung...',
+    'reviews.submit': 'Bewertung absenden',
+    'reviews.saved': 'Danke! Deine Bewertung wurde gespeichert.',
+    'reviews.login': 'Melde dich an, um eine Bewertung zu schreiben',
+    'reviews.count': '{count} Bewertungen',
+
+    'crowd.title': 'Erwarteter Andrang',
+    'crowd.low': 'Niedrig',
+    'crowd.medium': 'Mittel',
+    'crowd.high': 'Hoch',
+    'crowd.advice': 'Frühmorgens und spätabends ist es meist ruhiger.',
+
+    'pwa.install': 'App installieren',
+    'pwa.hint': 'Füge den Guide zu deinem Startbildschirm hinzu.',
 };
 
 const ru: Partial<Record<MessageKey, string>> = {
@@ -1520,6 +1638,25 @@ const ru: Partial<Record<MessageKey, string>> = {
     'analytics.subtitle': 'Сводка ваших поездок, мест и интересов.',
     'analytics.upcoming': 'Предстоящие поездки',
     'analytics.completion': 'Процент завершения',
+
+    'reviews.title': 'Отзывы',
+    'reviews.empty': 'Отзывов пока нет — поделитесь опытом первым.',
+    'reviews.write': 'Написать отзыв',
+    'reviews.yourRating': 'Ваша оценка',
+    'reviews.placeholder': 'Поделитесь впечатлениями...',
+    'reviews.submit': 'Отправить отзыв',
+    'reviews.saved': 'Спасибо! Ваш отзыв сохранён.',
+    'reviews.login': 'Войдите, чтобы написать отзыв',
+    'reviews.count': '{count} отзывов',
+
+    'crowd.title': 'Ожидаемая загруженность',
+    'crowd.low': 'Низкая',
+    'crowd.medium': 'Средняя',
+    'crowd.high': 'Высокая',
+    'crowd.advice': 'Ранним утром и поздним вечером обычно спокойнее.',
+
+    'pwa.install': 'Установить приложение',
+    'pwa.hint': 'Добавьте гид на главный экран для быстрого доступа.',
 };
 
 const tr: Partial<Record<MessageKey, string>> = {
@@ -1642,6 +1779,26 @@ const tr: Partial<Record<MessageKey, string>> = {
     'analytics.subtitle': 'Gezilerinizin, yerlerin ve ilgi alanlarınızın özeti.',
     'analytics.upcoming': 'Yaklaşan geziler',
     'analytics.completion': 'Tamamlama oranı',
+
+    'reviews.title': 'Değerlendirmeler',
+    'reviews.empty':
+        'Henüz değerlendirme yok — deneyimini ilk paylaşan sen ol.',
+    'reviews.write': 'Değerlendirme yaz',
+    'reviews.yourRating': 'Puanın',
+    'reviews.placeholder': 'Deneyimini paylaş...',
+    'reviews.submit': 'Değerlendirmeyi gönder',
+    'reviews.saved': 'Teşekkürler! Değerlendirmen kaydedildi.',
+    'reviews.login': 'Değerlendirme yazmak için giriş yap',
+    'reviews.count': '{count} değerlendirme',
+
+    'crowd.title': 'Beklenen kalabalık',
+    'crowd.low': 'Düşük',
+    'crowd.medium': 'Orta',
+    'crowd.high': 'Yüksek',
+    'crowd.advice': 'Sabah erken ve akşam geç saatler genelde daha sakindir.',
+
+    'pwa.install': 'Uygulamayı yükle',
+    'pwa.hint': 'Daha hızlı erişim için rehberi ana ekranına ekle.',
 };
 
 const zh: Partial<Record<MessageKey, string>> = {
@@ -1757,6 +1914,25 @@ const zh: Partial<Record<MessageKey, string>> = {
     'analytics.subtitle': '您的行程、地点和兴趣摘要。',
     'analytics.upcoming': '即将到来的行程',
     'analytics.completion': '完成率',
+
+    'reviews.title': '评价',
+    'reviews.empty': '暂无评价——成为第一个分享体验的人。',
+    'reviews.write': '写评价',
+    'reviews.yourRating': '您的评分',
+    'reviews.placeholder': '分享您的体验...',
+    'reviews.submit': '提交评价',
+    'reviews.saved': '谢谢！您的评价已保存。',
+    'reviews.login': '登录后即可写评价',
+    'reviews.count': '{count} 条评价',
+
+    'crowd.title': '预计人流',
+    'crowd.low': '低',
+    'crowd.medium': '中',
+    'crowd.high': '高',
+    'crowd.advice': '清晨和深夜通常更安静。',
+
+    'pwa.install': '安装应用',
+    'pwa.hint': '将向导添加到主屏幕，访问更快捷。',
 };
 
 const hi: Partial<Record<MessageKey, string>> = {
@@ -1876,6 +2052,26 @@ const hi: Partial<Record<MessageKey, string>> = {
     'analytics.subtitle': 'आपकी यात्राओं, स्थानों और रुचियों का सारांश।',
     'analytics.upcoming': 'आगामी यात्राएं',
     'analytics.completion': 'पूर्णता दर',
+
+    'reviews.title': 'समीक्षाएं',
+    'reviews.empty':
+        'अभी कोई समीक्षा नहीं — अपना अनुभव साझा करने वाले पहले व्यक्ति बनें।',
+    'reviews.write': 'समीक्षा लिखें',
+    'reviews.yourRating': 'आपकी रेटिंग',
+    'reviews.placeholder': 'अपना अनुभव साझा करें...',
+    'reviews.submit': 'समीक्षा भेजें',
+    'reviews.saved': 'धन्यवाद! आपकी समीक्षा सहेज दी गई।',
+    'reviews.login': 'समीक्षा लिखने के लिए लॉग इन करें',
+    'reviews.count': '{count} समीक्षाएं',
+
+    'crowd.title': 'अपेक्षित भीड़',
+    'crowd.low': 'कम',
+    'crowd.medium': 'मध्यम',
+    'crowd.high': 'अधिक',
+    'crowd.advice': 'सुबह जल्दी और देर शाम आमतौर पर कम भीड़ होती है।',
+
+    'pwa.install': 'ऐप इंस्टॉल करें',
+    'pwa.hint': 'तेज़ पहुँच के लिए गाइड को अपनी होम स्क्रीन पर जोड़ें।',
 };
 
 const ur: Partial<Record<MessageKey, string>> = {
@@ -1996,6 +2192,26 @@ const ur: Partial<Record<MessageKey, string>> = {
     'analytics.subtitle': 'آپ کے سفر، مقامات اور دلچسپیوں کا خلاصہ۔',
     'analytics.upcoming': 'آنے والے سفر',
     'analytics.completion': 'تکمیل کی شرح',
+
+    'reviews.title': 'تبصرے',
+    'reviews.empty':
+        'ابھی کوئی تبصرہ نہیں — اپنا تجربہ شیئر کرنے والے پہلے فرد بنیں۔',
+    'reviews.write': 'تبصرہ لکھیں',
+    'reviews.yourRating': 'آپ کی ریٹنگ',
+    'reviews.placeholder': 'اپنا تجربہ شیئر کریں...',
+    'reviews.submit': 'تبصرہ بھیجیں',
+    'reviews.saved': 'شکریہ! آپ کا تبصرہ محفوظ ہو گیا۔',
+    'reviews.login': 'تبصرہ لکھنے کے لیے لاگ ان کریں',
+    'reviews.count': '{count} تبصرے',
+
+    'crowd.title': 'متوقع رش',
+    'crowd.low': 'کم',
+    'crowd.medium': 'درمیانہ',
+    'crowd.high': 'زیادہ',
+    'crowd.advice': 'صبح سویرے اور رات گئے عموماً کم رش ہوتا ہے۔',
+
+    'pwa.install': 'ایپ انسٹال کریں',
+    'pwa.hint': 'تیز رسائی کے لیے گائیڈ کو اپنی ہوم اسکرین پر شامل کریں۔',
 };
 
 export const messages: Partial<

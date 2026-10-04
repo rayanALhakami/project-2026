@@ -240,8 +240,8 @@ _role:_ `user, assistant, tool`
 - [x] **6. الصوت** — STT (Gemini transcribe) + TTS (Gemini audio) + تبديل اللغة مع fallback لمتصفح (SpeechSynthesis) ✅
 - [x] **7. التكاملات الخارجية** — Leaflet/OpenStreetMap (خرائط Places + MiniMap)، طقس Open-Meteo، مواقيت الصلاة (Aladhan)، الأسعار من قاعدة البيانات ✅
 - [x] **8. الإشعارات** — `notifications:dispatch` مجدول 7ص بتوقيت الرياض (تذكير رحلة + تنبيه طقس/مدن متعددة + فعاليات قريبة) + جرس الإشعارات في الهيدر ✅
-- [ ] **9. الاختبارات** — Feature tests للمسارات والوكيل (160 اختبار / 836 assertion حتى الآن)
-- [ ] **10. التحسينات** — ✅ مشاركة الرابط (رابط عام `/shared/{token}` + صفحة `SharedTrip` + واجهة في مخطط الرحلات + 8 اختبارات) ✅ المفضلة (اختبارات + روابط في الهيدر والـSidebar) ✅ تصدير PDF (صفحة طباعة `TripPrint` حسب اللغة + زر في المخطط) ✅ تحليلات (صفحة `/analytics` + JSON endpoint) ✅ لوحة إدارة (`spatie/laravel-permission` — نظرة عامة/أماكن/فعاليات/مراجعات + دور admin عبر `AdminUserSeeder` بـadmin@example.com) ✅ PWA offline (`offline.html` + `navigateFallback`) • المتبقي: —
+- [ ] **9. الاختبارات** — Feature tests للمسارات والوكيل (172 اختبار / 914 assertion حتى الآن)
+- [ ] **10. التحسينات** — ✅ مشاركة الرابط (رابط عام `/shared/{token}` + صفحة `SharedTrip` + واجهة في مخطط الرحلات + 8 اختبارات) ✅ المفضلة (اختبارات + روابط في الهيدر والـSidebar) ✅ تصدير PDF (صفحة طباعة `TripPrint` حسب اللغة + زر في المخطط) ✅ تحليلات (صفحة `/analytics` + JSON endpoint) ✅ لوحة إدارة (`spatie/laravel-permission` — نظرة عامة/أماكن/فعاليات/مراجعات/طلبات + دور admin عبر `AdminUserSeeder` بـadmin@example.com) ✅ PWA offline (`offline.html` + `navigateFallback`) ✅ نموذج طلب التخطيط (`contact_requests` + صفحة إدارة) ✅ مراجعات المستخدمين (تقييم بالنجوم + عرض المراجعات) ✅ الازدحام المتوقع وأفضل وقت للزيارة ✅ زر تثبيت PWA ✅ محتوى أغنى (صور للمدن والأماكن + `ReviewSeeder` بـ71 مراجعة) • المتبقي: النشر
 
 # Instructions
 

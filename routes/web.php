@@ -2,9 +2,11 @@
 
 use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\AssistantController;
+use App\Http\Controllers\ContactRequestController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\PlaceReviewController;
 use App\Http\Controllers\PrayerTimesController;
 use App\Http\Controllers\SharedTripController;
 use App\Http\Controllers\TranslationController;
@@ -50,6 +52,14 @@ Route::get('prayer-times/{city}', [PrayerTimesController::class, 'show'])
 
 Route::get('shared/{token}', [SharedTripController::class, 'show'])->name('shared.show');
 
+Route::post('plan-request', [ContactRequestController::class, 'store'])
+    ->middleware('throttle:10,1')
+    ->name('contact.store');
+
+Route::get('places/{place}/reviews', [PlaceReviewController::class, 'index'])
+    ->middleware('throttle:60,1')
+    ->name('places.reviews.index');
+
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('trips', [TripController::class, 'index'])->name('trips');
@@ -70,6 +80,10 @@ Route::middleware('auth')->group(function () {
     Route::get('favorites/ids', [FavoriteController::class, 'index'])->name('favorites.index');
     Route::post('favorites/sync', [FavoriteController::class, 'sync'])->name('favorites.sync');
     Route::post('favorites/{place}', [FavoriteController::class, 'toggle'])->name('favorites.toggle');
+
+    Route::post('places/{place}/reviews', [PlaceReviewController::class, 'store'])
+        ->middleware('throttle:10,1')
+        ->name('places.reviews.store');
 
     Route::get('analytics', [AnalyticsController::class, 'index'])->name('analytics');
     Route::get('analytics/data', [AnalyticsController::class, 'data'])->name('analytics.data');

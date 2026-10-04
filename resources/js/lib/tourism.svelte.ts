@@ -59,6 +59,7 @@ function toCity(row: CityRow): City {
         latitude: Number(row.latitude),
         longitude: Number(row.longitude),
         description: row.description ?? '',
+        image: row.image ?? null,
     };
 }
 

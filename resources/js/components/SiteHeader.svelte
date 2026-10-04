@@ -16,6 +16,7 @@
     import AppLogoIcon from '@/components/AppLogoIcon.svelte';
     import BottomNav from '@/components/BottomNav.svelte';
     import GuestStartMenu from '@/components/GuestStartMenu.svelte';
+    import InstallPrompt from '@/components/InstallPrompt.svelte';
     import ThemeToggle from '@/components/ThemeToggle.svelte';
     import {
         DropdownMenu,
@@ -722,3 +723,4 @@
 </header>
 
 <BottomNav />
+<InstallPrompt />

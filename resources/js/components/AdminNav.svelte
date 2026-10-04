@@ -2,6 +2,7 @@
     import { Link } from '@inertiajs/svelte';
     import ArrowLeft from '@lucide/svelte/icons/arrow-left';
     import CalendarDays from '@lucide/svelte/icons/calendar-days';
+    import Inbox from '@lucide/svelte/icons/inbox';
     import LayoutDashboard from '@lucide/svelte/icons/layout-dashboard';
     import MapPin from '@lucide/svelte/icons/map-pin';
     import Star from '@lucide/svelte/icons/star';
@@ -10,6 +11,7 @@
     import { dashboard as adminDashboard } from '@/routes/admin';
     import { index as adminEvents } from '@/routes/admin/events';
     import { index as adminPlaces } from '@/routes/admin/places';
+    import { index as adminRequests } from '@/routes/admin/requests';
     import { index as adminReviews } from '@/routes/admin/reviews';
     import { dashboard as appDashboard } from '@/routes';
     import type { Component } from 'svelte';
@@ -51,6 +53,13 @@
             title: t('admin.reviews'),
             href: adminReviews.url(),
             icon: Star,
+            exact: false,
+        },
+        {
+            key: 'requests',
+            title: t('admin.requests'),
+            href: adminRequests.url(),
+            icon: Inbox,
             exact: false,
         },
     ]);

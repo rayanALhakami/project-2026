@@ -31,6 +31,7 @@ class DatabaseSeeder extends Seeder
             AdminUserSeeder::class,
             CitySeeder::class,
             PlaceSeeder::class,
+            ReviewSeeder::class,
             EventSeeder::class,
         ]);
     }

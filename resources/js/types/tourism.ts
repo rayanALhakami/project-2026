@@ -25,6 +25,7 @@ export interface City {
     latitude: number;
     longitude: number;
     description: string;
+    image?: string | null;
 }
 
 export interface Place {

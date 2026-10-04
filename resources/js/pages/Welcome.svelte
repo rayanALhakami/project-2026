@@ -1,6 +1,6 @@
 <script lang="ts">
     import type { Component } from 'svelte';
-    import { Link, page } from '@inertiajs/svelte';
+    import { Link, page, useForm } from '@inertiajs/svelte';
     import ArrowLeft from '@lucide/svelte/icons/arrow-left';
     import CalendarDays from '@lucide/svelte/icons/calendar-days';
     import Camera from '@lucide/svelte/icons/camera';
@@ -26,6 +26,7 @@
     import CityArt from '@/components/CityArt.svelte';
     import CityMotif from '@/components/CityMotif.svelte';
     import GuestStartMenu from '@/components/GuestStartMenu.svelte';
+    import InputError from '@/components/InputError.svelte';
     import PlaceMedia from '@/components/PlaceMedia.svelte';
     import SiteHeader from '@/components/SiteHeader.svelte';
     import { cityImage } from '@/lib/city-images';
@@ -42,12 +43,23 @@
         translate,
         trips,
     } from '@/routes';
+    import { store as contactStore } from '@/routes/contact';
     import type { Place, PlaceCategory } from '@/types';
 
     const auth = $derived(page.props.auth);
     const startHref = $derived(toUrl(auth.user ? dashboard() : register()));
 
     let submitted = $state(false);
+
+    const form = useForm({
+        name: '',
+        phone: '',
+        city_id: '' as number | string,
+        start_date: '',
+        travelers: '' as number | string,
+        budget: '' as number | string,
+        notes: '',
+    });
 
     const featuredCities = cities;
     const featuredPlaces = topPlaces(4);
@@ -173,7 +185,16 @@
 
     function onSubmit(event: SubmitEvent): void {
         event.preventDefault();
-        submitted = true;
+
+        form.post(contactStore.url(), {
+            preserveScroll: true,
+            onSuccess: () => {
+                submitted = true;
+            },
+            onFinish: () => {
+                form.processing = false;
+            },
+        });
     }
 </script>
 
@@ -590,9 +611,11 @@
                                 name="name"
                                 type="text"
                                 required
+                                bind:value={form.name}
                                 class={inputClass}
                                 placeholder={t('preview.formNamePlaceholder')}
                             />
+                            <InputError message={form.errors.name} />
                         </div>
                         <div>
                             <label class={labelClass} for="preview-phone">
@@ -603,9 +626,11 @@
                                 name="phone"
                                 type="tel"
                                 required
+                                bind:value={form.phone}
                                 class={inputClass}
                                 placeholder={t('preview.formPhonePlaceholder')}
                             />
+                            <InputError message={form.errors.phone} />
                         </div>
                         <div>
                             <label class={labelClass} for="preview-city">
@@ -613,8 +638,9 @@
                             </label>
                             <select
                                 id="preview-city"
-                                name="city"
+                                name="city_id"
                                 required
+                                bind:value={form.city_id}
                                 class={inputClass}
                             >
                                 <option value="">
@@ -626,6 +652,7 @@
                                     </option>
                                 {/each}
                             </select>
+                            <InputError message={form.errors.city_id} />
                         </div>
                         <div>
                             <label class={labelClass} for="preview-date">
@@ -633,11 +660,13 @@
                             </label>
                             <input
                                 id="preview-date"
-                                name="date"
+                                name="start_date"
                                 type="date"
                                 required
+                                bind:value={form.start_date}
                                 class={inputClass}
                             />
+                            <InputError message={form.errors.start_date} />
                         </div>
                         <div>
                             <label class={labelClass} for="preview-travelers">
@@ -648,11 +677,16 @@
                                 name="travelers"
                                 type="number"
                                 min="1"
+                                value={form.travelers}
+                                oninput={(event) =>
+                                    (form.travelers =
+                                        event.currentTarget.value)}
                                 class={inputClass}
                                 placeholder={t(
                                     'preview.formTravelersPlaceholder',
                                 )}
                             />
+                            <InputError message={form.errors.travelers} />
                         </div>
                         <div>
                             <label class={labelClass} for="preview-budget">
@@ -663,11 +697,15 @@
                                 name="budget"
                                 type="number"
                                 min="0"
+                                value={form.budget}
+                                oninput={(event) =>
+                                    (form.budget = event.currentTarget.value)}
                                 class={inputClass}
                                 placeholder={t(
                                     'preview.formBudgetPlaceholder',
                                 )}
                             />
+                            <InputError message={form.errors.budget} />
                         </div>
                         <div class="sm:col-span-2">
                             <label class={labelClass} for="preview-notes">
@@ -677,15 +715,18 @@
                                 id="preview-notes"
                                 name="notes"
                                 rows="3"
+                                bind:value={form.notes}
                                 class={inputClass}
                                 placeholder={t(
                                     'preview.formNotesPlaceholder',
                                 )}
                             ></textarea>
+                            <InputError message={form.errors.notes} />
                         </div>
                         <button
                             type="submit"
-                            class="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-gradient-to-br from-emerald-400 to-teal-700 px-7 text-base font-bold text-white shadow-lg shadow-emerald-900/20 transition hover:brightness-110 active:scale-[0.98] sm:col-span-2"
+                            disabled={form.processing}
+                            class="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-gradient-to-br from-emerald-400 to-teal-700 px-7 text-base font-bold text-white shadow-lg shadow-emerald-900/20 transition hover:brightness-110 active:scale-[0.98] disabled:opacity-60 sm:col-span-2"
                         >
                             <Send class="size-4 rtl:-scale-x-100" />
                             {t('preview.formSubmit')}

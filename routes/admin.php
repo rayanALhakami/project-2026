@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminContactRequestController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminEventController;
 use App\Http\Controllers\Admin\AdminPlaceController;
@@ -23,4 +24,8 @@ Route::middleware(['auth', 'verified', 'role:admin'])
 
         Route::get('reviews', [AdminReviewController::class, 'index'])->name('reviews.index');
         Route::delete('reviews/{review}', [AdminReviewController::class, 'destroy'])->name('reviews.destroy');
+
+        Route::get('requests', [AdminContactRequestController::class, 'index'])->name('requests.index');
+        Route::patch('requests/{contactRequest}/handle', [AdminContactRequestController::class, 'toggleHandled'])->name('requests.handle');
+        Route::delete('requests/{contactRequest}', [AdminContactRequestController::class, 'destroy'])->name('requests.destroy');
     });

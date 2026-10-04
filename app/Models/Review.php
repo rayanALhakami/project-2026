@@ -12,6 +12,8 @@ use Illuminate\Support\Carbon;
 /**
  * @property int $id
  * @property int $place_id
+ * @property int|null $user_id
+ * @property User|null $user
  * @property string $author
  * @property int $rating
  * @property string|null $content
@@ -20,7 +22,7 @@ use Illuminate\Support\Carbon;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  */
-#[Fillable(['place_id', 'author', 'rating', 'content', 'source', 'reviewed_at'])]
+#[Fillable(['place_id', 'user_id', 'author', 'rating', 'content', 'source', 'reviewed_at'])]
 class Review extends Model
 {
     /** @use HasFactory<ReviewFactory> */
@@ -46,5 +48,15 @@ class Review extends Model
     public function place(): BelongsTo
     {
         return $this->belongsTo(Place::class);
+    }
+
+    /**
+     * Get the visitor who wrote the review.
+     *
+     * @return BelongsTo<User, $this>
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 }

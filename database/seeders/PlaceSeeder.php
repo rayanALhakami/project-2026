@@ -119,6 +119,17 @@ class PlaceSeeder extends Seeder
             'King Fahd Causeway' => 'https://thumb.wikimedia.org/wikipedia/commons/thumb/c/cb/King_Fahd_Causeway_bridge_num4.jpg/1280px-King_Fahd_Causeway_bridge_num4.jpg',
             'Souq Al Zal' => 'https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5f/Incense_souk_in_downtown_Riyadh_%2812754047044%29.jpg/1280px-Incense_souk_in_downtown_Riyadh_%2812754047044%29.jpg',
             'AlUla Old Town' => 'https://thumb.wikimedia.org/wikipedia/commons/thumb/9/93/Al_Ula_old_town%2C_Saudi_Arabia_2011.jpg/1280px-Al_Ula_old_town%2C_Saudi_Arabia_2011.jpg',
+            'Silver Sands Beach' => 'https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1a/AlSaif_Beach_Jeddah_Saudi_Arabia_003.jpg/1280px-AlSaif_Beach_Jeddah_Saudi_Arabia_003.jpg',
+            'Al Muftaha Village' => 'https://thumb.wikimedia.org/wikipedia/commons/thumb/d/de/%D8%A7%D9%84%D9%85%D9%81%D8%AA%D8%A7%D8%AD%D8%A9.jpg/1280px-%D8%A7%D9%84%D9%85%D9%81%D8%AA%D8%A7%D8%AD%D8%A9.jpg',
+            'Taif Rose Farms' => 'https://thumb.wikimedia.org/wikipedia/commons/thumb/7/75/%D8%AD%D8%B5%D8%A7%D8%AF_%D8%A7%D9%84%D9%88%D8%B1%D8%AF_%D8%A7%D9%84%D8%B7%D8%A7%D8%A6%D9%81%D9%8A_%D9%81%D9%8A_%D8%A7%D9%84%D8%B3%D8%B9%D9%88%D8%AF%D9%8A%D8%A9_%D8%B3%D9%86%D8%A9_2026%D9%85.jpg/1280px-%D8%AD%D8%B5%D8%A7%D8%AF_%D8%A7%D9%84%D9%88%D8%B1%D8%AF_%D8%A7%D9%84%D8%B7%D8%A7%D8%A6%D9%81%D9%8A_%D9%81%D9%8A_%D8%A7%D9%84%D8%B3%D8%B9%D9%88%D8%AF%D9%8A%D8%A9_%D8%B3%D9%86%D8%A9_2026%D9%85.jpg',
+            'Wadi Hanifah' => 'https://thumb.wikimedia.org/wikipedia/commons/thumb/3/33/Wadi_Hanifa.jpg/1280px-Wadi_Hanifa.jpg',
+            'Al Baik' => 'https://thumb.wikimedia.org/wikipedia/commons/thumb/7/75/AlBaik%2C_Corniche.jpg/1280px-AlBaik%2C_Corniche.jpg',
+            'Najd Village' => 'https://thumb.wikimedia.org/wikipedia/commons/thumb/b/bc/Kabsa_%286486384335%29.jpg/1280px-Kabsa_%286486384335%29.jpg',
+            'New Abha Park' => 'https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d9/Abha_Dam_Lake.jpg/1280px-Abha_Dam_Lake.jpg',
+            'Farasan Islands' => 'https://thumb.wikimedia.org/wikipedia/commons/thumb/8/88/Empty_Coast_in_Farasan_Island.jpg/1280px-Empty_Coast_in_Farasan_Island.jpg',
+            'Ottoman Castle' => 'https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2e/%D9%82%D9%84%D8%B9%D8%A9_%D8%A7%D9%84%D8%AF%D9%88%D8%B3%D8%B1%D9%8A%D8%A9_3.jpg/1280px-%D9%82%D9%84%D8%B9%D8%A9_%D8%A7%D9%84%D8%AF%D9%88%D8%B3%D8%B1%D9%8A%D8%A9_3.jpg',
+            'Fifa Mountains' => 'https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a4/Jazan%27s_Fayfa_Mountains_%282025%29.jpg/1280px-Jazan%27s_Fayfa_Mountains_%282025%29.jpg',
+            'Jazan North Corniche' => 'https://thumb.wikimedia.org/wikipedia/commons/thumb/d/df/Sunset_in_Jazan.jpg/1280px-Sunset_in_Jazan.jpg',
         ];
     }
 
