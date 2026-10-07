@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\ContactRequest;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Carbon;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -43,7 +44,7 @@ class AdminContactRequestController extends Controller
      */
     public function toggleHandled(ContactRequest $contactRequest): RedirectResponse
     {
-        $contactRequest->handled_at = $contactRequest->handled_at === null ? now() : null;
+        $contactRequest->handled_at = $contactRequest->handled_at === null ? Carbon::now() : null;
         $contactRequest->save();
 
         return back();

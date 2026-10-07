@@ -6,6 +6,7 @@ use App\Ai\Agents\TouristGuide;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\DB;
 use Laravel\Ai\Prompts\AgentPrompt;
 use RuntimeException;
 use Tests\TestCase;
@@ -94,5 +95,57 @@ class AssistantChatTest extends TestCase
 
         $this->assertStringNotContainsString('Provider exploded', $response->getContent());
         $this->assertStringNotContainsString('RuntimeException', $response->getContent());
+    }
+
+    public function test_a_conversation_owned_by_another_user_forces_a_new_conversation(): void
+    {
+        config(['ai.conversations.generate_title' => false]);
+
+        TouristGuide::fake(['رد المالك', 'رد المستخدم الآخر']);
+
+        $owner = User::factory()->create();
+        $other = User::factory()->create();
+
+        $ownerResponse = $this->actingAs($owner)
+            ->postJson(route('assistant.chat'), ['message' => 'مرحبا'])
+            ->assertOk()
+            ->assertJsonPath('reply', 'رد المالك');
+
+        $ownerConversationId = $ownerResponse->json('conversation_id');
+
+        $this->assertIsString($ownerConversationId);
+        $this->assertDatabaseHas('agent_conversations', [
+            'id' => $ownerConversationId,
+            'participant_type' => $owner->getMorphClass(),
+            'participant_id' => $owner->id,
+        ]);
+
+        $otherResponse = $this->actingAs($other)
+            ->postJson(route('assistant.chat'), [
+                'message' => 'أكمل محادثة غيري',
+                'conversation_id' => $ownerConversationId,
+            ])
+            ->assertOk()
+            ->assertJsonPath('reply', 'رد المستخدم الآخر');
+
+        $otherConversationId = $otherResponse->json('conversation_id');
+
+        $this->assertIsString($otherConversationId);
+        $this->assertNotSame($ownerConversationId, $otherConversationId);
+        $this->assertDatabaseHas('agent_conversations', [
+            'id' => $otherConversationId,
+            'participant_type' => $other->getMorphClass(),
+            'participant_id' => $other->id,
+        ]);
+
+        $this->assertSame(1, DB::table('agent_conversation_messages')
+            ->where('conversation_id', $ownerConversationId)
+            ->where('role', 'user')
+            ->count());
+
+        $this->assertSame(1, DB::table('agent_conversation_messages')
+            ->where('conversation_id', $otherConversationId)
+            ->where('role', 'user')
+            ->count());
     }
 }

@@ -2,7 +2,9 @@
 
 namespace Tests\Feature\Admin;
 
+use App\Models\Event;
 use App\Models\Place;
+use App\Models\Review;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Inertia\Testing\AssertableInertia as Assert;
@@ -18,6 +20,25 @@ class AdminAccessTest extends TestCase
 
         foreach ($this->adminGetRoutes($place) as $url) {
             $this->get($url)->assertRedirect(route('login'));
+        }
+    }
+
+    public function test_guests_are_redirected_to_login_for_admin_write_routes(): void
+    {
+        $place = Place::factory()->create();
+        $event = Event::factory()->create();
+        $review = Review::factory()->create();
+
+        $writeRoutes = [
+            ['post', route('admin.events.store')],
+            ['put', route('admin.events.update', $event)],
+            ['delete', route('admin.events.destroy', $event)],
+            ['put', route('admin.places.update', $place)],
+            ['delete', route('admin.reviews.destroy', $review)],
+        ];
+
+        foreach ($writeRoutes as [$method, $url]) {
+            $this->{$method}($url)->assertRedirect(route('login'));
         }
     }
 

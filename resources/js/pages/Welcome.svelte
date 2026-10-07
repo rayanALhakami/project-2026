@@ -201,7 +201,7 @@
 <AppHead title={t('welcome.title')} />
 
 <div class="bg-background text-foreground">
-    <SiteHeader active="home" />
+    <SiteHeader active="home" bottomNav={false} transparent />
 
     <section
         id="top"
@@ -895,7 +895,7 @@
         </div>
     </section>
 
-    <footer class="bg-[#08131f] pt-14 pb-bottom-nav text-slate-300 md:pb-8">
+    <footer class="bg-[#08131f] pt-14 pb-8 text-slate-300">
         <div class="mx-auto max-w-6xl px-4 md:px-6">
             <div class="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
                 <div>

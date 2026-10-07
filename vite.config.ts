@@ -3,7 +3,6 @@ import { wayfinder } from '@laravel/vite-plugin-wayfinder';
 import { svelte } from '@sveltejs/vite-plugin-svelte';
 import tailwindcss from '@tailwindcss/vite';
 import laravel from 'laravel-vite-plugin';
-import { bunny } from 'laravel-vite-plugin/fonts';
 import { defineConfig, lazyPlugins } from 'vite-plus';
 import { VitePWA } from 'vite-plugin-pwa';
 
@@ -20,11 +19,6 @@ export default defineConfig({
         laravel({
             input: ['resources/css/app.css', 'resources/js/app.ts'],
             refresh: true,
-            fonts: [
-                bunny('Instrument Sans', {
-                    weights: [400, 500, 600],
-                }),
-            ],
         }),
         inertia(),
         tailwindcss(),
@@ -33,93 +27,23 @@ export default defineConfig({
             formVariants: true,
         }),
         VitePWA({
+            strategies: 'injectManifest',
             registerType: 'autoUpdate',
             injectRegister: 'auto',
             manifest: false,
-            includeAssets: ['offline.html'],
+            srcDir: 'resources/pwa',
             outDir: 'public',
             buildBase: '/',
-            filename: 'sw.js',
+            filename: 'sw.ts',
             scope: '/',
             devOptions: {
                 enabled: false,
             },
-            workbox: {
+            injectManifest: {
                 globPatterns: ['**/*.{js,css,html,svg,woff2}'],
                 dontCacheBustURLsMatching: /^build\/assets\//,
                 maximumFileSizeToCacheInBytes: 4 * 1024 * 1024,
-                navigateFallback: '/offline.html',
-                runtimeCaching: [
-                    {
-                        urlPattern:
-                            /^https:\/\/tile\.openstreetmap\.org\/.*/i,
-                        handler: 'CacheFirst',
-                        options: {
-                            cacheName: 'osm-tiles',
-                            expiration: {
-                                maxEntries: 600,
-                                maxAgeSeconds: 7 * 24 * 60 * 60,
-                            },
-                            cacheableResponse: {
-                                statuses: [0, 200],
-                            },
-                        },
-                    },
-                    {
-                        urlPattern:
-                            /^https:\/\/[a-z0-9-]+\.tile\.openstreetmap\.org\/.*/i,
-                        handler: 'CacheFirst',
-                        options: {
-                            cacheName: 'osm-tiles',
-                            expiration: {
-                                maxEntries: 600,
-                                maxAgeSeconds: 7 * 24 * 60 * 60,
-                            },
-                            cacheableResponse: {
-                                statuses: [0, 200],
-                            },
-                        },
-                    },
-                    {
-                        urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
-                        handler: 'CacheFirst',
-                        options: {
-                            cacheName: 'google-fonts-stylesheets',
-                            expiration: {
-                                maxEntries: 10,
-                                maxAgeSeconds: 365 * 24 * 60 * 60,
-                            },
-                            cacheableResponse: {
-                                statuses: [0, 200],
-                            },
-                        },
-                    },
-                    {
-                        urlPattern: /^https:\/\/fonts\.gstatic\.com\/.*/i,
-                        handler: 'CacheFirst',
-                        options: {
-                            cacheName: 'google-fonts-webfonts',
-                            expiration: {
-                                maxEntries: 30,
-                                maxAgeSeconds: 365 * 24 * 60 * 60,
-                            },
-                            cacheableResponse: {
-                                statuses: [0, 200],
-                            },
-                        },
-                    },
-                    {
-                        urlPattern: ({ url }) =>
-                            url.pathname.startsWith('/assistant') ||
-                            url.pathname.startsWith('/translate'),
-                        handler: 'NetworkOnly',
-                    },
-                    {
-                        urlPattern: ({ sameOrigin }) => sameOrigin,
-                        method: 'POST',
-                        handler: 'NetworkOnly',
-                    },
-                ],
+                minify: false,
             },
         }),
     ]),
@@ -140,6 +64,7 @@ export default defineConfig({
             'node_modules/**',
             'public/**',
             'bootstrap/ssr/**',
+            'resources/pwa/**',
             'tailwind.config.js',
             'resources/js/actions/**',
             'resources/js/components/ui/*',

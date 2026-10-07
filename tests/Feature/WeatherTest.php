@@ -200,6 +200,15 @@ class WeatherTest extends TestCase
         $this->assertMatchesRegularExpression('/\p{Arabic}/u', $response->json('error'));
     }
 
+    public function test_show_returns_not_found_for_an_unknown_city(): void
+    {
+        Http::preventStrayRequests();
+
+        $this->getJson(route('weather.show', 99999))->assertNotFound();
+
+        Http::assertNothingSent();
+    }
+
     private function reading(float $temperature, int $code, float $high, float $low): array
     {
         return [

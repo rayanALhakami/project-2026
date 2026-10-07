@@ -99,7 +99,7 @@
 
 <AppHead title={t('analytics.title')} />
 
-<SiteHeader active="" />
+<SiteHeader active="" transparent />
 
 <div class="min-h-dvh bg-background">
     <section

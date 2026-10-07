@@ -236,7 +236,7 @@
 
 <AppHead title={t('translate.title')} />
 
-<SiteHeader active="translate" />
+<SiteHeader active="translate" transparent />
 
 <div class="min-h-dvh bg-background">
     <section

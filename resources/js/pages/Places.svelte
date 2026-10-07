@@ -119,7 +119,7 @@
 
 <AppHead title={t('places.title')} />
 
-<SiteHeader active="places" />
+<SiteHeader active="places" transparent />
 
 <div class="min-h-dvh bg-background">
     <section

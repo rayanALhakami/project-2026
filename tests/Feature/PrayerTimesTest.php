@@ -118,4 +118,13 @@ class PrayerTimesTest extends TestCase
         $this->assertStringNotContainsString('Bad Gateway', $response->getContent());
         $this->assertStringNotContainsString('RuntimeException', $response->getContent());
     }
+
+    public function test_show_returns_not_found_for_an_unknown_city(): void
+    {
+        Http::preventStrayRequests();
+
+        $this->getJson(route('prayer-times.show', 99999))->assertNotFound();
+
+        Http::assertNothingSent();
+    }
 }

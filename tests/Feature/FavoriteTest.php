@@ -6,6 +6,7 @@ use App\Models\Favorite;
 use App\Models\Place;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Inertia\Testing\AssertableInertia as Assert;
 use Tests\TestCase;
 
 class FavoriteTest extends TestCase
@@ -19,6 +20,19 @@ class FavoriteTest extends TestCase
         $this->get(route('favorites.index'))->assertRedirect(route('login'));
         $this->post(route('favorites.toggle', $place))->assertRedirect(route('login'));
         $this->post(route('favorites.sync'), ['ids' => []])->assertRedirect(route('login'));
+    }
+
+    public function test_guests_are_redirected_from_the_favorites_page(): void
+    {
+        $this->get(route('favorites'))->assertRedirect(route('login'));
+    }
+
+    public function test_users_can_visit_the_favorites_page(): void
+    {
+        $this->actingAs(User::factory()->create())
+            ->get(route('favorites'))
+            ->assertOk()
+            ->assertInertia(fn (Assert $page) => $page->component('Favorites'));
     }
 
     public function test_users_see_their_favorite_ids_sorted(): void

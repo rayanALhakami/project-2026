@@ -39,6 +39,16 @@ class SecurityTest extends TestCase
             );
     }
 
+    public function test_well_known_passkey_endpoints_point_to_the_security_settings_page()
+    {
+        $this->getJson(route('well-known.passkeys'))
+            ->assertOk()
+            ->assertExactJson([
+                'enroll' => route('security.edit'),
+                'manage' => route('security.edit'),
+            ]);
+    }
+
     public function test_security_page_requires_password_confirmation_when_enabled()
     {
         $this->skipUnlessFortifyHas(Features::twoFactorAuthentication());

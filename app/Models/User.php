@@ -42,6 +42,8 @@ class User extends Authenticatable implements HasLocalePreference, PasskeyUser
 
     /**
      * Determine whether the user is an administrator.
+     *
+     * @return Attribute<bool, never>
      */
     protected function isAdmin(): Attribute
     {

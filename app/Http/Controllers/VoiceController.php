@@ -63,6 +63,10 @@ class VoiceController extends Controller
                 default => $pending->female(),
             };
 
+            if (filled($validated['language'] ?? null)) {
+                $pending->instructions("Speak the following text in the language identified by the BCP-47 code \"{$validated['language']}\", using its natural pronunciation and accent.");
+            }
+
             $response = $pending->generate(provider: Lab::Gemini);
 
             return response($response->content(), 200, [

@@ -96,7 +96,7 @@
 
 <AppHead title={trip.title || t('shared.title')} />
 
-<SiteHeader active="" />
+<SiteHeader active="" transparent />
 
 <div class="min-h-dvh bg-background">
     <section

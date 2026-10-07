@@ -90,7 +90,15 @@
 
     type NotificationIcon = Component<{ class?: string }>;
 
-    let { active = '' }: { active?: NavKey | '' } = $props();
+    let {
+        active = '',
+        bottomNav = true,
+        transparent = false,
+    }: {
+        active?: NavKey | '';
+        bottomNav?: boolean;
+        transparent?: boolean;
+    } = $props();
 
     const auth = $derived(page.props.auth);
     const http = useHttp({ locale: '' });
@@ -103,6 +111,23 @@
     );
 
     let menuOpen = $state(false);
+    let scrolled = $state(false);
+    const solid = $derived(!transparent || scrolled);
+
+    $effect(() => {
+        if (!transparent) {
+            return;
+        }
+
+        const onScroll = () => {
+            scrolled = window.scrollY > 8;
+        };
+
+        onScroll();
+        window.addEventListener('scroll', onScroll, { passive: true });
+
+        return () => window.removeEventListener('scroll', onScroll);
+    });
 
     const NOTIFICATIONS_POLL_MS = 120_000;
 
@@ -371,21 +396,25 @@
 </script>
 
 <header
-    class="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-[#08131f]/85 backdrop-blur-md"
+    class="fixed inset-x-0 top-0 z-50 border-b transition-colors duration-300 {solid
+        ? 'border-white/10 bg-[#08131f]/85 backdrop-blur-md'
+        : 'border-transparent bg-transparent'}"
 >
     <div
         class="mx-auto flex h-16 max-w-6xl items-center justify-between gap-3 px-4 md:px-6"
     >
         <Link
             href={toUrl(home())}
-            class="flex min-w-0 items-center gap-2.5 text-white"
+            class="flex shrink-0 items-center gap-2.5 text-white"
         >
             <span
                 class="flex size-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-400 to-teal-700"
             >
                 <AppLogoIcon class="size-5 fill-current" />
             </span>
-            <span class="truncate text-sm font-bold sm:text-base">
+            <span
+                class="text-sm font-bold whitespace-nowrap sm:text-base"
+            >
                 {t('app.name')}
             </span>
         </Link>
@@ -722,5 +751,7 @@
     {/if}
 </header>
 
-<BottomNav />
+{#if bottomNav}
+    <BottomNav />
+{/if}
 <InstallPrompt />

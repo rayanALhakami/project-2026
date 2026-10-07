@@ -58,7 +58,7 @@ class LocaleTest extends TestCase
             'locale' => 'es',
         ]);
 
-        $response->assertRedirect();
+        $response->assertOk()->assertExactJson(['locale' => 'es']);
         $this->assertSame('es', $user->refresh()->locale);
     }
 

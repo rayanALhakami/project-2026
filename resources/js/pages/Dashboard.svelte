@@ -5,7 +5,6 @@
     import Check from '@lucide/svelte/icons/check';
     import ChevronLeft from '@lucide/svelte/icons/chevron-left';
     import Heart from '@lucide/svelte/icons/heart';
-    import Languages from '@lucide/svelte/icons/languages';
     import MapPin from '@lucide/svelte/icons/map-pin';
     import Route from '@lucide/svelte/icons/route';
     import Sparkles from '@lucide/svelte/icons/sparkles';
@@ -20,7 +19,6 @@
     import WeatherCityPicker from '@/components/WeatherCityPicker.svelte';
     import { selectedCityId, setSelectedCity } from '@/lib/city.svelte';
     import { cityImage } from '@/lib/city-images';
-    import { favoritesCount } from '@/lib/favorites.svelte';
     import { formatDate, formatNumber, getLocale, t } from '@/lib/i18n.svelte';
     import { cityName, weatherCondition } from '@/lib/localize';
     import {
@@ -37,9 +35,7 @@
     import {
         analytics as analyticsRoute,
         assistant,
-        favorites as favoritesRoute,
         places,
-        translate,
         trips,
     } from '@/routes';
     import type { Component } from 'svelte';
@@ -118,37 +114,6 @@
         return local.length > 0 ? local.slice(0, 6) : topPlaces(6);
     });
 
-    const quickActions = $derived.by((): {
-        title: string;
-        href: string;
-        icon: Component<{ class?: string }>;
-    }[] => {
-        const actions: {
-            title: string;
-            href: string;
-            icon: Component<{ class?: string }>;
-        }[] = [
-            { title: t('nav.tripsShort'), href: trips().url, icon: Route },
-            { title: t('nav.places'), href: places().url, icon: MapPin },
-            { title: t('nav.translate'), href: translate().url, icon: Languages },
-            {
-                title: t('nav.assistant'),
-                href: assistant().url,
-                icon: Sparkles,
-            },
-        ];
-
-        if (favoritesCount() > 0) {
-            actions.splice(1, 0, {
-                title: t('nav.favorites'),
-                href: favoritesRoute().url,
-                icon: Heart,
-            });
-        }
-
-        return actions;
-    });
-
     const analyticsStats = $derived.by((): {
         key: string;
         label: string;
@@ -194,7 +159,7 @@
 
 <AppHead title={t('nav.home')} />
 
-<SiteHeader active="home" />
+<SiteHeader active="home" transparent />
 
 <div class="min-h-dvh bg-background">
     <section
@@ -454,29 +419,6 @@
                 </div>
             {/if}
         </div>
-
-        <section class="mt-8">
-            <h2 class="text-xl font-bold text-foreground sm:text-2xl">
-                {t('dashboard.quickActions')}
-            </h2>
-            <div class="mt-4 grid grid-cols-2 gap-3 lg:grid-cols-4">
-                {#each quickActions as action (action.title)}
-                    <Link
-                        href={action.href}
-                        class="flex items-center gap-3 rounded-[18px] bg-card p-4 shadow-sm ring-1 ring-border transition hover:-translate-y-0.5 hover:shadow-md active:scale-[0.98]"
-                    >
-                        <span
-                            class="flex size-11 shrink-0 items-center justify-center rounded-xl bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-400 ring-1 ring-emerald-100 dark:ring-emerald-900/60"
-                        >
-                            <action.icon class="size-5" />
-                        </span>
-                        <span class="text-sm font-bold text-foreground">
-                            {action.title}
-                        </span>
-                    </Link>
-                {/each}
-            </div>
-        </section>
 
         {#if analyticsLoading || analytics}
             <section class="mt-10">

@@ -103,6 +103,23 @@ class VoiceTest extends TestCase
         );
     }
 
+    public function test_the_requested_language_is_used_for_speech_generation(): void
+    {
+        Audio::fake([base64_encode('fake-wav-bytes')]);
+
+        $this->postJson(route('assistant.speak'), [
+            'text' => 'Good morning',
+            'voice' => 'male',
+            'language' => 'ja-JP',
+        ])->assertOk();
+
+        Audio::assertGenerated(
+            fn (AudioPrompt $prompt): bool => $prompt->contains('Good morning')
+                && $prompt->isMale()
+                && str_contains((string) $prompt->instructions, 'ja-JP'),
+        );
+    }
+
     public function test_the_text_is_required_before_generating_speech(): void
     {
         Audio::fake();

@@ -35,8 +35,8 @@ export function localeInfo(code: LocaleCode): LocaleInfo {
 }
 
 const en = {
-    'app.name': 'Your First Destination in Saudi Tourism',
-    'app.nameAr': 'وجهتك الأولى في السياحة السعودية',
+    'app.name': 'next trip',
+    'app.nameAr': 'رحلتك القادمة وجميع فعالياتك في تطبيق واحد',
 
     'nav.home': 'Home',
     'nav.assistant': 'Your Smart Guide',
@@ -175,7 +175,6 @@ const en = {
     'dashboard.discoverSubtitle': 'Top places and experiences in {city}.',
     'dashboard.explorePlaces': 'Places in {city}',
     'dashboard.planTrip': 'Plan a trip',
-    'dashboard.quickActions': 'Quick actions',
     'dashboard.needHelp': 'Need help?',
     'dashboard.helpDesc': 'Ask the tourist assistant anything about your trip.',
     'dashboard.openTrip': 'Open your trip',
@@ -570,8 +569,8 @@ const en = {
 export type MessageKey = keyof typeof en;
 
 const ar: Record<MessageKey, string> = {
-    'app.name': 'وجهتك الأولى في السياحة السعودية',
-    'app.nameAr': 'وجهتك الأولى في السياحة السعودية',
+    'app.name': 'next trip',
+    'app.nameAr': 'رحلتك القادمة وجميع فعالياتك في تطبيق واحد',
 
     'nav.home': 'الرئيسية',
     'nav.assistant': 'مرشدك الذكي',
@@ -712,7 +711,6 @@ const ar: Record<MessageKey, string> = {
     'dashboard.discoverSubtitle': 'أشهر الأماكن والتجارب في {city}.',
     'dashboard.explorePlaces': 'أماكن {city}',
     'dashboard.planTrip': 'خطط رحلة',
-    'dashboard.quickActions': 'اختصارات سريعة',
     'dashboard.needHelp': 'تحتاج مساعدة؟',
     'dashboard.helpDesc': 'اسأل المساعد السياحي عن أي شي يخص رحلتك.',
     'dashboard.openTrip': 'افتح رحلتك',
@@ -828,7 +826,7 @@ const ar: Record<MessageKey, string> = {
     'translate.from': 'من',
     'translate.to': 'إلى',
 
-    'welcome.title': 'اكتشف السعودية مع مرشدك الذكي',
+    'welcome.title': 'رحلتك القادمة وجميع فعالياتك في تطبيق واحد',
     'welcome.subtitle':
         'خطط رحلاتك، اكتشف الأماكن، ترجم فوراً، واحصل على إجابات — كل ذلك في تطبيق واحد سهل.',
     'welcome.start': 'ابدأ الآن',
@@ -1091,8 +1089,8 @@ const ar: Record<MessageKey, string> = {
 };
 
 const fr: Partial<Record<MessageKey, string>> = {
-    'app.name': 'Votre première destination touristique en Arabie saoudite',
-    'app.nameAr': 'وجهتك الأولى في السياحة السعودية',
+    'app.name': 'next trip',
+    'app.nameAr': 'رحلتك القادمة وجميع فعالياتك في تطبيق واحد',
 
     'nav.home': 'Accueil',
     'nav.assistant': 'Votre guide intelligent',
@@ -1237,8 +1235,8 @@ const fr: Partial<Record<MessageKey, string>> = {
 };
 
 const es: Partial<Record<MessageKey, string>> = {
-    'app.name': 'Tu primer destino turístico en Arabia Saudita',
-    'app.nameAr': 'وجهتك الأولى في السياحة السعودية',
+    'app.name': 'next trip',
+    'app.nameAr': 'رحلتك القادمة وجميع فعالياتك في تطبيق واحد',
 
     'nav.home': 'Inicio',
     'nav.assistant': 'Tu guía inteligente',
@@ -1380,8 +1378,8 @@ const es: Partial<Record<MessageKey, string>> = {
 };
 
 const de: Partial<Record<MessageKey, string>> = {
-    'app.name': 'Dein erstes Reiseziel in Saudi-Arabien',
-    'app.nameAr': 'وجهتك الأولى في السياحة السعودية',
+    'app.name': 'next trip',
+    'app.nameAr': 'رحلتك القادمة وجميع فعالياتك في تطبيق واحد',
 
     'nav.home': 'Start',
     'nav.assistant': 'Dein intelligenter Guide',
@@ -1480,8 +1478,7 @@ const de: Partial<Record<MessageKey, string>> = {
 
     'shared.title': 'Geteilte Reise',
     'shared.badge': 'Geteilter Reiseplan',
-    'shared.subtitle':
-        'Ein Tag-für-Tag-Plan, der mit dir geteilt wurde.',
+    'shared.subtitle': 'Ein Tag-für-Tag-Plan, der mit dir geteilt wurde.',
     'shared.readOnly': 'Dies ist eine schreibgeschützte Ansicht.',
     'shared.cta': 'Plane deine eigene Reise',
     'shared.ctaHint':
@@ -1520,8 +1517,8 @@ const de: Partial<Record<MessageKey, string>> = {
 };
 
 const ru: Partial<Record<MessageKey, string>> = {
-    'app.name': 'Ваше первое направление в туризме Саудовской Аравии',
-    'app.nameAr': 'وجهتك الأولى في السياحة السعودية',
+    'app.name': 'next trip',
+    'app.nameAr': 'رحلتك القادمة وجميع فعالياتك في تطبيق واحد',
 
     'nav.home': 'Главная',
     'nav.assistant': 'Ваш умный гид',
@@ -1613,7 +1610,8 @@ const ru: Partial<Record<MessageKey, string>> = {
     'trips.share': 'Поделиться поездкой',
     'trips.sharing': 'Подготовка ссылки...',
     'trips.shared': 'Доступ по ссылке включён',
-    'trips.shareHint': 'Любой, у кого есть ссылка, может просмотреть этот план.',
+    'trips.shareHint':
+        'Любой, у кого есть ссылка, может просмотреть этот план.',
     'trips.copyLink': 'Скопировать ссылку',
     'trips.linkCopied': 'Ссылка скопирована',
     'trips.stopSharing': 'Остановить доступ',
@@ -1621,12 +1619,10 @@ const ru: Partial<Record<MessageKey, string>> = {
 
     'shared.title': 'Общая поездка',
     'shared.badge': 'Общий план поездки',
-    'shared.subtitle':
-        'План по дням, которым с вами поделился путешественник.',
+    'shared.subtitle': 'План по дням, которым с вами поделился путешественник.',
     'shared.readOnly': 'Это режим только для чтения.',
     'shared.cta': 'Спланируйте свою поездку',
-    'shared.ctaHint':
-        'Составьте план по дням за минуты с умным гидом.',
+    'shared.ctaHint': 'Составьте план по дням за минуты с умным гидом.',
 
     'trips.export': 'Экспорт в PDF',
     'trips.exportHint':
@@ -1660,8 +1656,8 @@ const ru: Partial<Record<MessageKey, string>> = {
 };
 
 const tr: Partial<Record<MessageKey, string>> = {
-    'app.name': 'Suudi Arabistan Turizminde İlk Durağınız',
-    'app.nameAr': 'وجهتك الأولى في السياحة السعودية',
+    'app.name': 'next trip',
+    'app.nameAr': 'رحلتك القادمة وجميع فعالياتك في تطبيق واحد',
 
     'nav.home': 'Ana Sayfa',
     'nav.assistant': 'Akıllı rehberiniz',
@@ -1762,8 +1758,7 @@ const tr: Partial<Record<MessageKey, string>> = {
 
     'shared.title': 'Paylaşılan gezi',
     'shared.badge': 'Paylaşılan gezi planı',
-    'shared.subtitle':
-        'Bir gezgin tarafından sizinle paylaşılan günlük plan.',
+    'shared.subtitle': 'Bir gezgin tarafından sizinle paylaşılan günlük plan.',
     'shared.readOnly': 'Bu salt okunur bir görünümdür.',
     'shared.cta': 'Kendi gezinizi planlayın',
     'shared.ctaHint':
@@ -1776,7 +1771,8 @@ const tr: Partial<Record<MessageKey, string>> = {
     'trips.exportTitle': 'Gezi planı',
     'trips.exportedOn': 'Dışa aktarma: {date}',
 
-    'analytics.subtitle': 'Gezilerinizin, yerlerin ve ilgi alanlarınızın özeti.',
+    'analytics.subtitle':
+        'Gezilerinizin, yerlerin ve ilgi alanlarınızın özeti.',
     'analytics.upcoming': 'Yaklaşan geziler',
     'analytics.completion': 'Tamamlama oranı',
 
@@ -1802,8 +1798,8 @@ const tr: Partial<Record<MessageKey, string>> = {
 };
 
 const zh: Partial<Record<MessageKey, string>> = {
-    'app.name': '沙特旅游首选目的地',
-    'app.nameAr': 'وجهتك الأولى في السياحة السعودية',
+    'app.name': 'next trip',
+    'app.nameAr': 'رحلتك القادمة وجميع فعالياتك في تطبيق واحد',
 
     'nav.home': '首页',
     'nav.assistant': '您的智能向导',
@@ -1936,8 +1932,8 @@ const zh: Partial<Record<MessageKey, string>> = {
 };
 
 const hi: Partial<Record<MessageKey, string>> = {
-    'app.name': 'सऊदी पर्यटन में आपकी पहली पसंद',
-    'app.nameAr': 'وجهتك الأولى في السياحة السعودية',
+    'app.name': 'next trip',
+    'app.nameAr': 'رحلتك القادمة وجميع فعالياتك في تطبيق واحد',
 
     'nav.home': 'होम',
     'nav.assistant': 'आपका स्मार्ट गाइड',
@@ -2043,8 +2039,7 @@ const hi: Partial<Record<MessageKey, string>> = {
         'स्मार्ट गाइड के साथ कुछ ही मिनटों में अपनी दिन-प्रतिदिन की योजना बनाएं।',
 
     'trips.export': 'PDF निर्यात करें',
-    'trips.exportHint':
-        'प्रिंट-तैयार पृष्ठ खुलेगा। प्रिंट संवाद में “PDF के रूप में सहेजें” चुनें।',
+    'trips.exportHint': 'प्रिंट-तैयार पृष्ठ खुलेगा। प्रिंट संवाद में “PDF के रूप में सहेजें” चुनें।',
     'trips.printNow': 'प्रिंट / PDF सहेजें',
     'trips.exportTitle': 'यात्रा योजना',
     'trips.exportedOn': 'निर्यात: {date}',
@@ -2075,8 +2070,8 @@ const hi: Partial<Record<MessageKey, string>> = {
 };
 
 const ur: Partial<Record<MessageKey, string>> = {
-    'app.name': 'سعودی سیاحت میں آپ کی پہلی منزل',
-    'app.nameAr': 'وجهتك الأولى في السياحة السعودية',
+    'app.name': 'next trip',
+    'app.nameAr': 'رحلتك القادمة وجميع فعالياتك في تطبيق واحد',
 
     'nav.home': 'ہوم',
     'nav.assistant': 'آپ کا سمارٹ گائیڈ',

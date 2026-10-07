@@ -54,6 +54,19 @@ class PlaceReviewTest extends TestCase
             ->assertJsonPath('reviews.2.author', 'أقدم مراجعة');
     }
 
+    public function test_reviews_endpoint_limits_the_list_to_twenty_but_reports_the_full_count(): void
+    {
+        $place = Place::factory()->create();
+
+        Review::factory()->for($place)->count(25)->create(['rating' => 4]);
+
+        $this->getJson(route('places.reviews.index', $place))
+            ->assertOk()
+            ->assertJsonCount(20, 'reviews')
+            ->assertJsonPath('count', 25)
+            ->assertJsonPath('average', 4);
+    }
+
     public function test_guests_cannot_submit_reviews(): void
     {
         $place = Place::factory()->create();

@@ -17,6 +17,7 @@ class EventSeeder extends Seeder
     public function run(): void
     {
         $cityIds = City::query()->pluck('id', 'name_en');
+        $cityImages = City::query()->pluck('image', 'name_en');
         $today = now()->startOfDay();
 
         foreach ($this->events() as $event) {
@@ -33,7 +34,7 @@ class EventSeeder extends Seeder
                     'city_id' => $cityIds[$city],
                     'start_date' => $startDate,
                     'end_date' => $endDate,
-                    'image' => null,
+                    'image' => $cityImages[$city],
                 ],
             );
         }

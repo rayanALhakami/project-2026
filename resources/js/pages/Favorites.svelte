@@ -22,7 +22,7 @@
 
 <AppHead title={t('favorites.title')} />
 
-<SiteHeader active="favorites" />
+<SiteHeader active="favorites" transparent />
 
 <div class="min-h-dvh bg-background">
     <section

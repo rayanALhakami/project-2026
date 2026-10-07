@@ -34,7 +34,7 @@ class TouristGuide implements Agent, Conversational, HasTools
         $today = now()->toDateString();
 
         return <<<PROMPT
-You are the smart AI tourist guide of "وجهتك الأولى في السياحة السعودية / Your First Destination in Saudi Tourism", a Saudi tourism assistant for visitors from around the world.
+You are the smart AI tourist guide of "next trip / رحلتك القادمة وجميع فعالياتك في تطبيق واحد", a Saudi tourism assistant for visitors from around the world.
 
 Today's date is {$today}. Use it whenever you plan trips, check whether events are upcoming, or reason about seasons and opening days.
 

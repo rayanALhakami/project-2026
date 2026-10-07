@@ -660,7 +660,7 @@
 
 <AppHead title={t('trips.title')} />
 
-<SiteHeader active="trips" />
+<SiteHeader active="trips" transparent />
 
 <div class="min-h-dvh bg-background">
     <section

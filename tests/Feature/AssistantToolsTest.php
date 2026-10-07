@@ -11,6 +11,7 @@ use App\Ai\Tools\GetWeather;
 use App\Ai\Tools\ListEvents;
 use App\Ai\Tools\RecommendPlaces;
 use App\Ai\Tools\SearchPlaces;
+use App\Models\Event;
 use App\Models\Place;
 use Database\Seeders\CitySeeder;
 use Database\Seeders\PlaceSeeder;
@@ -174,6 +175,25 @@ class AssistantToolsTest extends TestCase
         $this->assertNotSame('', $result);
         $this->assertMatchesRegularExpression('/\p{Arabic}/u', $result);
         $this->assertStringContainsString('لا توجد فعاليات', $result);
+    }
+
+    public function test_list_events_returns_the_earliest_seeded_event_with_its_city_and_dates(): void
+    {
+        $this->seed();
+
+        $event = Event::query()->with('city')->orderBy('start_date')->firstOrFail();
+
+        $result = (string) (new ListEvents)->handle(new ToolRequest([]));
+        $payload = json_decode($result, true);
+
+        $this->assertCount(8, $payload);
+        $this->assertSame($event->name, $payload[0]['name']);
+        $this->assertSame($event->city->name, $payload[0]['city']);
+        $this->assertSame($event->start_date->toDateString(), $payload[0]['start_date']);
+        $this->assertSame($event->end_date->toDateString(), $payload[0]['end_date']);
+
+        $this->assertStringContainsString($event->name, $result);
+        $this->assertStringContainsString($event->city->name, $result);
     }
 
     public function test_recommend_places_returns_seeded_places_for_a_city(): void
