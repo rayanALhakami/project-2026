@@ -12,6 +12,8 @@ use App\Ai\Tools\ListEvents;
 use App\Ai\Tools\RecommendPlaces;
 use App\Ai\Tools\SearchPlaces;
 use Laravel\Ai\Attributes\MaxSteps;
+use Laravel\Ai\Attributes\Provider;
+use Laravel\Ai\Attributes\Timeout;
 use Laravel\Ai\Concerns\RemembersConversations;
 use Laravel\Ai\Contracts\Agent;
 use Laravel\Ai\Contracts\Conversational;
@@ -21,7 +23,9 @@ use Laravel\Ai\Promptable;
 use Laravel\Ai\Providers\Tools\ProviderTool;
 use Stringable;
 
+#[Provider('opencode')]
 #[MaxSteps(10)]
+#[Timeout(300)]
 class TouristGuide implements Agent, Conversational, HasTools
 {
     use Promptable, RemembersConversations;

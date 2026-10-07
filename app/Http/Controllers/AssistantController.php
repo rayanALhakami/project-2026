@@ -8,6 +8,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Laravel\Ai\Contracts\ConversationStore;
+use Laravel\Ai\Enums\Lab;
 use Laravel\Ai\Files\Image;
 use Laravel\Ai\Models\Conversation;
 use Throwable;
@@ -37,10 +38,12 @@ class AssistantController extends Controller
             $agent = new TouristGuide;
             $user = $request->user();
 
+            $provider = $attachments === [] ? null : Lab::Gemini;
+
             $response = $user instanceof User
                 ? $agent->continueOrStart($this->ownedConversationId($validated['conversation_id'] ?? null, $user), as: $user)
-                    ->prompt($prompt, attachments: $attachments)
-                : $agent->prompt($prompt, attachments: $attachments);
+                    ->prompt($prompt, attachments: $attachments, provider: $provider)
+                : $agent->prompt($prompt, attachments: $attachments, provider: $provider);
 
             return response()->json([
                 'reply' => (string) $response,

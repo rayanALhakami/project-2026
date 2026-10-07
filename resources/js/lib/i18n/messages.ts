@@ -222,6 +222,10 @@ const en = {
     'assistant.voice': 'Voice',
     'assistant.compareFeature': 'Feature',
     'assistant.mapTitle': 'Mini map',
+    'assistant.attachImage': 'Photo',
+    'assistant.recordAudio': 'Record',
+    'assistant.speakReplies': 'Speak',
+    'assistant.options': 'Options',
 
     'voice.settings': 'Voice settings',
     'voice.language': 'Voice language',
@@ -769,6 +773,10 @@ const ar: Record<MessageKey, string> = {
     'assistant.voice': 'صوت',
     'assistant.compareFeature': 'وجه المقارنة',
     'assistant.mapTitle': 'خريطة مصغّرة',
+    'assistant.attachImage': 'صورة',
+    'assistant.recordAudio': 'تسجيل',
+    'assistant.speakReplies': 'نطق',
+    'assistant.options': 'خيارات',
 
     'voice.settings': 'إعدادات الصوت',
     'voice.language': 'لغة الصوت',
