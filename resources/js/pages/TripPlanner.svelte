@@ -2,7 +2,9 @@
     import { Link, router, useHttp } from '@inertiajs/svelte';
     import CalendarDays from '@lucide/svelte/icons/calendar-days';
     import Check from '@lucide/svelte/icons/check';
+    import ChevronDown from '@lucide/svelte/icons/chevron-down';
     import ChevronLeft from '@lucide/svelte/icons/chevron-left';
+    import ChevronUp from '@lucide/svelte/icons/chevron-up';
     import Circle from '@lucide/svelte/icons/circle';
     import Copy from '@lucide/svelte/icons/copy';
     import Link2Off from '@lucide/svelte/icons/link-2-off';
@@ -14,6 +16,7 @@
     import Share2 from '@lucide/svelte/icons/share-2';
     import Sparkles from '@lucide/svelte/icons/sparkles';
     import Star from '@lucide/svelte/icons/star';
+    import Trash2 from '@lucide/svelte/icons/trash-2';
     import X from '@lucide/svelte/icons/x';
     import { untrack } from 'svelte';
     import { toast } from 'svelte-sonner';
@@ -48,7 +51,13 @@
         store as storeTrip,
         unshare as unshareTrip,
     } from '@/routes/trips';
-    import { toggle as toggleVisited } from '@/routes/trip-items';
+    import { store as storeDayItem } from '@/routes/trip-days/items';
+    import {
+        destroy as destroyItem,
+        move as moveItem,
+        toggle as toggleVisited,
+        update as updateItem,
+    } from '@/routes/trip-items';
     import type { City, Place, PlaceCategory } from '@/types';
 
     interface PlanEntry {
@@ -63,6 +72,7 @@
         day: number;
         date: string;
         cityId: number | null;
+        tripDayId: number | null;
         entries: PlanEntry[];
     }
 
@@ -76,6 +86,7 @@
     }
 
     interface SavedTripDay {
+        id: number;
         day_number: number;
         date: string;
         city_id: number | null;
@@ -244,6 +255,7 @@
                 day: day.day_number,
                 date: day.date,
                 cityId: inferredCityId,
+                tripDayId: day.id,
                 entries: day.items
                     .map((item): PlanEntry | null => {
                         const place = item.place_id
@@ -310,6 +322,7 @@
 
                             return {
                                 ...day,
+                                tripDayId: savedDay.id,
                                 entries: day.entries.map((entry, index) => ({
                                     ...entry,
                                     itemId: savedDay.items[index]?.id ?? null,
@@ -364,6 +377,265 @@
                 toast.error(t('trips.saveFailed'));
             },
         });
+    }
+
+    const addItemHttp = useHttp<
+        {
+            place_id: number | null;
+            start_time: string;
+            duration_minutes: number | null;
+        },
+        { id: number }
+    >({ place_id: null, start_time: '09:00', duration_minutes: null });
+    const updateItemHttp = useHttp<
+        { start_time: string },
+        { id: number; start_time: string | null }
+    >({ start_time: '09:00' });
+    const deleteItemHttp = useHttp<Record<string, never>, { deleted: boolean }>(
+        {},
+    );
+    const moveItemHttp = useHttp<
+        { direction: 'up' | 'down' },
+        { moved: boolean }
+    >({ direction: 'up' });
+
+    function mergeEntry(
+        dayIndex: number,
+        entryIndex: number,
+        changes: Partial<PlanEntry>,
+    ): void {
+        plan = plan.map((day, index) =>
+            index === dayIndex
+                ? {
+                      ...day,
+                      entries: day.entries.map((entry, position) =>
+                          position === entryIndex
+                              ? { ...entry, ...changes }
+                              : entry,
+                      ),
+                  }
+                : day,
+        );
+    }
+
+    function insertEntry(
+        dayIndex: number,
+        entryIndex: number,
+        entry: PlanEntry,
+    ): void {
+        plan = plan.map((day, index) => {
+            if (index !== dayIndex) {
+                return day;
+            }
+
+            const entries = [...day.entries];
+            entries.splice(Math.min(entryIndex, entries.length), 0, entry);
+
+            return { ...day, entries };
+        });
+    }
+
+    function removeEntry(dayIndex: number, entryIndex: number): void {
+        const entry = plan[dayIndex]?.entries[entryIndex];
+
+        if (!entry) {
+            return;
+        }
+
+        plan = plan.map((day, index) =>
+            index === dayIndex
+                ? {
+                      ...day,
+                      entries: day.entries.filter(
+                          (_, position) => position !== entryIndex,
+                      ),
+                  }
+                : day,
+        );
+
+        if (entry.itemId === null) {
+            return;
+        }
+
+        const revert = (): void => {
+            insertEntry(dayIndex, entryIndex, entry);
+            toast.error(t('trips.editFailed'));
+        };
+
+        deleteItemHttp
+            .delete(destroyItem.url(entry.itemId), {
+                onSuccess: () => toast.success(t('trips.itemRemoved')),
+                onError: revert,
+                onHttpException: revert,
+                onNetworkError: revert,
+            })
+            .catch(revert);
+    }
+
+    function moveEntry(
+        dayIndex: number,
+        entryIndex: number,
+        direction: 'up' | 'down',
+    ): void {
+        const day = plan[dayIndex];
+        const entry = day?.entries[entryIndex];
+
+        if (!day || !entry) {
+            return;
+        }
+
+        const target = direction === 'up' ? entryIndex - 1 : entryIndex + 1;
+
+        if (target < 0 || target >= day.entries.length) {
+            return;
+        }
+
+        const entries = [...day.entries];
+        [entries[entryIndex], entries[target]] = [
+            entries[target],
+            entries[entryIndex],
+        ];
+        plan = plan.map((current, index) =>
+            index === dayIndex ? { ...current, entries } : current,
+        );
+
+        if (entry.itemId === null) {
+            return;
+        }
+
+        const revert = (): void => {
+            const reverted = [...entries];
+            [reverted[target], reverted[entryIndex]] = [
+                reverted[entryIndex],
+                reverted[target],
+            ];
+            plan = plan.map((current, index) =>
+                index === dayIndex
+                    ? { ...current, entries: reverted }
+                    : current,
+            );
+            toast.error(t('trips.editFailed'));
+        };
+
+        moveItemHttp.direction = direction;
+        moveItemHttp
+            .post(moveItem.url(entry.itemId), {
+                onError: revert,
+                onHttpException: revert,
+                onNetworkError: revert,
+            })
+            .catch(revert);
+    }
+
+    function updateEntryTime(
+        dayIndex: number,
+        entryIndex: number,
+        value: string,
+    ): void {
+        const entry = plan[dayIndex]?.entries[entryIndex];
+
+        if (!entry || value === '') {
+            return;
+        }
+
+        const minutes = minutesFromTime(value);
+        const previous = { minutes: entry.minutes, time: entry.time };
+
+        mergeEntry(dayIndex, entryIndex, {
+            minutes,
+            time: formatTime(minutes),
+        });
+
+        if (entry.itemId === null) {
+            return;
+        }
+
+        const revert = (): void => {
+            mergeEntry(dayIndex, entryIndex, previous);
+            toast.error(t('trips.editFailed'));
+        };
+
+        updateItemHttp.start_time = toIsoTime(minutes);
+        updateItemHttp
+            .put(updateItem.url(entry.itemId), {
+                onError: revert,
+                onHttpException: revert,
+                onNetworkError: revert,
+            })
+            .catch(revert);
+    }
+
+    function availablePlaces(day: PlanDay): Place[] {
+        if (day.cityId === null) {
+            return [];
+        }
+
+        const used = new Set(day.entries.map((entry) => entry.place.id));
+
+        return placesByCity(day.cityId).filter((place) => !used.has(place.id));
+    }
+
+    function nextEntryMinutes(day: PlanDay): number {
+        const last = day.entries[day.entries.length - 1];
+
+        return last
+            ? last.minutes + (last.place.avgVisitDuration || 60) + 45
+            : 9 * 60;
+    }
+
+    function addEntry(dayIndex: number, placeId: number): void {
+        const day = plan[dayIndex];
+        const place = placeId === 0 ? undefined : placeById(placeId);
+
+        if (!day || !place) {
+            return;
+        }
+
+        if (day.entries.some((entry) => entry.place.id === place.id)) {
+            return;
+        }
+
+        const minutes = nextEntryMinutes(day);
+        const entryIndex = day.entries.length;
+
+        insertEntry(dayIndex, entryIndex, {
+            place,
+            time: formatTime(minutes),
+            minutes,
+            itemId: null,
+            done: false,
+        });
+
+        if (day.tripDayId === null) {
+            toast.success(t('trips.itemAdded'));
+
+            return;
+        }
+
+        const revert = (): void => {
+            removeEntry(dayIndex, entryIndex);
+            toast.error(t('trips.editFailed'));
+        };
+
+        addItemHttp.place_id = place.id;
+        addItemHttp.start_time = toIsoTime(minutes);
+        addItemHttp.duration_minutes = place.avgVisitDuration || 60;
+        addItemHttp
+            .post(storeDayItem.url(day.tripDayId), {
+                onSuccess: (response) => {
+                    if (typeof response?.id === 'number') {
+                        mergeEntry(dayIndex, entryIndex, {
+                            itemId: response.id,
+                        });
+                    }
+
+                    toast.success(t('trips.itemAdded'));
+                },
+                onError: revert,
+                onHttpException: revert,
+                onNetworkError: revert,
+            })
+            .catch(revert);
     }
 
     async function copyText(value: string): Promise<boolean> {
@@ -616,6 +888,7 @@
                     day: dayNumber,
                     date: addDays(startDate, dayNumber - 1),
                     cityId: city.id,
+                    tripDayId: null,
                     entries,
                 });
                 dayNumber += 1;
@@ -1083,7 +1356,7 @@
                     {/if}
                 </h2>
 
-                {#each plan as day (day.day)}
+                {#each plan as day, dayIndex (day.day)}
                     {@const dayCity =
                         day.cityId === null ? undefined : cityById(day.cityId)}
                     <div
@@ -1122,20 +1395,27 @@
                             </p>
                         {:else}
                             <ol class="mt-4 flex flex-col gap-3">
-                                {#each day.entries as entry (entry.place.id)}
+                                {#each day.entries as entry, entryIndex (entry.place.id)}
                                     {@const meta =
                                         categoryMeta[entry.place.category]}
                                     {@const placeCity = cityById(
                                         entry.place.cityId,
                                     )}
                                     <li class="flex items-stretch gap-3">
-                                        <span
-                                            class="flex w-24 shrink-0 items-center justify-center rounded-xl px-2 py-3 text-sm font-bold text-white {entry.done
+                                        <input
+                                            type="time"
+                                            value={toIsoTime(entry.minutes)}
+                                            onchange={(event) =>
+                                                updateEntryTime(
+                                                    dayIndex,
+                                                    entryIndex,
+                                                    event.currentTarget.value,
+                                                )}
+                                            aria-label={t('trips.startTime')}
+                                            class="w-24 shrink-0 rounded-xl px-2 py-3 text-center text-sm font-bold text-white outline-none {entry.done
                                                 ? 'bg-emerald-600'
                                                 : 'bg-[#0b1e33]'}"
-                                        >
-                                            {entry.time}
-                                        </span>
+                                        />
                                         <div
                                             class="min-w-0 flex-1 rounded-xl p-3 ring-1 {entry.done
                                                 ? 'bg-emerald-50 dark:bg-emerald-950/40 ring-emerald-200 dark:ring-emerald-900/60'
@@ -1217,10 +1497,91 @@
                                                     {priceLabel(entry.place)}
                                                 </span>
                                             </p>
+                                            <div
+                                                class="mt-2 flex items-center justify-end gap-1"
+                                            >
+                                                <button
+                                                    type="button"
+                                                    onclick={() =>
+                                                        moveEntry(
+                                                            dayIndex,
+                                                            entryIndex,
+                                                            'up',
+                                                        )}
+                                                    disabled={entryIndex === 0}
+                                                    class="flex size-8 items-center justify-center rounded-lg text-muted-foreground transition hover:bg-background hover:text-foreground disabled:opacity-30 disabled:hover:bg-transparent"
+                                                    aria-label={t(
+                                                        'trips.moveUp',
+                                                    )}
+                                                    title={t('trips.moveUp')}
+                                                >
+                                                    <ChevronUp class="size-4" />
+                                                </button>
+                                                <button
+                                                    type="button"
+                                                    onclick={() =>
+                                                        moveEntry(
+                                                            dayIndex,
+                                                            entryIndex,
+                                                            'down',
+                                                        )}
+                                                    disabled={entryIndex ===
+                                                        day.entries.length - 1}
+                                                    class="flex size-8 items-center justify-center rounded-lg text-muted-foreground transition hover:bg-background hover:text-foreground disabled:opacity-30 disabled:hover:bg-transparent"
+                                                    aria-label={t(
+                                                        'trips.moveDown',
+                                                    )}
+                                                    title={t('trips.moveDown')}
+                                                >
+                                                    <ChevronDown
+                                                        class="size-4"
+                                                    />
+                                                </button>
+                                                <button
+                                                    type="button"
+                                                    onclick={() =>
+                                                        removeEntry(
+                                                            dayIndex,
+                                                            entryIndex,
+                                                        )}
+                                                    class="flex size-8 items-center justify-center rounded-lg text-muted-foreground transition hover:bg-background hover:text-red-600"
+                                                    aria-label={t(
+                                                        'trips.removeItem',
+                                                    )}
+                                                    title={t('trips.removeItem')}
+                                                >
+                                                    <Trash2 class="size-4" />
+                                                </button>
+                                            </div>
                                         </div>
                                     </li>
                                 {/each}
                             </ol>
+                        {/if}
+
+                        {#if dayCity && availablePlaces(day).length > 0}
+                            <select
+                                value=""
+                                onchange={(event) => {
+                                    const value = Number(
+                                        event.currentTarget.value,
+                                    );
+
+                                    if (value > 0) {
+                                        addEntry(dayIndex, value);
+                                    }
+
+                                    event.currentTarget.value = '';
+                                }}
+                                class="mt-3 min-h-11 w-full rounded-xl bg-muted/60 px-3 text-sm font-bold text-secondary-foreground outline-none ring-1 ring-border transition focus:ring-2 focus:ring-emerald-400"
+                            >
+                                <option value="">{t('trips.addPlace')}</option>
+                                {#each availablePlaces(day) as place (place.id)}
+                                    <option value={place.id}>
+                                        {placeName(place)}
+                                    </option>
+                                {/each}
+                            </select>
                         {/if}
                     </div>
                 {/each}

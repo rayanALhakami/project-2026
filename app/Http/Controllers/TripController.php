@@ -6,6 +6,7 @@ use App\Enums\TripItemType;
 use App\Models\City;
 use App\Models\Place;
 use App\Models\Trip;
+use App\Models\TripDay;
 use App\Models\TripItem;
 use App\Support\TripPayload;
 use Illuminate\Http\JsonResponse;
@@ -15,6 +16,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -141,6 +143,119 @@ class TripController extends Controller
         return response()->json([
             'completed' => $item->completed_at !== null,
         ]);
+    }
+
+    /**
+     * Add an item to one of the user's trip days.
+     */
+    public function storeItem(Request $request, TripDay $day): JsonResponse
+    {
+        $day->loadMissing('trip');
+
+        abort_unless($day->trip?->user_id === $request->user()->id, 403);
+
+        $validated = $request->validate([
+            'place_id' => ['nullable', 'integer', 'exists:places,id'],
+            'title' => ['nullable', 'string', 'max:200'],
+            'type' => ['nullable', Rule::enum(TripItemType::class)],
+            'start_time' => ['nullable', 'date_format:H:i'],
+            'duration_minutes' => ['nullable', 'integer', 'min:0', 'max:1440'],
+            'notes' => ['nullable', 'string', 'max:2000'],
+        ]);
+
+        $place = isset($validated['place_id'])
+            ? Place::whereKey($validated['place_id'])->first()
+            : null;
+
+        $item = $day->items()->create([
+            'place_id' => $place?->id,
+            'title' => $validated['title'] ?? $place->name ?? '—',
+            'type' => $validated['type'] ?? TripItemType::Activity,
+            'start_time' => $validated['start_time'] ?? null,
+            'duration_minutes' => $validated['duration_minutes'] ?? $place?->avg_visit_duration,
+            'notes' => $validated['notes'] ?? null,
+            'sort_order' => (int) $day->items()->max('sort_order') + 1,
+        ]);
+
+        return response()->json([
+            'id' => $item->id,
+            'title' => $item->title,
+            'start_time' => $item->start_time,
+            'duration_minutes' => $item->duration_minutes,
+        ]);
+    }
+
+    /**
+     * Update the editable fields of an itinerary item.
+     */
+    public function updateItem(Request $request, TripItem $item): JsonResponse
+    {
+        $item->loadMissing('day.trip');
+
+        abort_unless($item->day?->trip?->user_id === $request->user()->id, 403);
+
+        $validated = $request->validate([
+            'title' => ['sometimes', 'string', 'max:200'],
+            'start_time' => ['sometimes', 'nullable', 'date_format:H:i'],
+            'duration_minutes' => ['sometimes', 'nullable', 'integer', 'min:0', 'max:1440'],
+            'notes' => ['sometimes', 'nullable', 'string', 'max:2000'],
+        ]);
+
+        $item->update($validated);
+
+        return response()->json([
+            'id' => $item->id,
+            'title' => $item->title,
+            'start_time' => $item->start_time,
+            'duration_minutes' => $item->duration_minutes,
+        ]);
+    }
+
+    /**
+     * Remove an item from the user's itinerary.
+     */
+    public function destroyItem(Request $request, TripItem $item): JsonResponse
+    {
+        $item->loadMissing('day.trip');
+
+        abort_unless($item->day?->trip?->user_id === $request->user()->id, 403);
+
+        $item->delete();
+
+        return response()->json(['deleted' => true]);
+    }
+
+    /**
+     * Swap an item's position with the neighbor above or below it.
+     */
+    public function moveItem(Request $request, TripItem $item): JsonResponse
+    {
+        $item->loadMissing('day.trip');
+
+        abort_unless($item->day?->trip?->user_id === $request->user()->id, 403);
+
+        $validated = $request->validate([
+            'direction' => ['required', 'string', Rule::in(['up', 'down'])],
+        ]);
+
+        $siblings = $item->day->items()->get();
+        $index = $siblings->search(fn (TripItem $sibling): bool => $sibling->id === $item->id);
+        $target = $validated['direction'] === 'up' ? $index - 1 : $index + 1;
+
+        if ($index === false || ! $siblings->has($target)) {
+            return response()->json(['moved' => false]);
+        }
+
+        $ordered = $siblings->pluck('id')->all();
+        [$ordered[$index], $ordered[$target]] = [$ordered[$target], $ordered[$index]];
+
+        DB::transaction(function () use ($ordered): void {
+            foreach ($ordered as $position => $id) {
+                TripItem::whereKey($id)->update(['sort_order' => $position]);
+            }
+        });
+
+        return response()->json(['moved' => true]);
     }
 
     /**

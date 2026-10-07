@@ -40,6 +40,7 @@ class TripPayload
                 ? route('shared.show', $trip->share_token)
                 : null,
             'days' => $trip->days->map(fn (TripDay $day): array => [
+                'id' => $day->id,
                 'day_number' => $day->day_number,
                 'date' => $day->date?->toDateString(),
                 'city_id' => $day->city_id,

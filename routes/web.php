@@ -69,6 +69,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('trips/{trip}/unshare', [TripController::class, 'unshare'])->name('trips.unshare');
     Route::get('trips/{trip}/print', [TripController::class, 'printPlan'])->name('trips.print');
     Route::patch('trip-items/{item}', [TripController::class, 'toggleItem'])->name('trip-items.toggle');
+    Route::put('trip-items/{item}', [TripController::class, 'updateItem'])->name('trip-items.update');
+    Route::delete('trip-items/{item}', [TripController::class, 'destroyItem'])->name('trip-items.destroy');
+    Route::post('trip-items/{item}/move', [TripController::class, 'moveItem'])->name('trip-items.move');
+    Route::post('trip-days/{day}/items', [TripController::class, 'storeItem'])->name('trip-days.items.store');
 });
 
 Route::middleware('auth')->group(function () {
