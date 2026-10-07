@@ -49,6 +49,7 @@ export interface Place {
     closedFriday?: boolean;
     openingHours?: string | null;
     image?: string | null;
+    bookingUrl?: string | null;
     tags: string[];
 }
 

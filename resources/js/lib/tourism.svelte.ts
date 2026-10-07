@@ -37,6 +37,7 @@ type PlaceRow = {
     latitude: number | string;
     longitude: number | string;
     image?: string | null;
+    booking_url?: string | null;
     ticket_price?: number | string | null;
     rating?: number | string | null;
     opening_hours?: string | null;
@@ -85,6 +86,7 @@ function toPlace(row: PlaceRow): Place {
         closedFriday: row.closed_friday,
         openingHours: row.opening_hours ?? undefined,
         image: row.image ?? null,
+        bookingUrl: row.booking_url ?? null,
         tags: row.tags ?? [],
     };
 }

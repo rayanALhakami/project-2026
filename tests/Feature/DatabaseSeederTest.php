@@ -27,6 +27,7 @@ class DatabaseSeederTest extends TestCase
         $this->assertSame('العلا', $hegra->city->name);
         $this->assertSame(PlaceCategory::Heritage, $hegra->category);
         $this->assertSame('95.00', $hegra->ticket_price);
+        $this->assertSame('https://www.experiencealula.com', $hegra->booking_url);
         $this->assertFalse($hegra->wheelchair_accessible);
         $this->assertTrue($hegra->prayer_facilities);
     }

@@ -34,6 +34,7 @@ class AdminPlaceTest extends TestCase
             'category' => 'museum',
             'description' => 'Updated description',
             'ticket_price' => 150,
+            'booking_url' => 'https://tickets.example.com/museum',
             'rating' => 4.5,
             'opening_hours' => '10:00 - 20:00',
             'is_indoor' => true,
@@ -61,6 +62,7 @@ class AdminPlaceTest extends TestCase
             ->put(route('admin.places.update', $place), [
                 'name_en' => 'Updated Name EN',
                 'category' => 'invalid-category',
+                'booking_url' => 'not-a-url',
                 'rating' => 9,
                 'is_indoor' => 'not-a-boolean',
                 'family_friendly' => true,
@@ -68,7 +70,7 @@ class AdminPlaceTest extends TestCase
                 'prayer_facilities' => true,
                 'closed_friday' => false,
             ])
-            ->assertSessionHasErrors(['name', 'category', 'rating', 'is_indoor']);
+            ->assertSessionHasErrors(['name', 'category', 'booking_url', 'rating', 'is_indoor']);
 
         $this->assertDatabaseHas('places', [
             'id' => $place->id,
@@ -107,6 +109,7 @@ class AdminPlaceTest extends TestCase
             'category' => 'museum',
             'description' => 'Updated description',
             'ticket_price' => 150,
+            'booking_url' => 'https://tickets.example.com/museum',
             'rating' => 4.5,
             'opening_hours' => '10:00 - 20:00',
             'is_indoor' => true,

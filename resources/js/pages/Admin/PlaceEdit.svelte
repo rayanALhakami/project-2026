@@ -21,6 +21,7 @@
         category: PlaceCategory;
         description: string | null;
         ticket_price: string | null;
+        booking_url: string | null;
         rating: string | null;
         opening_hours: string | null;
         is_indoor: boolean;
@@ -49,6 +50,7 @@
         category: initialPlace.category,
         description: initialPlace.description ?? '',
         ticket_price: initialPlace.ticket_price ?? '',
+        booking_url: initialPlace.booking_url ?? '',
         rating: initialPlace.rating ?? '',
         opening_hours: initialPlace.opening_hours ?? '',
         is_indoor: initialPlace.is_indoor,
@@ -176,6 +178,19 @@
                 maxlength="255"
             />
             <InputError message={form.errors.opening_hours} />
+        </label>
+
+        <label class="grid gap-2">
+            <span class={labelClass}>{t('admin.fields.bookingUrl')}</span>
+            <input
+                type="url"
+                bind:value={form.booking_url}
+                class={inputClass}
+                maxlength="2048"
+                placeholder="https://"
+                dir="ltr"
+            />
+            <InputError message={form.errors.booking_url} />
         </label>
 
         <div class="grid gap-3 sm:grid-cols-2">

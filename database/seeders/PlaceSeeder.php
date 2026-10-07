@@ -26,6 +26,7 @@ class PlaceSeeder extends Seeder
                 ...$place,
                 'city_id' => $cityIds[$city],
                 'image' => $this->images()[$place['name_en']] ?? null,
+                'booking_url' => $this->bookingLinks()[$place['name_en']] ?? null,
             ];
 
             Place::query()->updateOrCreate(
@@ -91,6 +92,22 @@ class PlaceSeeder extends Seeder
                 'wheelchair_accessible' => true,
                 'closed_friday' => false,
             ],
+        ];
+    }
+
+    /**
+     * Official booking or information links for places that sell tickets online.
+     *
+     * @return array<string, string>
+     */
+    private function bookingLinks(): array
+    {
+        return [
+            'Diriyah At-Turaif' => 'https://www.diriyah.sa',
+            'Hegra' => 'https://www.experiencealula.com',
+            'Elephant Rock' => 'https://www.experiencealula.com',
+            'Maraya' => 'https://www.experiencealula.com',
+            'AlUla Old Town' => 'https://www.experiencealula.com',
         ];
     }
 

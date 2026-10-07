@@ -376,6 +376,18 @@
                     {placeDescription(place)}
                 </p>
 
+                {#if place.bookingUrl}
+                    <a
+                        href={place.bookingUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="{actionClass} bg-[#0b1e33] text-white hover:brightness-110"
+                    >
+                        <Ticket class="size-5" aria-hidden="true" />
+                        {t('place.bookNow')}
+                    </a>
+                {/if}
+
                 <div class="grid grid-cols-1 gap-2 sm:grid-cols-3">
                     <a
                         href={openStreetMapUrl(place)}

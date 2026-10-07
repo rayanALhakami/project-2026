@@ -25,6 +25,7 @@ use Illuminate\Support\Carbon;
  * @property float $latitude
  * @property float $longitude
  * @property string|null $image
+ * @property string|null $booking_url
  * @property string|null $ticket_price
  * @property string $rating
  * @property string|null $opening_hours
@@ -49,6 +50,7 @@ use Illuminate\Support\Carbon;
     'latitude',
     'longitude',
     'image',
+    'booking_url',
     'ticket_price',
     'rating',
     'opening_hours',
