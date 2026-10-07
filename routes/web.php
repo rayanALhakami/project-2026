@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\AssistantController;
+use App\Http\Controllers\AssistantConversationController;
 use App\Http\Controllers\ContactRequestController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FavoriteController;
@@ -71,6 +72,18 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
+    Route::get('assistant/conversations', [AssistantConversationController::class, 'index'])
+        ->middleware('throttle:60,1')
+        ->name('assistant.conversations.index');
+
+    Route::get('assistant/conversations/{conversation}', [AssistantConversationController::class, 'show'])
+        ->middleware('throttle:60,1')
+        ->name('assistant.conversations.show');
+
+    Route::delete('assistant/conversations/{conversation}', [AssistantConversationController::class, 'destroy'])
+        ->middleware('throttle:20,1')
+        ->name('assistant.conversations.destroy');
+
     Route::get('notifications', [NotificationController::class, 'index'])->name('notifications.index');
     Route::post('notifications/read-all', [NotificationController::class, 'markAllRead'])->name('notifications.read-all');
     Route::post('notifications/{notification}/read', [NotificationController::class, 'markRead'])->name('notifications.read');

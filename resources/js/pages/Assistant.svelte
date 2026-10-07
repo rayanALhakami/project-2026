@@ -1,15 +1,18 @@
 <script lang="ts">
     import { page, useHttp } from '@inertiajs/svelte';
+    import History from '@lucide/svelte/icons/history';
     import ImageIcon from '@lucide/svelte/icons/image';
     import LoaderCircle from '@lucide/svelte/icons/loader-circle';
     import MapPin from '@lucide/svelte/icons/map-pin';
     import Mic from '@lucide/svelte/icons/mic';
     import Mountain from '@lucide/svelte/icons/mountain';
+    import Plus from '@lucide/svelte/icons/plus';
     import Route from '@lucide/svelte/icons/route';
     import Send from '@lucide/svelte/icons/send';
     import Settings2 from '@lucide/svelte/icons/settings-2';
     import Sparkles from '@lucide/svelte/icons/sparkles';
     import Square from '@lucide/svelte/icons/square';
+    import Trash2 from '@lucide/svelte/icons/trash-2';
     import Utensils from '@lucide/svelte/icons/utensils';
     import Volume2 from '@lucide/svelte/icons/volume-2';
     import VolumeX from '@lucide/svelte/icons/volume-x';
@@ -40,6 +43,11 @@
         voiceLanguageOptions,
     } from '@/lib/voice.svelte';
     import { chat } from '@/routes/assistant';
+    import {
+        destroy as conversationDestroy,
+        index as conversationsIndex,
+        show as conversationShow,
+    } from '@/routes/assistant/conversations';
 
     interface ChatMessage {
         id: number;
@@ -53,6 +61,20 @@
         conversation_id: string | null;
         user_message_id: number | string | null;
         assistant_message_id: number | string | null;
+    }
+
+    interface ConversationSummary {
+        id: string;
+        title: string;
+        updated_at: string | null;
+        messages_count: number;
+    }
+
+    interface ConversationMessagePayload {
+        id: string;
+        role: string;
+        content: string;
+        created_at: string | null;
     }
 
     const MAX_IMAGE_BYTES = 8 * 1024 * 1024;
@@ -102,6 +124,11 @@
         },
     ]);
     let conversationId = $state<string | null>(null);
+    let conversations = $state<ConversationSummary[]>([]);
+    let historyOpen = $state(false);
+    let historyLoading = $state(false);
+    let conversationLoadingId = $state<string | null>(null);
+    let deletingConversationId = $state<string | null>(null);
     let imagePreview = $state<string | null>(null);
     let speakingId = $state<number | null>(null);
     let container: HTMLDivElement | null = null;
@@ -121,6 +148,19 @@
 
         return data;
     });
+
+    const conversationsHttp = useHttp<
+        Record<string, never>,
+        { conversations: ConversationSummary[] }
+    >({});
+    const conversationHttp = useHttp<
+        Record<string, never>,
+        { messages: ConversationMessagePayload[] }
+    >({});
+    const conversationDeleteHttp = useHttp<
+        Record<string, never>,
+        { deleted: boolean }
+    >({});
 
     const recordingSupported = isRecordingSupported();
 
@@ -166,6 +206,10 @@
     });
 
     onMount(() => {
+        if (authUser) {
+            loadConversations();
+        }
+
         const key = conversationKey();
 
         if (key === null || typeof window === 'undefined') {
@@ -210,6 +254,153 @@
         window.localStorage.setItem(key, id);
     }
 
+    function loadConversations(): void {
+        if (!authUser) {
+            return;
+        }
+
+        historyLoading = true;
+
+        conversationsHttp
+            .get(conversationsIndex.url(), {
+                onSuccess: (response) => {
+                    conversations = response.conversations ?? [];
+                },
+                onFinish: () => {
+                    historyLoading = false;
+                },
+            })
+            .catch(() => {
+                historyLoading = false;
+            });
+    }
+
+    function startNewChat(): void {
+        conversationId = null;
+
+        const key = conversationKey();
+
+        if (key !== null && typeof window !== 'undefined') {
+            window.localStorage.removeItem(key);
+        }
+
+        stopSpeaking();
+        speakingId = null;
+        nextId = 2;
+        messages = [{ id: 1, role: 'assistant', text: t('assistant.prompt') }];
+        historyOpen = false;
+    }
+
+    function openConversation(id: string): void {
+        if (conversationLoadingId !== null) {
+            return;
+        }
+
+        conversationLoadingId = id;
+        stopSpeaking();
+        speakingId = null;
+
+        conversationHttp
+            .get(conversationShow.url(id), {
+                onSuccess: (response) => {
+                    const loaded = (response.messages ?? [])
+                        .filter(
+                            (message) =>
+                                message.role === 'user' ||
+                                message.role === 'assistant',
+                        )
+                        .filter((message) => message.content.trim() !== '')
+                        .map(
+                            (message): ChatMessage => ({
+                                id: nextId++,
+                                role: message.role as 'user' | 'assistant',
+                                text: message.content,
+                            }),
+                        );
+
+                    messages =
+                        loaded.length > 0
+                            ? loaded
+                            : [
+                                  {
+                                      id: nextId++,
+                                      role: 'assistant',
+                                      text: t('assistant.prompt'),
+                                  },
+                              ];
+                    conversationId = id;
+                    persistConversation(id);
+                    historyOpen = false;
+                },
+                onHttpException: () => {
+                    toast.error(failureText());
+                },
+                onNetworkError: () => {
+                    toast.error(failureText());
+                },
+                onFinish: () => {
+                    conversationLoadingId = null;
+                },
+            })
+            .catch(() => {
+                conversationLoadingId = null;
+            });
+    }
+
+    function deleteConversation(id: string): void {
+        if (deletingConversationId !== null) {
+            return;
+        }
+
+        if (!window.confirm(t('assistant.deleteConfirm'))) {
+            return;
+        }
+
+        deletingConversationId = id;
+
+        conversationDeleteHttp
+            .delete(conversationDestroy.url(id), {
+                onSuccess: () => {
+                    conversations = conversations.filter(
+                        (conversation) => conversation.id !== id,
+                    );
+
+                    if (conversationId === id) {
+                        startNewChat();
+                    }
+                },
+                onHttpException: () => {
+                    toast.error(failureText());
+                },
+                onNetworkError: () => {
+                    toast.error(failureText());
+                },
+                onFinish: () => {
+                    deletingConversationId = null;
+                },
+            })
+            .catch(() => {
+                deletingConversationId = null;
+            });
+    }
+
+    function formatConversationDate(value: string | null): string {
+        if (value === null) {
+            return '';
+        }
+
+        const date = new Date(value);
+
+        if (Number.isNaN(date.getTime())) {
+            return '';
+        }
+
+        return new Intl.DateTimeFormat(getLocale(), {
+            day: 'numeric',
+            month: 'short',
+        }).format(date);
+    }
+
     function failureText(): string {
         return isArabic
             ? 'عذراً، حدث خطأ أثناء معالجة طلبك. حاول مرة أخرى بعد قليل.'
@@ -252,6 +443,8 @@
         stopSpeaking();
         http.clearErrors();
 
+        const wasNewConversation = !isValidConversationId(conversationId);
+
         http.post(chat.url(), {
             onSuccess: (response) => {
                 const reply =
@@ -281,6 +474,10 @@
                 if (isValidConversationId(response.conversation_id)) {
                     conversationId = response.conversation_id;
                     persistConversation(response.conversation_id);
+
+                    if (wasNewConversation) {
+                        loadConversations();
+                    }
                 }
 
                 http.message = '';
@@ -431,20 +628,135 @@
     <div
         class="mx-auto flex h-[calc(100dvh-10rem)] w-full max-w-4xl flex-col px-4 py-4 md:h-[calc(100dvh-4rem)] md:px-6"
     >
-        <div class="flex items-center gap-3 pb-4">
-            <span
-                class="flex size-11 items-center justify-center rounded-xl bg-[#0b1e33] text-emerald-300"
-            >
-                <Sparkles class="size-6" />
-            </span>
-            <div>
-                <h1 class="text-xl font-bold text-foreground sm:text-2xl">
-                    {t('assistant.title')}
-                </h1>
-                <p class="text-sm text-muted-foreground">
-                    {t('assistant.subtitle')}
-                </p>
+        <div class="flex items-center justify-between gap-3 pb-4">
+            <div class="flex min-w-0 items-center gap-3">
+                <span
+                    class="flex size-11 shrink-0 items-center justify-center rounded-xl bg-[#0b1e33] text-emerald-300"
+                >
+                    <Sparkles class="size-6" />
+                </span>
+                <div class="min-w-0">
+                    <h1
+                        class="truncate text-xl font-bold text-foreground sm:text-2xl"
+                    >
+                        {t('assistant.title')}
+                    </h1>
+                    <p class="truncate text-sm text-muted-foreground">
+                        {t('assistant.subtitle')}
+                    </p>
+                </div>
             </div>
+
+            {#if authUser}
+                <Popover
+                    bind:open={historyOpen}
+                    onOpenChange={(open) => {
+                        if (open) {
+                            loadConversations();
+                        }
+                    }}
+                >
+                    <PopoverTrigger
+                        class="flex size-11 shrink-0 items-center justify-center rounded-xl bg-card text-secondary-foreground ring-1 ring-border transition hover:text-emerald-700 hover:ring-emerald-300 dark:hover:text-emerald-300"
+                        aria-label={t('assistant.history')}
+                        title={t('assistant.history')}
+                    >
+                        <History class="size-5" />
+                    </PopoverTrigger>
+                    <PopoverContent align="end" class="w-80 gap-0 p-2">
+                        <div
+                            class="flex items-center justify-between gap-2 px-2 pb-2"
+                        >
+                            <span class="text-sm font-bold text-foreground">
+                                {t('assistant.history')}
+                            </span>
+                            <button
+                                type="button"
+                                onclick={startNewChat}
+                                class="inline-flex min-h-8 items-center gap-1 rounded-full px-2.5 text-xs font-bold text-emerald-700 transition hover:bg-emerald-50 dark:text-emerald-300 dark:hover:bg-emerald-950/40"
+                            >
+                                <Plus class="size-3.5" />
+                                {t('assistant.newChat')}
+                            </button>
+                        </div>
+
+                        <div class="max-h-80 overflow-y-auto">
+                            {#if historyLoading}
+                                <div class="flex flex-col gap-2 p-2">
+                                    {#each [1, 2, 3] as row (row)}
+                                        <div
+                                            class="h-12 animate-pulse rounded-xl bg-muted"
+                                        ></div>
+                                    {/each}
+                                </div>
+                            {:else if conversations.length === 0}
+                                <p
+                                    class="px-3 py-6 text-center text-sm text-muted-foreground"
+                                >
+                                    {t('assistant.emptyHistory')}
+                                </p>
+                            {:else}
+                                {#each conversations as conversation (conversation.id)}
+                                    <div class="flex items-center gap-1">
+                                        <button
+                                            type="button"
+                                            onclick={() =>
+                                                openConversation(
+                                                    conversation.id,
+                                                )}
+                                            class="flex min-h-12 min-w-0 flex-1 flex-col items-start justify-center rounded-xl px-3 py-1.5 text-start transition hover:bg-muted {conversationId ===
+                                            conversation.id
+                                                ? 'bg-muted'
+                                                : ''}"
+                                        >
+                                            <span
+                                                class="w-full truncate text-sm font-bold text-foreground"
+                                            >
+                                                {conversation.title}
+                                            </span>
+                                            {#if conversationLoadingId === conversation.id}
+                                                <LoaderCircle
+                                                    class="size-4 animate-spin text-muted-foreground"
+                                                />
+                                            {:else}
+                                                <span
+                                                    class="text-xs text-muted-foreground"
+                                                >
+                                                    {formatConversationDate(
+                                                        conversation.updated_at,
+                                                    )}
+                                                </span>
+                                            {/if}
+                                        </button>
+                                        <button
+                                            type="button"
+                                            onclick={() =>
+                                                deleteConversation(
+                                                    conversation.id,
+                                                )}
+                                            disabled={deletingConversationId ===
+                                                conversation.id}
+                                            class="flex size-9 shrink-0 items-center justify-center rounded-xl text-muted-foreground/60 transition hover:text-red-600 disabled:opacity-40"
+                                            aria-label={t(
+                                                'assistant.deleteChat',
+                                            )}
+                                            title={t('assistant.deleteChat')}
+                                        >
+                                            {#if deletingConversationId === conversation.id}
+                                                <LoaderCircle
+                                                    class="size-4 animate-spin"
+                                                />
+                                            {:else}
+                                                <Trash2 class="size-4" />
+                                            {/if}
+                                        </button>
+                                    </div>
+                                {/each}
+                            {/if}
+                        </div>
+                    </PopoverContent>
+                </Popover>
+            {/if}
         </div>
 
         <div

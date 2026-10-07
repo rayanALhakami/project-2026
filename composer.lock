@@ -8354,16 +8354,16 @@
         },
         {
             "name": "laravel/cloud-cli",
-            "version": "v0.6.1",
+            "version": "v0.6.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/cloud-cli.git",
-                "reference": "5b85a5fde5b94d0e5abf971f45a537d206e97edb"
+                "reference": "74b68a0b315038e160a34df7ced073f15fb06b40"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/cloud-cli/zipball/5b85a5fde5b94d0e5abf971f45a537d206e97edb",
-                "reference": "5b85a5fde5b94d0e5abf971f45a537d206e97edb",
+                "url": "https://api.github.com/repos/laravel/cloud-cli/zipball/74b68a0b315038e160a34df7ced073f15fb06b40",
+                "reference": "74b68a0b315038e160a34df7ced073f15fb06b40",
                 "shasum": ""
             },
             "require": {
@@ -8424,7 +8424,7 @@
                 "issues": "https://github.com/laravel/cloud-cli/issues",
                 "source": "https://github.com/laravel/cloud-cli"
             },
-            "time": "2026-09-15T01:00:56+00:00"
+            "time": "2026-09-30T18:41:50+00:00"
         },
         {
             "name": "laravel/mcp",

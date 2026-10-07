@@ -139,6 +139,11 @@ const en = {
     'assistant.title': 'Your Smart Guide',
     'assistant.subtitle': 'Ask anything about your trip',
     'assistant.placeholder': 'Type your message...',
+    'assistant.history': 'Chat history',
+    'assistant.newChat': 'New chat',
+    'assistant.emptyHistory': 'No past conversations yet.',
+    'assistant.deleteChat': 'Delete conversation',
+    'assistant.deleteConfirm': 'Delete this conversation permanently?',
     'assistant.greeting':
         'Welcome! I am your smart guide. I can plan a trip, compare places, suggest restaurants, and answer about prices and weather. Where would you like to start?',
 
@@ -675,6 +680,11 @@ const ar: Record<MessageKey, string> = {
     'assistant.title': 'مرشدك الذكي',
     'assistant.subtitle': 'اسأل عن أي شي يخص رحلتك',
     'assistant.placeholder': 'اكتب رسالتك...',
+    'assistant.history': 'المحادثات السابقة',
+    'assistant.newChat': 'محادثة جديدة',
+    'assistant.emptyHistory': 'ما فيه محادثات سابقة بعد.',
+    'assistant.deleteChat': 'حذف المحادثة',
+    'assistant.deleteConfirm': 'حذف هذه المحادثة نهائياً؟',
     'assistant.greeting':
         'أهلاً بك! أنا مرشدك الذكي. أقدر أخطط لك رحلة، أقارن أماكن، أقترح مطاعم، وأجاوب عن الأسعار والطقس. وش تحب تبدأ فيه؟',
 
@@ -1178,6 +1188,11 @@ const fr: Partial<Record<MessageKey, string>> = {
     'assistant.title': 'Votre guide intelligent',
     'assistant.subtitle': 'Posez toutes vos questions sur votre voyage',
     'assistant.placeholder': 'Écrivez votre message...',
+    'assistant.history': 'Historique des conversations',
+    'assistant.newChat': 'Nouvelle conversation',
+    'assistant.emptyHistory': 'Aucune conversation passée pour le moment.',
+    'assistant.deleteChat': 'Supprimer la conversation',
+    'assistant.deleteConfirm': 'Supprimer définitivement cette conversation ?',
     'assistant.greeting':
         'Bienvenue ! Je suis votre guide intelligent. Je peux planifier un voyage, comparer des lieux, suggérer des restaurants et répondre sur les prix et la météo. Par où voulez-vous commencer ?',
 
@@ -1322,6 +1337,12 @@ const es: Partial<Record<MessageKey, string>> = {
     'assistant.title': 'Tu guía inteligente',
     'assistant.subtitle': 'Pregunta lo que quieras sobre tu viaje',
     'assistant.placeholder': 'Escribe tu mensaje...',
+    'assistant.history': 'Historial de conversaciones',
+    'assistant.newChat': 'Nueva conversación',
+    'assistant.emptyHistory': 'Aún no hay conversaciones anteriores.',
+    'assistant.deleteChat': 'Eliminar conversación',
+    'assistant.deleteConfirm':
+        '¿Eliminar esta conversación de forma permanente?',
     'assistant.greeting':
         '¡Bienvenido! Soy tu guía inteligente. Puedo planificar un viaje, comparar lugares, sugerir restaurantes y responder sobre precios y clima. ¿Por dónde quieres empezar?',
 
@@ -1464,6 +1485,11 @@ const de: Partial<Record<MessageKey, string>> = {
     'assistant.title': 'Dein intelligenter Guide',
     'assistant.subtitle': 'Frag alles über deine Reise',
     'assistant.placeholder': 'Schreibe deine Nachricht...',
+    'assistant.history': 'Chat-Verlauf',
+    'assistant.newChat': 'Neuer Chat',
+    'assistant.emptyHistory': 'Noch keine früheren Unterhaltungen.',
+    'assistant.deleteChat': 'Unterhaltung löschen',
+    'assistant.deleteConfirm': 'Diese Unterhaltung endgültig löschen?',
     'assistant.greeting':
         'Willkommen! Ich bin dein intelligenter Guide. Ich kann eine Reise planen, Orte vergleichen, Restaurants vorschlagen und Fragen zu Preisen und Wetter beantworten. Wo möchtest du anfangen?',
 
@@ -1604,6 +1630,11 @@ const ru: Partial<Record<MessageKey, string>> = {
     'assistant.title': 'Ваш умный гид',
     'assistant.subtitle': 'Спросите о чём угодно про вашу поездку',
     'assistant.placeholder': 'Напишите сообщение...',
+    'assistant.history': 'История чатов',
+    'assistant.newChat': 'Новый чат',
+    'assistant.emptyHistory': 'Пока нет прошлых бесед.',
+    'assistant.deleteChat': 'Удалить беседу',
+    'assistant.deleteConfirm': 'Удалить эту беседу навсегда?',
     'assistant.greeting':
         'Добро пожаловать! Я ваш умный гид. Я могу спланировать поездку, сравнить места, предложить рестораны и ответить о ценах и погоде. С чего хотите начать?',
 
@@ -1744,6 +1775,11 @@ const tr: Partial<Record<MessageKey, string>> = {
     'assistant.title': 'Akıllı rehberiniz',
     'assistant.subtitle': 'Gezinizle ilgili her şeyi sorun',
     'assistant.placeholder': 'Mesajınızı yazın...',
+    'assistant.history': 'Sohbet geçmişi',
+    'assistant.newChat': 'Yeni sohbet',
+    'assistant.emptyHistory': 'Henüz geçmiş sohbet yok.',
+    'assistant.deleteChat': 'Sohbeti sil',
+    'assistant.deleteConfirm': 'Bu sohbet kalıcı olarak silinsin mi?',
     'assistant.greeting':
         'Hoş geldiniz! Ben akıllı rehberinizim. Gezi planlayabilir, yerleri karşılaştırabilir, restoran önerebilir ve fiyatlar ile hava durumu hakkında yanıtlayabilirim. Nereden başlamak istersiniz?',
 
@@ -1882,6 +1918,11 @@ const zh: Partial<Record<MessageKey, string>> = {
     'assistant.title': '您的智能向导',
     'assistant.subtitle': '询问任何与您旅程相关的问题',
     'assistant.placeholder': '输入您的消息...',
+    'assistant.history': '聊天记录',
+    'assistant.newChat': '新对话',
+    'assistant.emptyHistory': '暂无历史对话。',
+    'assistant.deleteChat': '删除对话',
+    'assistant.deleteConfirm': '确定要永久删除此对话吗？',
     'assistant.greeting':
         '欢迎！我是您的智能向导。我可以规划旅程、比较地点、推荐餐厅，并回答价格和天气问题。您想从哪里开始？',
 
@@ -2017,6 +2058,11 @@ const hi: Partial<Record<MessageKey, string>> = {
     'assistant.title': 'आपका स्मार्ट गाइड',
     'assistant.subtitle': 'अपनी यात्रा के बारे में कुछ भी पूछें',
     'assistant.placeholder': 'अपना संदेश लिखें...',
+    'assistant.history': 'चैट इतिहास',
+    'assistant.newChat': 'नई चैट',
+    'assistant.emptyHistory': 'अभी तक कोई पिछली चैट नहीं।',
+    'assistant.deleteChat': 'चैट हटाएं',
+    'assistant.deleteConfirm': 'क्या इस चैट को हमेशा के लिए हटाना है?',
     'assistant.greeting':
         'स्वागत है! मैं आपका स्मार्ट गाइड हूँ। मैं यात्रा की योजना बना सकता हूँ, स्थानों की तुलना कर सकता हूँ, रेस्तरां सुझा सकता हूँ, और कीमतों तथा मौसम के बारे में बता सकता हूँ। आप कहाँ से शुरू करना चाहेंगे?',
 
@@ -2156,6 +2202,11 @@ const ur: Partial<Record<MessageKey, string>> = {
     'assistant.title': 'آپ کا سمارٹ گائیڈ',
     'assistant.subtitle': 'اپنے سفر کے بارے میں کچھ بھی پوچھیں',
     'assistant.placeholder': 'اپنا پیغام لکھیں...',
+    'assistant.history': 'چیٹ ہسٹری',
+    'assistant.newChat': 'نئی چیٹ',
+    'assistant.emptyHistory': 'ابھی تک کوئی پرانی چیٹ نہیں۔',
+    'assistant.deleteChat': 'چیٹ حذف کریں',
+    'assistant.deleteConfirm': 'کیا اس چیٹ کو ہمیشہ کے لیے حذف کرنا ہے؟',
     'assistant.greeting':
         'خوش آمدید! میں آپ کا سمارٹ گائیڈ ہوں۔ میں سفر کا منصوبہ بنا سکتا ہوں، مقامات کا موازنہ کر سکتا ہوں، ریستوران تجویز کر سکتا ہوں، اور قیمتوں اور موسم کے بارے میں بتا سکتا ہوں۔ آپ کہاں سے شروع کرنا چاہیں گے؟',
 
