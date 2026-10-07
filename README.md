@@ -31,17 +31,17 @@
 
 ## التقنيات
 
-| الطبقة            | التقنية                                             |
-| ----------------- | --------------------------------------------------- |
-| الخادم            | Laravel 13 + PHP 8.4                                 |
-| الواجهة           | Inertia v3 + Svelte 5 (runes) + TailwindCSS 4        |
-| الـAI             | `laravel/ai` مع Google Gemini (نص + صور + STT + TTS) |
-| الخرائط           | Leaflet + OpenStreetMap                              |
-| الطقس والمواقيت   | Open-Meteo + Aladhan                                 |
-| قاعدة البيانات    | SQLite محلياً، PostgreSQL (Neon Serverless) إنتاجاً   |
+| الطبقة              | التقنية                                                  |
+| ------------------- | -------------------------------------------------------- |
+| الخادم              | Laravel 13 + PHP 8.4                                     |
+| الواجهة             | Inertia v3 + Svelte 5 (runes) + TailwindCSS 4            |
+| الـAI               | `laravel/ai` مع Google Gemini (نص + صور + STT + TTS)     |
+| الخرائط             | Leaflet + OpenStreetMap                                  |
+| الطقس والمواقيت     | Open-Meteo + Aladhan                                     |
+| قاعدة البيانات      | SQLite محلياً، PostgreSQL (Neon Serverless) إنتاجاً      |
 | المصادقة والصلاحيات | Laravel Fortify + Passkeys + `spatie/laravel-permission` |
-| PWA               | Vite PWA (استراتيجية injectManifest)                 |
-| الأدوات           | Wayfinder (روابط TypeScript)، Pint، PHPStan، PHPUnit  |
+| PWA                 | Vite PWA (استراتيجية injectManifest)                     |
+| الأدوات             | Wayfinder (روابط TypeScript)، Pint، PHPStan، PHPUnit     |
 
 ---
 

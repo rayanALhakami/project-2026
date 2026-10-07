@@ -230,10 +230,11 @@
     }
 
     function toIsoTime(minutes: number): string {
-        const hours = Math.floor(minutes / 60)
+        const wrapped = ((minutes % 1440) + 1440) % 1440;
+        const hours = Math.floor(wrapped / 60)
             .toString()
             .padStart(2, '0');
-        const mins = (minutes % 60).toString().padStart(2, '0');
+        const mins = (wrapped % 60).toString().padStart(2, '0');
 
         return `${hours}:${mins}`;
     }
@@ -811,6 +812,10 @@
     }
 
     function generate(): void {
+        if (startDate === '') {
+            startDate = todayIso;
+        }
+
         const selectedIds = new Set(selectedCities.map((city) => city.id));
         const extraDraftCities: City[] = [];
 
@@ -862,7 +867,10 @@
                 }
             }
 
-            const perDay = Math.max(1, Math.ceil(pool.length / allocatedDays));
+            const perDay = Math.min(
+                6,
+                Math.max(1, Math.ceil(pool.length / allocatedDays)),
+            );
             let cursor = 0;
 
             for (let offset = 0; offset < allocatedDays; offset++) {
@@ -1018,16 +1026,29 @@
                         <span class="text-sm font-bold text-secondary-foreground">
                             {t('trips.startDate')}
                         </span>
-                        <div class="relative">
-                            <CalendarDays
-                                class="pointer-events-none absolute inset-y-0 start-3 my-auto size-5 text-muted-foreground"
-                            />
+                        <span class="relative block">
+                            <span class="{inputClass} flex items-center gap-3">
+                                <CalendarDays
+                                    class="size-5 shrink-0 text-muted-foreground"
+                                    aria-hidden="true"
+                                />
+                                <span class="truncate">
+                                    {startDate
+                                        ? formatDate(`${startDate}T00:00:00`, {
+                                              day: 'numeric',
+                                              month: 'long',
+                                              year: 'numeric',
+                                          })
+                                        : '—'}
+                                </span>
+                            </span>
                             <input
                                 type="date"
                                 bind:value={startDate}
-                                class="{inputClass} ps-11"
+                                aria-label={t('trips.startDate')}
+                                class="absolute inset-0 h-full w-full cursor-pointer opacity-0"
                             />
-                        </div>
+                        </span>
                     </label>
                 {:else if step === 2}
                     <div class="flex items-center justify-center gap-5">
