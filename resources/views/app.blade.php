@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ app()->getLocale() }}" dir="{{ in_array(app()->getLocale(), config('app.rtl_locales'), true) ? 'rtl' : 'ltr' }}" @class(['dark' => ($appearance ?? 'system') == 'dark'])>
+<html lang="{{ app()->getLocale() }}" dir="{{ in_array(app()->getLocale(), config('app.rtl_locales'), true) ? 'rtl' : 'ltr' }}">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -18,17 +18,6 @@
         @unless (file_exists(public_path('hot')))
             <script src="/build/registerSW.js" defer></script>
         @endunless
-
-        <script>
-            (function () {
-                try {
-                    var stored = localStorage.getItem('appearance') || @json($appearance ?? 'system');
-                    var dark = stored === 'dark' || (stored === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
-                    document.documentElement.classList.toggle('dark', dark);
-                    document.documentElement.style.colorScheme = dark ? 'dark' : 'light';
-                } catch (error) {}
-            })();
-        </script>
 
         @vite(['resources/css/app.css', 'resources/js/app.ts'])
         <x-inertia::head>

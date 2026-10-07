@@ -2,7 +2,6 @@
     import Breadcrumbs from '@/components/Breadcrumbs.svelte';
     import FontSizeControl from '@/components/FontSizeControl.svelte';
     import LanguageSwitcher from '@/components/LanguageSwitcher.svelte';
-    import ThemeToggle from '@/components/ThemeToggle.svelte';
     import { SidebarTrigger } from '@/components/ui/sidebar';
     import type { BreadcrumbItem } from '@/types';
 
@@ -25,6 +24,5 @@
     <div class="ms-auto flex items-center gap-1">
         <FontSizeControl />
         <LanguageSwitcher />
-        <ThemeToggle />
     </div>
 </header>

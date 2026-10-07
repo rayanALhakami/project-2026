@@ -17,7 +17,6 @@
     import BottomNav from '@/components/BottomNav.svelte';
     import GuestStartMenu from '@/components/GuestStartMenu.svelte';
     import InstallPrompt from '@/components/InstallPrompt.svelte';
-    import ThemeToggle from '@/components/ThemeToggle.svelte';
     import {
         DropdownMenu,
         DropdownMenuContent,
@@ -33,7 +32,6 @@
         t,
         type LocaleCode,
     } from '@/lib/i18n.svelte';
-    import { themeState } from '@/lib/theme.svelte';
     import { toUrl } from '@/lib/utils';
     import { update } from '@/routes/locale';
     import {
@@ -102,13 +100,6 @@
 
     const auth = $derived(page.props.auth);
     const http = useHttp({ locale: '' });
-    const { resolvedAppearance } = themeState();
-
-    const themeLabel = $derived(
-        resolvedAppearance() === 'dark'
-            ? t('common.lightMode')
-            : t('common.darkMode'),
-    );
 
     let menuOpen = $state(false);
     let scrolled = $state(false);
@@ -460,10 +451,6 @@
                 </select>
             </label>
 
-            <ThemeToggle
-                class="size-10 rounded-xl text-white hover:bg-white/10 hover:text-white"
-            />
-
             {#if auth.user}
                 <DropdownMenu bind:open={notificationsOpen}>
                     <DropdownMenuTrigger>
@@ -704,17 +691,6 @@
                     {/each}
                 </select>
             </label>
-
-            <div
-                class="mt-2 flex items-center justify-between gap-3 rounded-xl border border-white/10 px-3 py-1.5"
-            >
-                <span class="text-sm font-semibold text-slate-200">
-                    {themeLabel}
-                </span>
-                <ThemeToggle
-                    class="size-9 rounded-lg text-white hover:bg-white/10 hover:text-white"
-                />
-            </div>
 
             {#if auth.user}
                 <div class="mt-3 flex items-center justify-between gap-3 border-t border-white/10 pt-4">

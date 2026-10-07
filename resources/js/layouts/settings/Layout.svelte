@@ -6,7 +6,6 @@
     import { currentUrlState } from '@/lib/currentUrl.svelte';
     import { t } from '@/lib/i18n.svelte';
     import { toUrl } from '@/lib/utils';
-    import { edit as editAppearance } from '@/routes/appearance';
     import { edit as editProfile } from '@/routes/profile';
     import { edit as editSecurity } from '@/routes/security';
     import type { NavItem } from '@/types';
@@ -22,7 +21,6 @@
     const navItems = $derived<NavItem[]>([
         { title: t('settings.profile'), href: editProfile() },
         { title: t('settings.security'), href: editSecurity() },
-        { title: t('settings.appearance'), href: editAppearance() },
     ]);
 </script>
 

@@ -10,7 +10,6 @@
     import CityMotif from '@/components/CityMotif.svelte';
     import LanguageSwitcher from '@/components/LanguageSwitcher.svelte';
     import SaudiFlag from '@/components/SaudiFlag.svelte';
-    import ThemeToggle from '@/components/ThemeToggle.svelte';
     import { t } from '@/lib/i18n.svelte';
     import { toUrl } from '@/lib/utils';
     import { dashboard, login, register } from '@/routes';
@@ -60,7 +59,6 @@
         </div>
         <div class="flex items-center gap-1">
             <LanguageSwitcher />
-            <ThemeToggle />
         </div>
     </header>
 
