@@ -57,6 +57,10 @@ Route::post('plan-request', [ContactRequestController::class, 'store'])
     ->middleware('throttle:10,1')
     ->name('contact.store');
 
+Route::post('plan-request/{contactRequest:token}/plan', [ContactRequestController::class, 'plan'])
+    ->middleware('throttle:6,1')
+    ->name('contact.plan');
+
 Route::get('places/{place}/reviews', [PlaceReviewController::class, 'index'])
     ->middleware('throttle:60,1')
     ->name('places.reviews.index');

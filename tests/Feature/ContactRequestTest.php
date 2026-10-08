@@ -2,11 +2,16 @@
 
 namespace Tests\Feature;
 
+use App\Ai\Agents\TouristGuide;
 use App\Models\City;
 use App\Models\ContactRequest;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Str;
+use Inertia\Support\SessionKey;
 use Inertia\Testing\AssertableInertia as Assert;
+use Laravel\Ai\Prompts\AgentPrompt;
+use RuntimeException;
 use Tests\TestCase;
 
 class ContactRequestTest extends TestCase
@@ -36,6 +41,14 @@ class ContactRequestTest extends TestCase
             'travelers' => 4,
             'handled_at' => null,
         ]);
+
+        $contactRequest = ContactRequest::query()->firstOrFail();
+
+        $this->assertNotNull($contactRequest->token);
+
+        $response->assertSessionHas(SessionKey::FLASH_DATA, [
+            'planRequest' => ['token' => $contactRequest->token],
+        ]);
     }
 
     public function test_planning_request_is_validated(): void
@@ -53,6 +66,76 @@ class ContactRequestTest extends TestCase
         ])->assertSessionHasErrors(['city_id', 'start_date', 'travelers', 'budget']);
 
         $this->assertDatabaseCount('contact_requests', 0);
+    }
+
+    public function test_the_smart_guide_generates_a_plan_for_a_planning_request(): void
+    {
+        $city = City::factory()->create(['name' => 'الرياض', 'name_en' => 'Riyadh']);
+        $contactRequest = ContactRequest::factory()->create([
+            'city_id' => $city->id,
+            'budget' => 5000,
+            'notes' => 'رحلة عائلية مع أطفال',
+        ]);
+
+        TouristGuide::fake(['**اليوم الأول** زيارة المتحف.']);
+
+        $this->postJson(route('contact.plan', $contactRequest->token))
+            ->assertOk()
+            ->assertJsonPath('plan', '**اليوم الأول** زيارة المتحف.');
+
+        $contactRequest->refresh();
+
+        $this->assertSame('**اليوم الأول** زيارة المتحف.', $contactRequest->plan);
+        $this->assertNotNull($contactRequest->plan_generated_at);
+
+        TouristGuide::assertPrompted(fn (AgentPrompt $prompt): bool => $prompt->contains('الرياض')
+            && $prompt->contains('رحلة عائلية مع أطفال')
+            && $prompt->contains('5,000'));
+    }
+
+    public function test_a_stored_plan_is_returned_without_prompting_the_guide_again(): void
+    {
+        $contactRequest = ContactRequest::factory()->create([
+            'plan' => 'خطة محفوظة مسبقاً',
+            'plan_generated_at' => now(),
+        ]);
+
+        TouristGuide::fake();
+
+        $this->postJson(route('contact.plan', $contactRequest->token))
+            ->assertOk()
+            ->assertJsonPath('plan', 'خطة محفوظة مسبقاً');
+
+        TouristGuide::assertNeverPrompted();
+    }
+
+    public function test_plan_generation_returns_a_404_for_an_unknown_token(): void
+    {
+        TouristGuide::fake();
+
+        $this->postJson(route('contact.plan', (string) Str::uuid()))->assertNotFound();
+
+        TouristGuide::assertNeverPrompted();
+    }
+
+    public function test_plan_generation_failures_return_a_generic_arabic_error(): void
+    {
+        $contactRequest = ContactRequest::factory()->create();
+
+        TouristGuide::fake(fn () => throw new RuntimeException('Provider exploded with secret detail.'));
+
+        $response = $this->postJson(route('contact.plan', $contactRequest->token));
+
+        $response->assertStatus(503)
+            ->assertJsonStructure(['error'])
+            ->assertJsonMissingPaths(['exception', 'trace', 'file', 'line']);
+
+        $this->assertStringNotContainsString('Provider exploded', $response->getContent());
+
+        $contactRequest->refresh();
+
+        $this->assertNull($contactRequest->plan);
+        $this->assertNull($contactRequest->plan_generated_at);
     }
 
     public function test_admins_can_view_and_manage_requests(): void

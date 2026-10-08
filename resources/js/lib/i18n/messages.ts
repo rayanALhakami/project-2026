@@ -395,7 +395,14 @@ const en = {
         'Tell us about your interests: museums, adventure, food...',
     'preview.formSubmit': 'Send request',
     'preview.formSuccess':
-        'Request received! The guide will get back to you with your itinerary.',
+        'Request received! Your smart guide is building a draft plan for you.',
+    'preview.planLoading': 'Your smart guide is building your plan...',
+    'preview.planTitle': 'Your draft itinerary',
+    'preview.planHint':
+        'This is an AI-generated draft — refine it anytime with the smart guide.',
+    'preview.planOpenAssistant': 'Continue with the smart guide',
+    'preview.planError': 'We could not build your plan right now.',
+    'preview.planRetry': 'Try again',
     'preview.testimonialsBadge': 'Testimonials',
     'preview.testimonialsTitle': 'What travelers say',
     'preview.testimonialsDesc':
@@ -938,7 +945,14 @@ const ar: Record<MessageKey, string> = {
     'preview.formNotesPlaceholder':
         'أخبرنا عن اهتماماتك: متاحف، مغامرات، مطاعم...',
     'preview.formSubmit': 'أرسل الطلب',
-    'preview.formSuccess': 'وصلنا طلبك! سيتواصل معك المرشد بخطة رحلتك قريباً.',
+    'preview.formSuccess': 'وصلنا طلبك! ومرشدك الذكي يبني لك خطة مبدئية.',
+    'preview.planLoading': 'مرشدك الذكي يبني خطتك الآن...',
+    'preview.planTitle': 'خطتك المبدئية',
+    'preview.planHint':
+        'هذه خطة أولية مولّدة بالذكاء الاصطناعي — يمكنك تعديلها في أي وقت مع المرشد الذكي.',
+    'preview.planOpenAssistant': 'كمّل خطتك مع المرشد الذكي',
+    'preview.planError': 'تعذر إنشاء خطتك الآن.',
+    'preview.planRetry': 'إعادة المحاولة',
     'preview.testimonialsBadge': 'آراء المسافرين',
     'preview.testimonialsTitle': 'ماذا قال المسافرون',
     'preview.testimonialsDesc':

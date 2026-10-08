@@ -1,6 +1,6 @@
 <script lang="ts">
     import type { Component } from 'svelte';
-    import { Link, page, useForm } from '@inertiajs/svelte';
+    import { Link, page, useForm, useHttp } from '@inertiajs/svelte';
     import ArrowLeft from '@lucide/svelte/icons/arrow-left';
     import CalendarDays from '@lucide/svelte/icons/calendar-days';
     import Camera from '@lucide/svelte/icons/camera';
@@ -15,6 +15,7 @@
     import MessageCircle from '@lucide/svelte/icons/message-circle';
     import Mic from '@lucide/svelte/icons/mic';
     import Phone from '@lucide/svelte/icons/phone';
+    import RefreshCw from '@lucide/svelte/icons/refresh-cw';
     import Route from '@lucide/svelte/icons/route';
     import Send from '@lucide/svelte/icons/send';
     import Sparkles from '@lucide/svelte/icons/sparkles';
@@ -23,6 +24,7 @@
     import Wallet from '@lucide/svelte/icons/wallet';
     import AppHead from '@/components/AppHead.svelte';
     import AppLogoIcon from '@/components/AppLogoIcon.svelte';
+    import AssistantRichMessage from '@/components/AssistantRichMessage.svelte';
     import CityArt from '@/components/CityArt.svelte';
     import CityMotif from '@/components/CityMotif.svelte';
     import GuestStartMenu from '@/components/GuestStartMenu.svelte';
@@ -43,13 +45,18 @@
         translate,
         trips,
     } from '@/routes';
-    import { store as contactStore } from '@/routes/contact';
+    import { plan as contactPlan, store as contactStore } from '@/routes/contact';
     import type { Place, PlaceCategory } from '@/types';
 
     const auth = $derived(page.props.auth);
     const startHref = $derived(toUrl(auth.user ? dashboard() : register()));
 
     let submitted = $state(false);
+    let planToken = $state<string | null>(null);
+    let plan = $state<string | null>(null);
+    let planError = $state(false);
+
+    const planHttp = useHttp<Record<string, never>, { plan?: unknown }>({});
 
     const form = useForm({
         name: '',
@@ -188,13 +195,50 @@
 
         form.post(contactStore.url(), {
             preserveScroll: true,
+            onFlash: (flash) => {
+                const request = flash?.planRequest as
+                    | { token?: unknown }
+                    | undefined;
+
+                if (typeof request?.token === 'string') {
+                    planToken = request.token;
+                }
+            },
             onSuccess: () => {
                 submitted = true;
+
+                if (planToken !== null) {
+                    void generatePlan();
+                }
             },
             onFinish: () => {
                 form.processing = false;
             },
         });
+    }
+
+    async function generatePlan(): Promise<void> {
+        if (planToken === null || planHttp.processing) {
+            return;
+        }
+
+        plan = null;
+        planError = false;
+
+        try {
+            const response = await planHttp.post(contactPlan.url(planToken));
+            const value = typeof response?.plan === 'string' ? response.plan : '';
+
+            if (value.trim() === '') {
+                planError = true;
+
+                return;
+            }
+
+            plan = value;
+        } catch {
+            planError = true;
+        }
     }
 </script>
 
@@ -588,9 +632,7 @@
                 class="mt-10 rounded-[24px] bg-card p-6 shadow-xl shadow-slate-900/5 ring-1 ring-border/70 sm:p-8"
             >
                 {#if submitted}
-                    <div
-                        class="flex flex-col items-center gap-4 py-10 text-center"
-                    >
+                    <div class="flex flex-col items-center gap-4 pt-10 text-center">
                         <span
                             class="flex size-14 items-center justify-center rounded-full bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-400 ring-1 ring-emerald-100 dark:ring-emerald-900/60"
                         >
@@ -599,6 +641,77 @@
                         <p class="text-lg font-bold text-foreground">
                             {t('preview.formSuccess')}
                         </p>
+
+                        {#if planHttp.processing}
+                            <div
+                                class="w-full rounded-[20px] bg-muted/40 p-5 ring-1 ring-border"
+                            >
+                                <div
+                                    class="flex items-center justify-center gap-2 text-sm font-bold text-emerald-700 dark:text-emerald-300"
+                                >
+                                    <Sparkles class="size-4 animate-pulse" />
+                                    {t('preview.planLoading')}
+                                </div>
+                                <div class="mt-4 flex flex-col gap-2.5">
+                                    <div
+                                        class="h-3.5 w-2/3 animate-pulse rounded-full bg-muted"
+                                    ></div>
+                                    <div
+                                        class="h-3.5 w-full animate-pulse rounded-full bg-muted"
+                                    ></div>
+                                    <div
+                                        class="h-3.5 w-5/6 animate-pulse rounded-full bg-muted"
+                                    ></div>
+                                    <div
+                                        class="h-3.5 w-1/2 animate-pulse rounded-full bg-muted"
+                                    ></div>
+                                </div>
+                            </div>
+                        {:else if plan !== null}
+                            <div
+                                class="w-full rounded-[20px] bg-muted/40 p-5 text-start ring-1 ring-border sm:p-6"
+                            >
+                                <h3
+                                    class="flex items-center gap-2 text-base font-bold text-foreground"
+                                >
+                                    <Sparkles
+                                        class="size-4 text-emerald-600 dark:text-emerald-400"
+                                    />
+                                    {t('preview.planTitle')}
+                                </h3>
+                                <div class="mt-3">
+                                    <AssistantRichMessage text={plan} />
+                                </div>
+                                <p class="mt-4 text-xs text-muted-foreground">
+                                    {t('preview.planHint')}
+                                </p>
+                                <Link
+                                    href={toUrl(assistant())}
+                                    class="mt-4 inline-flex min-h-10 items-center gap-2 rounded-full bg-[#0b1e33] px-4 text-sm font-bold text-white transition hover:brightness-110"
+                                >
+                                    <MessageCircle class="size-4" />
+                                    {t('preview.planOpenAssistant')}
+                                </Link>
+                            </div>
+                        {:else if planError}
+                            <div
+                                class="w-full rounded-[20px] bg-red-50 p-5 ring-1 ring-red-100 dark:bg-red-950/40 dark:ring-red-900/60"
+                            >
+                                <p
+                                    class="text-sm font-bold text-red-700 dark:text-red-300"
+                                >
+                                    {t('preview.planError')}
+                                </p>
+                                <button
+                                    type="button"
+                                    onclick={generatePlan}
+                                    class="mt-4 inline-flex min-h-10 items-center gap-2 rounded-full bg-card px-4 text-sm font-bold text-foreground ring-1 ring-border transition hover:ring-emerald-400"
+                                >
+                                    <RefreshCw class="size-4" />
+                                    {t('preview.planRetry')}
+                                </button>
+                            </div>
+                        {/if}
                     </div>
                 {:else}
                     <form class="grid gap-5 sm:grid-cols-2" onsubmit={onSubmit}>

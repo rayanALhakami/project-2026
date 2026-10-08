@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Models\City;
 use App\Models\ContactRequest;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 /**
  * @extends Factory<ContactRequest>
@@ -19,6 +20,7 @@ class ContactRequestFactory extends Factory
     public function definition(): array
     {
         return [
+            'token' => (string) Str::uuid(),
             'name' => fake()->name(),
             'phone' => fake()->numerify('05########'),
             'city_id' => City::factory(),
