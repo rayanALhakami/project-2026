@@ -80,8 +80,8 @@ class ContactRequestTest extends TestCase
         TouristGuide::fake(['**اليوم الأول** زيارة المتحف.']);
 
         $this->postJson(route('contact.plan', $contactRequest->token))
-            ->assertOk()
-            ->assertJsonPath('plan', '**اليوم الأول** زيارة المتحف.');
+            ->assertStatus(202)
+            ->assertJsonPath('status', 'pending');
 
         $contactRequest->refresh();
 
@@ -91,6 +91,13 @@ class ContactRequestTest extends TestCase
         TouristGuide::assertPrompted(fn (AgentPrompt $prompt): bool => $prompt->contains('الرياض')
             && $prompt->contains('رحلة عائلية مع أطفال')
             && $prompt->contains('5,000'));
+
+        $this->postJson(route('contact.plan', $contactRequest->token))
+            ->assertOk()
+            ->assertJsonPath('status', 'ready')
+            ->assertJsonPath('plan', '**اليوم الأول** زيارة المتحف.');
+
+        TouristGuide::assertPromptedTimes(1);
     }
 
     public function test_a_stored_plan_is_returned_without_prompting_the_guide_again(): void
@@ -104,9 +111,37 @@ class ContactRequestTest extends TestCase
 
         $this->postJson(route('contact.plan', $contactRequest->token))
             ->assertOk()
+            ->assertJsonPath('status', 'ready')
             ->assertJsonPath('plan', 'خطة محفوظة مسبقاً');
 
         TouristGuide::assertNeverPrompted();
+    }
+
+    public function test_a_failed_generation_is_retried_on_the_next_request(): void
+    {
+        $contactRequest = ContactRequest::factory()->create();
+
+        $attempts = 0;
+
+        TouristGuide::fake(function () use (&$attempts): string {
+            $attempts++;
+
+            if ($attempts === 1) {
+                throw new RuntimeException('Provider exploded with secret detail.');
+            }
+
+            return 'خطة بديلة';
+        });
+
+        $this->postJson(route('contact.plan', $contactRequest->token))
+            ->assertStatus(202);
+
+        $this->assertNull($contactRequest->fresh()->plan);
+
+        $this->postJson(route('contact.plan', $contactRequest->token))
+            ->assertStatus(202);
+
+        $this->assertSame('خطة بديلة', $contactRequest->fresh()->plan);
     }
 
     public function test_plan_generation_returns_a_404_for_an_unknown_token(): void
@@ -116,26 +151,6 @@ class ContactRequestTest extends TestCase
         $this->postJson(route('contact.plan', (string) Str::uuid()))->assertNotFound();
 
         TouristGuide::assertNeverPrompted();
-    }
-
-    public function test_plan_generation_failures_return_a_generic_arabic_error(): void
-    {
-        $contactRequest = ContactRequest::factory()->create();
-
-        TouristGuide::fake(fn () => throw new RuntimeException('Provider exploded with secret detail.'));
-
-        $response = $this->postJson(route('contact.plan', $contactRequest->token));
-
-        $response->assertStatus(503)
-            ->assertJsonStructure(['error'])
-            ->assertJsonMissingPaths(['exception', 'trace', 'file', 'line']);
-
-        $this->assertStringNotContainsString('Provider exploded', $response->getContent());
-
-        $contactRequest->refresh();
-
-        $this->assertNull($contactRequest->plan);
-        $this->assertNull($contactRequest->plan_generated_at);
     }
 
     public function test_admins_can_view_and_manage_requests(): void

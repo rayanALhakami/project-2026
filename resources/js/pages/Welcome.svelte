@@ -1,5 +1,6 @@
 <script lang="ts">
     import type { Component } from 'svelte';
+    import { onDestroy } from 'svelte';
     import { Link, page, useForm, useHttp } from '@inertiajs/svelte';
     import ArrowLeft from '@lucide/svelte/icons/arrow-left';
     import CalendarDays from '@lucide/svelte/icons/calendar-days';
@@ -55,8 +56,13 @@
     let planToken = $state<string | null>(null);
     let plan = $state<string | null>(null);
     let planError = $state(false);
+    let disposed = false;
 
     const planHttp = useHttp<Record<string, never>, { plan?: unknown }>({});
+
+    onDestroy(() => {
+        disposed = true;
+    });
 
     const form = useForm({
         name: '',
@@ -217,6 +223,9 @@
         });
     }
 
+    const PLAN_POLL_INTERVAL_MS = 2500;
+    const PLAN_MAX_POLLS = 72;
+
     async function generatePlan(): Promise<void> {
         if (planToken === null || planHttp.processing) {
             return;
@@ -225,20 +234,33 @@
         plan = null;
         planError = false;
 
-        try {
-            const response = await planHttp.post(contactPlan.url(planToken));
-            const value = typeof response?.plan === 'string' ? response.plan : '';
-
-            if (value.trim() === '') {
-                planError = true;
-
+        for (let attempt = 0; attempt < PLAN_MAX_POLLS; attempt++) {
+            if (disposed) {
                 return;
             }
 
-            plan = value;
-        } catch {
-            planError = true;
+            try {
+                const response = await planHttp.post(contactPlan.url(planToken));
+                const value =
+                    typeof response?.plan === 'string' ? response.plan : '';
+
+                if (value.trim() !== '') {
+                    plan = value;
+
+                    return;
+                }
+            } catch {
+                // Keep polling; the next call retries generation on the server.
+            }
+
+            await sleep(PLAN_POLL_INTERVAL_MS);
         }
+
+        planError = true;
+    }
+
+    function sleep(milliseconds: number): Promise<void> {
+        return new Promise((resolve) => setTimeout(resolve, milliseconds));
     }
 </script>
 
