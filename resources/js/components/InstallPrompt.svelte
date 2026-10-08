@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { page } from '@inertiajs/svelte';
     import X from '@lucide/svelte/icons/x';
     import { onMount } from 'svelte';
     import AppLogoIcon from '@/components/AppLogoIcon.svelte';
@@ -15,8 +16,10 @@
     let installed = $state(false);
     let dismissed = $state(false);
 
+    const onAssistantPage = $derived(page.url.startsWith('/assistant'));
+
     const visible = $derived(
-        deferredPrompt !== null && !installed && !dismissed,
+        deferredPrompt !== null && !installed && !dismissed && !onAssistantPage,
     );
 
     function isStandalone(): boolean {

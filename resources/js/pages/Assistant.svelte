@@ -15,11 +15,11 @@
     import Trash2 from '@lucide/svelte/icons/trash-2';
     import Utensils from '@lucide/svelte/icons/utensils';
     import Volume2 from '@lucide/svelte/icons/volume-2';
-    import VolumeX from '@lucide/svelte/icons/volume-x';
     import X from '@lucide/svelte/icons/x';
     import { onDestroy, onMount } from 'svelte';
     import { toast } from 'svelte-sonner';
     import AppHead from '@/components/AppHead.svelte';
+    import AssistantRichMessage from '@/components/AssistantRichMessage.svelte';
     import SiteHeader from '@/components/SiteHeader.svelte';
     import {
         Popover,
@@ -444,6 +444,14 @@
         http.clearErrors();
 
         const wasNewConversation = !isValidConversationId(conversationId);
+        const userMessage: ChatMessage = {
+            id: nextId++,
+            role: 'user',
+            text: value,
+            imageUrl: imagePreview ?? undefined,
+        };
+
+        messages = [...messages, userMessage];
 
         http.post(chat.url(), {
             onSuccess: (response) => {
@@ -456,20 +464,13 @@
                     return;
                 }
 
-                const imageUrl = imagePreview ?? undefined;
-                const userMessage: ChatMessage = {
-                    id: nextId++,
-                    role: 'user',
-                    text: value,
-                    imageUrl,
-                };
                 const assistantMessage: ChatMessage = {
                     id: nextId++,
                     role: 'assistant',
                     text: reply,
                 };
 
-                messages = [...messages, userMessage, assistantMessage];
+                messages = [...messages, assistantMessage];
 
                 if (isValidConversationId(response.conversation_id)) {
                     conversationId = response.conversation_id;
@@ -478,14 +479,6 @@
                     if (wasNewConversation) {
                         loadConversations();
                     }
-                }
-
-                http.message = '';
-                http.image = null;
-                imagePreview = null;
-
-                if (fileInput) {
-                    fileInput.value = '';
                 }
 
                 if (fromVoice && voice.autoPlay) {
@@ -502,6 +495,14 @@
         }).catch(() => {
             // Failures are surfaced through the callbacks above.
         });
+
+        http.message = '';
+        http.image = null;
+        imagePreview = null;
+
+        if (fileInput) {
+            fileInput.value = '';
+        }
     }
 
     function createPreview(file: File): string {
@@ -630,7 +631,7 @@
     <div
         class="mx-auto flex min-h-0 w-full max-w-4xl flex-1 flex-col px-4 py-4 md:px-6"
     >
-        <div class="flex items-center justify-between gap-3 pb-4">
+        <div class="flex items-center justify-between gap-2 pb-3 sm:pb-4">
             <div class="flex min-w-0 items-center gap-3">
                 <span
                     class="flex size-11 shrink-0 items-center justify-center rounded-xl bg-[#0b1e33] text-emerald-300"
@@ -649,9 +650,87 @@
                 </div>
             </div>
 
-            {#if authUser}
-                <Popover
-                    bind:open={historyOpen}
+            <div class="flex shrink-0 items-center gap-2">
+                <Popover>
+                    <PopoverTrigger
+                        class="flex size-11 shrink-0 items-center justify-center rounded-xl bg-card ring-1 ring-border transition hover:ring-emerald-300 {voice.autoPlay
+                            ? 'text-emerald-700 dark:text-emerald-300'
+                            : 'text-secondary-foreground'}"
+                        aria-label={t('voice.settings')}
+                        title={t('voice.settings')}
+                    >
+                        <Settings2 class="size-5" />
+                    </PopoverTrigger>
+                    <PopoverContent align="end" class="w-72 gap-4 p-4">
+                        <div class="flex flex-col gap-2">
+                            <span
+                                class="text-xs font-bold text-muted-foreground"
+                            >
+                                {t('voice.language')}
+                            </span>
+                            <select
+                                value={voice.language}
+                                onchange={(event) =>
+                                    setVoiceLanguage(
+                                        event.currentTarget.value,
+                                    )}
+                                class="min-h-11 w-full rounded-xl bg-card px-3 text-sm font-bold text-foreground outline-none ring-1 ring-border focus:ring-2 focus:ring-emerald-400"
+                            >
+                                {#each voiceLanguageOptions as option (option.code)}
+                                    <option value={option.code}>
+                                        {option.flag} {option.label}
+                                    </option>
+                                {/each}
+                            </select>
+                        </div>
+                        <div class="flex flex-col gap-2">
+                            <span
+                                class="text-xs font-bold text-muted-foreground"
+                            >
+                                {t('voice.gender')}
+                            </span>
+                            <div class="grid grid-cols-2 gap-2">
+                                <button
+                                    type="button"
+                                    onclick={() =>
+                                        setVoiceGender('female')}
+                                    class="min-h-10 rounded-xl text-sm font-bold ring-1 transition {voice.voiceGender ===
+                                    'female'
+                                        ? 'bg-[#0b1e33] text-white ring-[#0b1e33]'
+                                        : 'bg-card text-secondary-foreground ring-border hover:ring-emerald-400'}"
+                                >
+                                    {t('voice.female')}
+                                </button>
+                                <button
+                                    type="button"
+                                    onclick={() => setVoiceGender('male')}
+                                    class="min-h-10 rounded-xl text-sm font-bold ring-1 transition {voice.voiceGender ===
+                                    'male'
+                                        ? 'bg-[#0b1e33] text-white ring-[#0b1e33]'
+                                        : 'bg-card text-secondary-foreground ring-border hover:ring-emerald-400'}"
+                                >
+                                    {t('voice.male')}
+                                </button>
+                            </div>
+                        </div>
+                        <label
+                            class="flex items-center justify-between gap-3"
+                        >
+                            <span class="text-sm font-bold text-foreground">
+                                {t('voice.autoPlay')}
+                            </span>
+                            <Switch
+                                checked={voice.autoPlay}
+                                onCheckedChange={(checked) =>
+                                    setVoiceAutoPlay(checked)}
+                            />
+                        </label>
+                    </PopoverContent>
+                </Popover>
+
+                {#if authUser}
+                    <Popover
+                        bind:open={historyOpen}
                     onOpenChange={(open) => {
                         if (open) {
                             loadConversations();
@@ -758,7 +837,8 @@
                         </div>
                     </PopoverContent>
                 </Popover>
-            {/if}
+                {/if}
+            </div>
         </div>
 
         <div
@@ -766,7 +846,7 @@
         >
             <div
                 bind:this={container}
-                class="flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto p-4 sm:p-5"
+                class="flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto p-3 sm:p-5"
             >
                 {#each messages as message (message.id)}
                     <div
@@ -816,9 +896,7 @@
                                         </p>
                                     </div>
                                 {:else}
-                                    <p class="whitespace-pre-wrap">
-                                        {message.text}
-                                    </p>
+                                    <AssistantRichMessage text={message.text} />
                                     <button
                                         type="button"
                                         onclick={() => toggleSpeak(message)}
@@ -874,11 +952,14 @@
                 {#if messages.length <= 1}
                     <div class="flex flex-col gap-3 pt-2">
                         <div class="grid grid-cols-2 gap-2 sm:grid-cols-3">
-                            {#each categories as category (category.key)}
+                            {#each categories as category, index (category.key)}
                                 <button
                                     type="button"
                                     onclick={() => send(category.prompt)}
-                                    class="flex min-h-14 items-center gap-2 rounded-xl bg-card px-4 text-sm font-bold text-secondary-foreground ring-1 ring-border transition hover:ring-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300"
+                                    class="flex min-h-12 items-center gap-2 rounded-xl bg-card px-3 text-sm font-bold text-secondary-foreground ring-1 ring-border transition hover:ring-emerald-400 hover:text-emerald-700 sm:min-h-14 sm:px-4 dark:hover:text-emerald-300 {index ===
+                                    categories.length - 1
+                                        ? 'col-span-2 sm:col-span-1'
+                                        : ''}"
                                 >
                                     <category.icon class="size-5 shrink-0" />
                                     <span class="truncate">{category.label}</span>
@@ -942,7 +1023,7 @@
                     </p>
                 {/if}
 
-                <div class="flex items-end gap-2 p-3">
+                <div class="flex items-center gap-2 p-2">
                     <input
                         bind:this={fileInput}
                         type="file"
@@ -951,156 +1032,57 @@
                         onchange={onImageSelected}
                     />
                     <div
-                        class="flex min-w-0 flex-1 flex-col rounded-2xl bg-muted/60 ring-1 ring-border transition focus-within:ring-2 focus-within:ring-emerald-400"
+                        class="flex min-h-12 min-w-0 flex-1 items-center rounded-2xl bg-muted/60 ring-1 ring-border transition focus-within:ring-2 focus-within:ring-emerald-400"
                     >
+                        <button
+                            type="button"
+                            onclick={() => fileInput?.click()}
+                            disabled={http.processing}
+                            class="flex size-11 shrink-0 items-center justify-center rounded-full text-muted-foreground transition hover:text-foreground disabled:opacity-40"
+                            aria-label={t('assistant.attachImage')}
+                            title={t('assistant.attachImage')}
+                        >
+                            <ImageIcon class="size-5" />
+                        </button>
                         <input
                             bind:value={http.message}
                             type="text"
                             placeholder={t('assistant.placeholder')}
                             aria-label={t('assistant.placeholder')}
-                            class="w-full bg-transparent px-4 pt-3.5 pb-1.5 text-base text-foreground outline-none placeholder:text-muted-foreground"
+                            class="w-full min-w-0 flex-1 bg-transparent px-1 py-3 text-base text-foreground outline-none placeholder:text-muted-foreground"
                         />
-                        <div class="flex flex-wrap items-center gap-1 px-2 pb-2">
-                            <button
-                                type="button"
-                                onclick={() => fileInput?.click()}
-                                disabled={http.processing}
-                                class="inline-flex min-h-9 items-center gap-1.5 rounded-full px-2.5 text-xs font-bold text-muted-foreground transition hover:bg-background hover:text-foreground disabled:opacity-40"
-                                aria-label={t('assistant.attachImage')}
-                                title={t('assistant.attachImage')}
-                            >
-                                <ImageIcon class="size-4" />
-                                {t('assistant.attachImage')}
-                            </button>
-                            <button
-                                type="button"
-                                onclick={toggleMic}
-                                disabled={voice.processing}
-                                aria-pressed={voice.recording}
-                                class="inline-flex min-h-9 items-center gap-1.5 rounded-full px-2.5 text-xs font-bold transition disabled:opacity-40 {voice.recording
-                                    ? 'animate-pulse bg-red-500 text-white'
-                                    : 'text-muted-foreground hover:bg-background hover:text-foreground'}"
-                                aria-label={voice.recording
-                                    ? t('voice.stop')
-                                    : voice.processing
-                                      ? t('voice.transcribing')
-                                      : t('assistant.recordAudio')}
-                                title={voice.recording
-                                    ? t('voice.stop')
-                                    : voice.processing
-                                      ? t('voice.transcribing')
-                                      : t('assistant.recordAudio')}
-                            >
-                                {#if voice.processing}
-                                    <LoaderCircle class="size-4 animate-spin" />
-                                {:else}
-                                    <Mic class="size-4" />
-                                {/if}
-                                {voice.recording
-                                    ? t('voice.stop')
-                                    : t('assistant.recordAudio')}
-                            </button>
-                            <button
-                                type="button"
-                                onclick={() => setVoiceAutoPlay(!voice.autoPlay)}
-                                aria-pressed={voice.autoPlay}
-                                class="inline-flex min-h-9 items-center gap-1.5 rounded-full px-2.5 text-xs font-bold transition {voice.autoPlay
-                                    ? 'text-emerald-700 hover:bg-background dark:text-emerald-300'
-                                    : 'text-muted-foreground hover:bg-background hover:text-foreground'}"
-                                aria-label={t('voice.autoPlay')}
-                                title={t('voice.autoPlay')}
-                            >
-                                {#if voice.autoPlay}
-                                    <Volume2 class="size-4" />
-                                {:else}
-                                    <VolumeX class="size-4" />
-                                {/if}
-                                {t('assistant.speakReplies')}
-                            </button>
-                            <Popover>
-                                <PopoverTrigger
-                                    class="inline-flex min-h-9 items-center gap-1.5 rounded-full px-2.5 text-xs font-bold text-muted-foreground transition hover:bg-background hover:text-foreground"
-                                    aria-label={t('voice.settings')}
-                                    title={t('voice.settings')}
-                                >
-                                    <Settings2 class="size-4" />
-                                    {t('assistant.options')}
-                                </PopoverTrigger>
-                                <PopoverContent align="end" class="w-72 gap-4 p-4">
-                                    <div class="flex flex-col gap-2">
-                                        <span
-                                            class="text-xs font-bold text-muted-foreground"
-                                        >
-                                            {t('voice.language')}
-                                        </span>
-                                        <select
-                                            value={voice.language}
-                                            onchange={(event) =>
-                                                setVoiceLanguage(
-                                                    event.currentTarget.value,
-                                                )}
-                                            class="min-h-11 w-full rounded-xl bg-card px-3 text-sm font-bold text-foreground outline-none ring-1 ring-border focus:ring-2 focus:ring-emerald-400"
-                                        >
-                                            {#each voiceLanguageOptions as option (option.code)}
-                                                <option value={option.code}>
-                                                    {option.flag} {option.label}
-                                                </option>
-                                            {/each}
-                                        </select>
-                                    </div>
-                                    <div class="flex flex-col gap-2">
-                                        <span
-                                            class="text-xs font-bold text-muted-foreground"
-                                        >
-                                            {t('voice.gender')}
-                                        </span>
-                                        <div class="grid grid-cols-2 gap-2">
-                                            <button
-                                                type="button"
-                                                onclick={() =>
-                                                    setVoiceGender('female')}
-                                                class="min-h-10 rounded-xl text-sm font-bold ring-1 transition {voice.voiceGender ===
-                                                'female'
-                                                    ? 'bg-[#0b1e33] text-white ring-[#0b1e33]'
-                                                    : 'bg-card text-secondary-foreground ring-border hover:ring-emerald-400'}"
-                                            >
-                                                {t('voice.female')}
-                                            </button>
-                                            <button
-                                                type="button"
-                                                onclick={() =>
-                                                    setVoiceGender('male')}
-                                                class="min-h-10 rounded-xl text-sm font-bold ring-1 transition {voice.voiceGender ===
-                                                'male'
-                                                    ? 'bg-[#0b1e33] text-white ring-[#0b1e33]'
-                                                    : 'bg-card text-secondary-foreground ring-border hover:ring-emerald-400'}"
-                                            >
-                                                {t('voice.male')}
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <label
-                                        class="flex items-center justify-between gap-3"
-                                    >
-                                        <span
-                                            class="text-sm font-bold text-foreground"
-                                        >
-                                            {t('voice.autoPlay')}
-                                        </span>
-                                        <Switch
-                                            checked={voice.autoPlay}
-                                            onCheckedChange={(checked) =>
-                                                setVoiceAutoPlay(checked)}
-                                        />
-                                    </label>
-                                </PopoverContent>
-                            </Popover>
-                        </div>
+                        <button
+                            type="button"
+                            onclick={toggleMic}
+                            disabled={voice.processing}
+                            aria-pressed={voice.recording}
+                            class="flex size-11 shrink-0 items-center justify-center rounded-full transition disabled:opacity-40 {voice.recording
+                                ? 'animate-pulse bg-red-500 text-white'
+                                : 'text-muted-foreground hover:text-foreground'}"
+                            aria-label={voice.recording
+                                ? t('voice.stop')
+                                : voice.processing
+                                  ? t('voice.transcribing')
+                                  : t('assistant.recordAudio')}
+                            title={voice.recording
+                                ? t('voice.stop')
+                                : voice.processing
+                                  ? t('voice.transcribing')
+                                  : t('assistant.recordAudio')}
+                        >
+                            {#if voice.processing}
+                                <LoaderCircle class="size-5 animate-spin" />
+                            {:else if voice.recording}
+                                <Square class="size-4 fill-current" />
+                            {:else}
+                                <Mic class="size-5" />
+                            {/if}
+                        </button>
                     </div>
                     <button
                         type="submit"
                         disabled={http.processing || http.message.trim() === ''}
-                        class="flex size-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-400 to-teal-700 text-white shadow-lg shadow-emerald-900/20 transition hover:brightness-110 active:scale-95 disabled:opacity-40"
+                        class="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-emerald-400 to-teal-700 text-white shadow-lg shadow-emerald-900/20 transition hover:brightness-110 active:scale-95 disabled:opacity-40"
                         aria-label={t('assistant.send')}
                         title={t('assistant.send')}
                     >

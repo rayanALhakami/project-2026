@@ -7,6 +7,7 @@ use App\Ai\Tools\ComparePlaces;
 use App\Ai\Tools\EstimateBudget;
 use App\Ai\Tools\FindBestFor;
 use App\Ai\Tools\GetDirections;
+use App\Ai\Tools\GetPrayerTimes;
 use App\Ai\Tools\GetWeather;
 use App\Ai\Tools\ListEvents;
 use App\Ai\Tools\RecommendPlaces;
@@ -73,6 +74,7 @@ PROMPT;
             new ListEvents,
             new GetWeather,
             new GetDirections,
+            new GetPrayerTimes,
         ];
     }
 }

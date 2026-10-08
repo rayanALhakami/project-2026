@@ -7,6 +7,7 @@ use App\Ai\Tools\ComparePlaces;
 use App\Ai\Tools\EstimateBudget;
 use App\Ai\Tools\FindBestFor;
 use App\Ai\Tools\GetDirections;
+use App\Ai\Tools\GetPrayerTimes;
 use App\Ai\Tools\GetWeather;
 use App\Ai\Tools\ListEvents;
 use App\Ai\Tools\RecommendPlaces;
@@ -300,6 +301,52 @@ class AssistantToolsTest extends TestCase
         Http::preventStrayRequests();
 
         $result = (string) (new GetWeather)->handle(new ToolRequest([
+            'city' => 'مدينة غير موجودة إطلاقاً',
+        ]));
+
+        $this->assertMatchesRegularExpression('/\p{Arabic}/u', $result);
+        $this->assertStringContainsString('لم أجد مدينة', $result);
+    }
+
+    public function test_get_prayer_times_returns_the_resolved_city_and_times_from_live_data(): void
+    {
+        $this->seed();
+
+        Http::preventStrayRequests();
+        Http::fake([
+            'api.aladhan.com/*' => Http::response([
+                'data' => [
+                    'timings' => [
+                        'Fajr' => '04:32 (AST)',
+                        'Dhuhr' => '11:58 (AST)',
+                        'Asr' => '15:21 (AST)',
+                        'Maghrib' => '18:47 (AST)',
+                        'Isha' => '20:17 (AST)',
+                    ],
+                ],
+            ]),
+        ]);
+
+        $result = (string) (new GetPrayerTimes)->handle(new ToolRequest(['city' => 'أبها']));
+        $payload = json_decode($result, true);
+
+        $this->assertSame('أبها', $payload['city']);
+        $this->assertSame('Abha', $payload['city_en']);
+        $this->assertSame('04:32', $payload['fajr']);
+        $this->assertSame('20:17', $payload['isha']);
+        $this->assertStringContainsString('أبها', $result);
+        $this->assertStringContainsString('04:32', $result);
+
+        Http::assertSentCount(1);
+    }
+
+    public function test_get_prayer_times_returns_an_arabic_error_for_an_unknown_city(): void
+    {
+        $this->seed();
+
+        Http::preventStrayRequests();
+
+        $result = (string) (new GetPrayerTimes)->handle(new ToolRequest([
             'city' => 'مدينة غير موجودة إطلاقاً',
         ]));
 

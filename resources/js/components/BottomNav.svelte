@@ -68,7 +68,7 @@
                 url.currentUrl,
             )}
             <li class="flex-1">
-                {#if item.key === 'assistant'}
+                {#if item.key === 'assistant' && !active}
                     <Link
                         href={toUrl(item.href)}
                         aria-current={active ? 'page' : undefined}
@@ -91,12 +91,14 @@
                     <Link
                         href={toUrl(item.href)}
                         aria-current={active ? 'page' : undefined}
-                        class="flex min-h-16 flex-col items-center justify-center gap-1 rounded-2xl px-1 py-2 text-base font-semibold transition {active
+                        class="flex min-h-16 flex-col items-center justify-center gap-1 rounded-2xl px-0.5 py-2 font-semibold transition {active
                             ? 'text-primary'
                             : 'text-muted-foreground hover:text-foreground'}"
                     >
                         <item.icon class="size-6 shrink-0" />
-                        <span class="text-center leading-tight">
+                        <span
+                            class="whitespace-nowrap text-center text-[11px] leading-tight"
+                        >
                             {item.title}
                         </span>
                     </Link>
