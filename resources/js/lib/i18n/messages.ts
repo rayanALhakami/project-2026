@@ -36,7 +36,7 @@ export function localeInfo(code: LocaleCode): LocaleInfo {
 
 const en = {
     'app.name': 'next trip',
-    'app.nameAr': 'رحلتك القادمة وجميع فعالياتك في تطبيق واحد',
+    'app.nameAr': 'رحلتك القادمة وجميع فعالياتك في منصة واحدة',
 
     'nav.home': 'Home',
     'nav.assistant': 'Your Smart Guide',
@@ -596,7 +596,7 @@ export type MessageKey = keyof typeof en;
 
 const ar: Record<MessageKey, string> = {
     'app.name': 'next trip',
-    'app.nameAr': 'رحلتك القادمة وجميع فعالياتك في تطبيق واحد',
+    'app.nameAr': 'رحلتك القادمة وجميع فعالياتك في منصة واحدة',
 
     'nav.home': 'الرئيسية',
     'nav.assistant': 'مرشدك الذكي',
@@ -862,9 +862,9 @@ const ar: Record<MessageKey, string> = {
     'translate.from': 'من',
     'translate.to': 'إلى',
 
-    'welcome.title': 'رحلتك القادمة وجميع فعالياتك في تطبيق واحد',
+    'welcome.title': 'رحلتك القادمة وجميع فعالياتك في منصة واحدة',
     'welcome.subtitle':
-        'خطط رحلاتك، اكتشف الأماكن، ترجم فوراً، واحصل على إجابات — كل ذلك في تطبيق واحد سهل.',
+        'خطط رحلاتك، اكتشف الأماكن، ترجم فوراً، واحصل على إجابات — كل ذلك في منصة واحدة سهلة.',
     'welcome.start': 'ابدأ الآن',
     'welcome.login': 'تسجيل الدخول',
     'welcome.browse': 'الدخول إلى التطبيق',
@@ -879,7 +879,7 @@ const ar: Record<MessageKey, string> = {
     'preview.backToCurrent': 'التصميم الكلاسيكي',
     'preview.badge': 'منصة السياحة الذكية في السعودية',
     'preview.heroSubtitle':
-        'خطط رحلتك، واختر فعالياتك حسب ميزانيتك ورغبتك، وكل الأماكن والطقس والخرائط والترجمة في تطبيق واحد.',
+        'خطط رحلتك، واختر فعالياتك حسب ميزانيتك ورغبتك، وكل الأماكن والطقس والخرائط والترجمة في منصة واحدة.',
     'preview.ctaFeatures': 'استكشف المميزات',
     'preview.statCities': 'مدينة سعودية',
     'preview.statPlaces': 'معلم سياحي',
@@ -1142,7 +1142,7 @@ const ar: Record<MessageKey, string> = {
 
 const fr: Partial<Record<MessageKey, string>> = {
     'app.name': 'next trip',
-    'app.nameAr': 'رحلتك القادمة وجميع فعالياتك في تطبيق واحد',
+    'app.nameAr': 'رحلتك القادمة وجميع فعالياتك في منصة واحدة',
 
     'nav.home': 'Accueil',
     'nav.assistant': 'Votre guide intelligent',
@@ -1293,7 +1293,7 @@ const fr: Partial<Record<MessageKey, string>> = {
 
 const es: Partial<Record<MessageKey, string>> = {
     'app.name': 'next trip',
-    'app.nameAr': 'رحلتك القادمة وجميع فعالياتك في تطبيق واحد',
+    'app.nameAr': 'رحلتك القادمة وجميع فعالياتك في منصة واحدة',
 
     'nav.home': 'Inicio',
     'nav.assistant': 'Tu guía inteligente',
@@ -1442,7 +1442,7 @@ const es: Partial<Record<MessageKey, string>> = {
 
 const de: Partial<Record<MessageKey, string>> = {
     'app.name': 'next trip',
-    'app.nameAr': 'رحلتك القادمة وجميع فعالياتك في تطبيق واحد',
+    'app.nameAr': 'رحلتك القادمة وجميع فعالياتك في منصة واحدة',
 
     'nav.home': 'Start',
     'nav.assistant': 'Dein intelligenter Guide',
@@ -1586,7 +1586,7 @@ const de: Partial<Record<MessageKey, string>> = {
 
 const ru: Partial<Record<MessageKey, string>> = {
     'app.name': 'next trip',
-    'app.nameAr': 'رحلتك القادمة وجميع فعالياتك في تطبيق واحد',
+    'app.nameAr': 'رحلتك القادمة وجميع فعالياتك في منصة واحدة',
 
     'nav.home': 'Главная',
     'nav.assistant': 'Ваш умный гид',
@@ -1730,7 +1730,7 @@ const ru: Partial<Record<MessageKey, string>> = {
 
 const tr: Partial<Record<MessageKey, string>> = {
     'app.name': 'next trip',
-    'app.nameAr': 'رحلتك القادمة وجميع فعالياتك في تطبيق واحد',
+    'app.nameAr': 'رحلتك القادمة وجميع فعالياتك في منصة واحدة',
 
     'nav.home': 'Ana Sayfa',
     'nav.assistant': 'Akıllı rehberiniz',
@@ -1877,7 +1877,7 @@ const tr: Partial<Record<MessageKey, string>> = {
 
 const zh: Partial<Record<MessageKey, string>> = {
     'app.name': 'next trip',
-    'app.nameAr': 'رحلتك القادمة وجميع فعالياتك في تطبيق واحد',
+    'app.nameAr': 'رحلتك القادمة وجميع فعالياتك في منصة واحدة',
 
     'nav.home': '首页',
     'nav.assistant': '您的智能向导',
@@ -2016,7 +2016,7 @@ const zh: Partial<Record<MessageKey, string>> = {
 
 const hi: Partial<Record<MessageKey, string>> = {
     'app.name': 'next trip',
-    'app.nameAr': 'رحلتك القادمة وجميع فعالياتك في تطبيق واحد',
+    'app.nameAr': 'رحلتك القادمة وجميع فعالياتك في منصة واحدة',
 
     'nav.home': 'होम',
     'nav.assistant': 'आपका स्मार्ट गाइड',
@@ -2159,7 +2159,7 @@ const hi: Partial<Record<MessageKey, string>> = {
 
 const ur: Partial<Record<MessageKey, string>> = {
     'app.name': 'next trip',
-    'app.nameAr': 'رحلتك القادمة وجميع فعالياتك في تطبيق واحد',
+    'app.nameAr': 'رحلتك القادمة وجميع فعالياتك في منصة واحدة',
 
     'nav.home': 'ہوم',
     'nav.assistant': 'آپ کا سمارٹ گائیڈ',
