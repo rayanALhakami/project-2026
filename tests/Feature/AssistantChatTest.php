@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Ai\Agents\TouristGuide;
+use App\Ai\GuestParticipant;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
@@ -17,19 +18,47 @@ class AssistantChatTest extends TestCase
 
     public function test_guests_can_chat_with_the_assistant(): void
     {
+        config(['ai.conversations.generate_title' => false]);
+
         TouristGuide::fake(['أهلاً بك في السعودية!']);
 
         $response = $this->postJson(route('assistant.chat'), ['message' => 'مرحبا']);
 
         $response->assertOk()
-            ->assertExactJson([
-                'reply' => 'أهلاً بك في السعودية!',
-                'conversation_id' => null,
-                'user_message_id' => null,
-                'assistant_message_id' => null,
-            ]);
+            ->assertJsonPath('reply', 'أهلاً بك في السعودية!');
+
+        $conversationId = $response->json('conversation_id');
+
+        $this->assertIsString($conversationId);
+        $this->assertDatabaseHas('agent_conversations', [
+            'id' => $conversationId,
+            'participant_type' => GuestParticipant::class,
+        ]);
 
         TouristGuide::assertPrompted('مرحبا');
+    }
+
+    public function test_guests_can_continue_their_conversation(): void
+    {
+        config(['ai.conversations.generate_title' => false]);
+
+        TouristGuide::fake(['مقارنة جدة وأبها', 'ملخص موجز']);
+
+        $first = $this->postJson(route('assistant.chat'), ['message' => 'قارن بين جدة وأبها'])->assertOk();
+
+        $conversationId = $first->json('conversation_id');
+        $this->assertIsString($conversationId);
+
+        $second = $this->postJson(route('assistant.chat'), [
+            'message' => 'اخصر',
+            'conversation_id' => $conversationId,
+        ])->assertOk()->assertJsonPath('reply', 'ملخص موجز');
+
+        $this->assertSame($conversationId, $second->json('conversation_id'));
+        $this->assertSame(2, DB::table('agent_conversation_messages')
+            ->where('conversation_id', $conversationId)
+            ->where('role', 'user')
+            ->count());
     }
 
     public function test_the_message_is_required_before_prompting_the_agent(): void
@@ -145,6 +174,33 @@ class AssistantChatTest extends TestCase
 
         $this->assertSame(1, DB::table('agent_conversation_messages')
             ->where('conversation_id', $otherConversationId)
+            ->where('role', 'user')
+            ->count());
+    }
+
+    public function test_a_conversation_owned_by_a_guest_is_not_continued_by_a_user(): void
+    {
+        config(['ai.conversations.generate_title' => false]);
+
+        TouristGuide::fake(['رد الزائر', 'رد المستخدم']);
+
+        $guestResponse = $this->postJson(route('assistant.chat'), ['message' => 'مرحبا'])->assertOk();
+
+        $guestConversationId = $guestResponse->json('conversation_id');
+        $this->assertIsString($guestConversationId);
+
+        $userResponse = $this->actingAs(User::factory()->create())
+            ->postJson(route('assistant.chat'), [
+                'message' => 'أكمل محادثة الزائر',
+                'conversation_id' => $guestConversationId,
+            ])
+            ->assertOk()
+            ->assertJsonPath('reply', 'رد المستخدم');
+
+        $this->assertIsString($userResponse->json('conversation_id'));
+        $this->assertNotSame($guestConversationId, $userResponse->json('conversation_id'));
+        $this->assertSame(1, DB::table('agent_conversation_messages')
+            ->where('conversation_id', $guestConversationId)
             ->where('role', 'user')
             ->count());
     }

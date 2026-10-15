@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Ai\Agents\TouristGuide;
+use App\Ai\GuestParticipant;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -37,13 +38,16 @@ class AssistantController extends Controller
 
             $agent = new TouristGuide;
             $user = $request->user();
+            $participant = $user instanceof User ? $user : $this->guestParticipant($request);
 
             $provider = $attachments === [] ? null : Lab::Gemini;
 
-            $response = $user instanceof User
-                ? $agent->continueOrStart($this->ownedConversationId($validated['conversation_id'] ?? null, $user), as: $user)
-                    ->prompt($prompt, attachments: $attachments, provider: $provider)
-                : $agent->prompt($prompt, attachments: $attachments, provider: $provider);
+            $response = $agent
+                ->continueOrStart(
+                    $this->ownedConversationId($validated['conversation_id'] ?? null, $participant),
+                    as: $participant,
+                )
+                ->prompt($prompt, attachments: $attachments, provider: $provider);
 
             return response()->json([
                 'reply' => (string) $response,
@@ -61,9 +65,9 @@ class AssistantController extends Controller
     }
 
     /**
-     * Only continue a conversation owned by the given user; otherwise start a new one.
+     * Only continue a conversation owned by the given participant; otherwise start a new one.
      */
-    private function ownedConversationId(?string $conversationId, User $user): ?string
+    private function ownedConversationId(?string $conversationId, User|GuestParticipant $participant): ?string
     {
         if ($conversationId === null) {
             return null;
@@ -73,8 +77,25 @@ class AssistantController extends Controller
 
         return $store->conversationBelongsTo(
             $conversationId,
-            Conversation::participantType($user),
-            Conversation::participantKey($user),
+            Conversation::participantType($participant),
+            Conversation::participantKey($participant),
         ) ? $conversationId : null;
+    }
+
+    /**
+     * Resolve the session-scoped participant that remembers a guest's conversations.
+     */
+    private function guestParticipant(Request $request): GuestParticipant
+    {
+        $session = $request->session();
+
+        $id = $session->get('ai.guest_participant_id');
+
+        if (! is_int($id)) {
+            $id = random_int(1, PHP_INT_MAX);
+            $session->put('ai.guest_participant_id', $id);
+        }
+
+        return new GuestParticipant($id);
     }
 }

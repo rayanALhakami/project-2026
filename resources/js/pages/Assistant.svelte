@@ -212,7 +212,7 @@
 
         const key = conversationKey();
 
-        if (key === null || typeof window === 'undefined') {
+        if (typeof window === 'undefined') {
             return;
         }
 
@@ -234,20 +234,16 @@
         return typeof value === 'string' && UUID_PATTERN.test(value);
     }
 
-    function conversationKey(): string | null {
+    function conversationKey(): string {
         const user = authUser;
 
-        if (!user) {
-            return null;
-        }
-
-        return `assistant-conversation-${user.id}`;
+        return `assistant-conversation-${user ? user.id : 'guest'}`;
     }
 
     function persistConversation(id: string): void {
         const key = conversationKey();
 
-        if (key === null || typeof window === 'undefined') {
+        if (typeof window === 'undefined') {
             return;
         }
 
@@ -280,7 +276,7 @@
 
         const key = conversationKey();
 
-        if (key !== null && typeof window !== 'undefined') {
+        if (typeof window !== 'undefined') {
             window.localStorage.removeItem(key);
         }
 
