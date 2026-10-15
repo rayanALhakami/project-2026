@@ -1,7 +1,5 @@
 <script lang="ts">
     import { Link, page, useHttp } from '@inertiajs/svelte';
-    import ArrowDown from '@lucide/svelte/icons/arrow-down';
-    import ArrowUp from '@lucide/svelte/icons/arrow-up';
     import Check from '@lucide/svelte/icons/check';
     import ChevronLeft from '@lucide/svelte/icons/chevron-left';
     import Heart from '@lucide/svelte/icons/heart';
@@ -15,8 +13,8 @@
     import PlaceShowcaseCard from '@/components/PlaceShowcaseCard.svelte';
     import SiteHeader from '@/components/SiteHeader.svelte';
     import { Toaster } from '@/components/ui/sonner';
-    import WeatherArt from '@/components/WeatherArt.svelte';
     import WeatherCityPicker from '@/components/WeatherCityPicker.svelte';
+    import WeatherIcon from '@/components/WeatherIcon.svelte';
     import { selectedCityId, setSelectedCity } from '@/lib/city.svelte';
     import { cityImage } from '@/lib/city-images';
     import { formatDate, formatNumber, getLocale, t } from '@/lib/i18n.svelte';
@@ -105,6 +103,19 @@
     const artCondition = $derived(
         (weather?.condition ?? 'clear') as WeatherCondition,
     );
+
+    const weatherIconTints: Record<WeatherCondition, string> = {
+        clear: 'bg-[#FFF5DC]',
+        'partly-cloudy': 'bg-[#EEF4FD]',
+        cloudy: 'bg-[#EEF1F6]',
+        fog: 'bg-[#EEF2F5]',
+        rain: 'bg-[#E8F1FD]',
+        thunder: 'bg-[#F1EEFB]',
+        dust: 'bg-[#F8F1E3]',
+        hot: 'bg-[#FDEEE9]',
+    };
+
+    const iconTint = $derived(weatherIconTints[artCondition] ?? 'bg-muted');
 
     const recommended = $derived.by(() => {
         const local = [...placesByCity(selectedCityId())].sort(
@@ -219,116 +230,98 @@
 
     <div class="mx-auto -mt-8 w-full max-w-6xl px-4 pb-20 md:px-6">
         <div class="grid gap-5 md:grid-cols-2">
-            <WeatherArt condition={artCondition} class="rounded-[20px]">
-                <div class="flex flex-1 flex-col justify-between gap-4 p-4 sm:p-5">
-                    <div class="flex flex-wrap items-start justify-between gap-x-3 gap-y-2">
-                        <div class="flex flex-col items-start gap-1">
-                            <p class="text-base font-medium text-white/85">
-                                {t('dashboard.weatherNow')}
-                            </p>
-                            <WeatherCityPicker />
-                        </div>
+            <div
+                class="flex min-h-[17rem] flex-col justify-between gap-4 rounded-[20px] bg-card p-4 shadow-sm ring-1 ring-border sm:p-5"
+            >
+                <div class="flex flex-wrap items-start justify-between gap-x-3 gap-y-2">
+                    <div class="flex flex-col items-start gap-1">
+                        <p class="text-[15px] font-semibold text-muted-foreground">
+                            {t('dashboard.weatherNow')}
+                        </p>
                         {#if weather}
-                            <span
-                                class="inline-flex min-h-11 shrink-0 items-center rounded-full border border-white/20 bg-black/10 px-4 py-2 text-base font-semibold text-white backdrop-blur-sm"
-                            >
+                            <p class="text-[15px] text-foreground">
                                 {weatherCondition(weather)}
-                            </span>
+                            </p>
                         {:else}
                             <span
-                                class="inline-block h-11 w-28 animate-pulse rounded-full bg-white/15"
+                                class="inline-block h-5 w-16 animate-pulse rounded-full bg-muted"
                                 aria-hidden="true"
                             ></span>
                         {/if}
                     </div>
+                    <WeatherCityPicker />
+                </div>
 
-                    {#if weather}
-                        <div class="flex items-center justify-between gap-3 sm:gap-5">
-                            <p
-                                class="text-6xl leading-[0.95] font-semibold text-white sm:text-7xl"
-                            >
-                                {formatNumber(weather.temperature)}°
-                            </p>
-                            <span
-                                class="flex size-20 shrink-0 items-center justify-center rounded-full border border-white/20 bg-white/12 text-5xl backdrop-blur-sm sm:size-24 sm:text-6xl"
-                            >
-                                {weather.icon}
+                {#if weather}
+                    <div class="flex items-center justify-between gap-3 sm:gap-5">
+                        <p
+                            class="text-6xl leading-none font-semibold tracking-tight text-foreground sm:text-7xl"
+                        >
+                            {formatNumber(weather.temperature)}°
+                        </p>
+                        <span
+                            class="flex size-16 shrink-0 items-center justify-center rounded-full sm:size-[4.5rem] {iconTint}"
+                        >
+                            <WeatherIcon
+                                condition={artCondition}
+                                class="size-10 sm:size-11"
+                            />
+                        </span>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-2.5">
+                        <div
+                            class="flex min-h-12 items-center justify-between gap-2 rounded-2xl bg-muted px-3.5 py-2.5 text-sm text-muted-foreground"
+                        >
+                            <span>{t('weather.high')}</span>
+                            <span class="text-lg font-semibold text-foreground">
+                                {formatNumber(weather.high)}°
                             </span>
                         </div>
+                        <div
+                            class="flex min-h-12 items-center justify-between gap-2 rounded-2xl bg-muted px-3.5 py-2.5 text-sm text-muted-foreground"
+                        >
+                            <span>{t('weather.low')}</span>
+                            <span class="text-lg font-semibold text-foreground">
+                                {formatNumber(weather.low)}°
+                            </span>
+                        </div>
+                    </div>
+                {:else if weatherFailure}
+                    <div
+                        class="flex flex-1 flex-col items-start justify-center gap-3 py-6"
+                        role="alert"
+                    >
+                        <p class="text-[15px] font-medium text-foreground">
+                            {weatherFailure}
+                        </p>
+                        <button
+                            type="button"
+                            onclick={() => void retryWeather()}
+                            class="inline-flex min-h-11 items-center justify-center rounded-xl border border-border bg-background px-5 text-sm font-bold text-foreground transition hover:bg-muted active:scale-[0.98]"
+                        >
+                            {t('weather.retry')}
+                        </button>
+                    </div>
+                {:else}
+                    <div
+                        class="flex items-center justify-between gap-3 sm:gap-5"
+                        aria-hidden="true"
+                    >
+                        <span
+                            class="h-14 w-32 animate-pulse rounded-2xl bg-muted sm:h-16 sm:w-36"
+                        ></span>
+                        <span
+                            class="size-16 shrink-0 animate-pulse rounded-full bg-muted sm:size-[4.5rem]"
+                        ></span>
+                    </div>
 
-                        <div
-                            class="grid grid-cols-2 gap-3 border-t border-white/20 pt-3"
-                        >
-                            <div
-                                class="flex min-h-16 flex-col items-start justify-center gap-1 rounded-2xl border border-white/15 bg-white/10 px-3 py-2 backdrop-blur-sm sm:flex-row sm:items-center sm:justify-between sm:px-4"
-                            >
-                                <span
-                                    class="flex items-center gap-2 text-base text-white/90"
-                                >
-                                    <ArrowUp class="size-4" aria-hidden="true" />
-                                    {t('weather.high')}
-                                </span>
-                                <span class="text-xl font-semibold text-white">
-                                    {formatNumber(weather.high)}°
-                                </span>
-                            </div>
-                            <div
-                                class="flex min-h-16 flex-col items-start justify-center gap-1 rounded-2xl border border-white/15 bg-white/10 px-3 py-2 backdrop-blur-sm sm:flex-row sm:items-center sm:justify-between sm:px-4"
-                            >
-                                <span
-                                    class="flex items-center gap-2 text-base text-white/90"
-                                >
-                                    <ArrowDown class="size-4" aria-hidden="true" />
-                                    {t('weather.low')}
-                                </span>
-                                <span class="text-xl font-semibold text-white">
-                                    {formatNumber(weather.low)}°
-                                </span>
-                            </div>
-                        </div>
-                    {:else if weatherFailure}
-                        <div
-                            class="flex flex-1 flex-col items-start justify-center gap-3 py-6"
-                            role="alert"
-                        >
-                            <p class="text-base font-medium text-white/90">
-                                {weatherFailure}
-                            </p>
-                            <button
-                                type="button"
-                                onclick={() => void retryWeather()}
-                                class="inline-flex min-h-11 items-center justify-center rounded-xl border border-white/25 bg-white/10 px-5 text-sm font-bold text-white backdrop-blur-sm transition hover:bg-white/20 active:scale-[0.98]"
-                            >
-                                {t('weather.retry')}
-                            </button>
-                        </div>
-                    {:else}
-                        <div
-                            class="flex items-center justify-between gap-3 sm:gap-5"
-                            aria-hidden="true"
-                        >
-                            <span
-                                class="h-14 w-32 animate-pulse rounded-2xl bg-white/15 sm:h-16 sm:w-36"
-                            ></span>
-                            <span
-                                class="size-20 shrink-0 animate-pulse rounded-full bg-white/15 sm:size-24"
-                            ></span>
-                        </div>
-
-                        <div
-                            class="grid grid-cols-2 gap-3 border-t border-white/20 pt-3"
-                            aria-hidden="true"
-                        >
-                            <span
-                                class="min-h-16 animate-pulse rounded-2xl bg-white/10"
-                            ></span>
-                            <span
-                                class="min-h-16 animate-pulse rounded-2xl bg-white/10"
-                            ></span>
-                        </div>
-                    {/if}
-                </div>
-            </WeatherArt>
+                    <div class="grid grid-cols-2 gap-2.5" aria-hidden="true">
+                        <span class="min-h-12 animate-pulse rounded-2xl bg-muted"></span>
+                        <span class="min-h-12 animate-pulse rounded-2xl bg-muted"></span>
+                    </div>
+                {/if}
+            </div>
 
             {#if savedTrip}
                 <div
