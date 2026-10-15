@@ -3,6 +3,8 @@
 namespace Tests\Feature;
 
 use App\Models\City;
+use DateTimeImmutable;
+use DateTimeZone;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Http;
@@ -212,6 +214,70 @@ class WeatherTest extends TestCase
         Http::assertNothingSent();
     }
 
+    public function test_show_falls_back_to_met_no_when_open_meteo_is_rate_limited(): void
+    {
+        $city = City::factory()->create([
+            'name' => 'الرياض',
+            'name_en' => 'Riyadh',
+            'latitude' => 24.7136,
+            'longitude' => 46.6753,
+        ]);
+
+        Http::preventStrayRequests();
+        Http::fake([
+            'api.open-meteo.com/*' => Http::response('Daily API request limit exceeded.', 429),
+            'api.met.no/*' => Http::response($this->metNoReading('clearsky_day')),
+        ]);
+
+        $response = $this->getJson(route('weather.show', $city));
+
+        $response->assertOk()
+            ->assertJsonPath('city', 'الرياض')
+            ->assertJsonPath('cityEn', 'Riyadh')
+            ->assertJsonPath('temperature', 31)
+            ->assertJsonPath('condition', 'clear')
+            ->assertJsonPath('conditionEn', 'Clear')
+            ->assertJsonPath('icon', '☀️')
+            ->assertJsonPath('conditionCode', 0)
+            ->assertJsonPath('high', 35)
+            ->assertJsonPath('low', 31)
+            ->assertJsonPath('forecast.0.date', '2026-10-15')
+            ->assertJsonPath('forecast.0.condition', 'clear');
+
+        $this->assertCount(3, $response->json('forecast'));
+
+        Http::assertSent(fn (Request $request): bool => str_contains($request->url(), 'api.met.no'));
+    }
+
+    public function test_show_serves_the_last_reading_when_every_provider_fails(): void
+    {
+        $city = City::factory()->create([
+            'name' => 'الرياض',
+            'name_en' => 'Riyadh',
+            'latitude' => 24.7136,
+            'longitude' => 46.6753,
+        ]);
+
+        Http::preventStrayRequests();
+        Http::fake([
+            'api.open-meteo.com/*' => Http::response($this->reading(41.4, 0, 43.2, 28.8)),
+        ]);
+
+        $this->getJson(route('weather.show', $city))->assertOk();
+
+        $this->travel(31)->minutes();
+
+        Http::fake([
+            'api.open-meteo.com/*' => Http::response('unavailable', 503),
+            'api.met.no/*' => Http::response('unavailable', 503),
+        ]);
+
+        $this->getJson(route('weather.show', $city))
+            ->assertOk()
+            ->assertJsonPath('temperature', 41)
+            ->assertJsonPath('forecast.0.date', '2026-10-15');
+    }
+
     private function reading(float $temperature, int $code, float $high, float $low): array
     {
         return [
@@ -251,5 +317,29 @@ class WeatherTest extends TestCase
             ],
             ['2026-10-15', '2026-10-16', '2026-10-17', '2026-10-18', '2026-10-19', '2026-10-20'],
         );
+    }
+
+    /**
+     * Build a MET Norway locationforecast payload for the test fixture.
+     *
+     * @return array<string, mixed>
+     */
+    private function metNoReading(string $symbol): array
+    {
+        $start = new DateTimeImmutable('2026-10-15 00:00:00', new DateTimeZone('UTC'));
+        $series = [];
+
+        for ($hour = 0; $hour < 48; $hour++) {
+            $series[] = [
+                'time' => $start->modify("+{$hour} hours")->format('Y-m-d\TH:i:s\Z'),
+                'data' => [
+                    'instant' => ['details' => ['air_temperature' => 30.6 + ($hour % 5)]],
+                    'next_1_hours' => ['summary' => ['symbol_code' => $symbol]],
+                    'next_6_hours' => ['summary' => ['symbol_code' => $symbol]],
+                ],
+            ];
+        }
+
+        return ['properties' => ['timeseries' => $series]];
     }
 }

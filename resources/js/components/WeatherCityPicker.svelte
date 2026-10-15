@@ -10,7 +10,7 @@
         DialogTitle,
         DialogTrigger,
     } from '@/components/ui/dialog';
-    import { formatNumber, t } from '@/lib/i18n.svelte';
+    import { formatNumber, getLocale, t } from '@/lib/i18n.svelte';
     import { cityName } from '@/lib/localize';
     import { cities } from '@/lib/tourism.svelte';
     import {
@@ -123,5 +123,11 @@
                 </button>
             {/each}
         </div>
+
+        <p class="mt-1 text-xs text-muted-foreground">
+            {getLocale() === 'ar'
+                ? 'بيانات الطقس من Open-Meteo و MET Norway'
+                : 'Weather data from Open-Meteo and MET Norway'}
+        </p>
     </DialogContent>
 </Dialog>
