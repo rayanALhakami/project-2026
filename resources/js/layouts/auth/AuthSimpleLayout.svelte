@@ -27,7 +27,7 @@
                     class="flex items-center gap-2.5 text-white"
                 >
                     <span
-                        class="flex size-11 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-400 to-teal-700"
+                        class="flex size-11 items-center justify-center rounded-xl bg-white shadow-lg shadow-slate-950/20"
                     >
                         <AppLogoIcon class="size-6 fill-current" />
                     </span>

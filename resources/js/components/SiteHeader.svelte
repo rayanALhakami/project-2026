@@ -13,7 +13,6 @@
     import UserPlus from '@lucide/svelte/icons/user-plus';
     import X from '@lucide/svelte/icons/x';
     import { onMount, untrack } from 'svelte';
-    import AppLogoIcon from '@/components/AppLogoIcon.svelte';
     import BottomNav from '@/components/BottomNav.svelte';
     import GuestStartMenu from '@/components/GuestStartMenu.svelte';
     import InstallPrompt from '@/components/InstallPrompt.svelte';
@@ -398,11 +397,11 @@
             href={toUrl(home())}
             class="flex shrink-0 items-center gap-2.5 text-white"
         >
-            <span
-                class="flex size-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-400 to-teal-700"
-            >
-                <AppLogoIcon class="size-5 fill-current" />
-            </span>
+            <img
+                src="/logo/mark-transparent.png"
+                alt=""
+                class="h-9 w-auto shrink-0"
+            />
             <span
                 class="text-sm font-bold whitespace-nowrap sm:text-base"
             >
