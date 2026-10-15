@@ -2,6 +2,7 @@
     import Check from '@lucide/svelte/icons/check';
     import ChevronDown from '@lucide/svelte/icons/chevron-down';
     import { onMount, untrack } from 'svelte';
+    import WeatherIcon from '@/components/WeatherIcon.svelte';
     import {
         Dialog,
         DialogContent,
@@ -19,6 +20,7 @@
         weatherCityId,
         weatherFor,
     } from '@/lib/weather-city.svelte';
+    import type { WeatherCondition } from '@/types';
 
     let open = $state(false);
 
@@ -51,7 +53,7 @@
                 {...props}
                 aria-label={t('weather.changeCity')}
                 title={t('weather.changeCity')}
-                class="inline-flex min-h-11 items-center gap-2 rounded-full border border-white/20 bg-white/15 px-4 text-lg font-semibold text-white backdrop-blur-sm transition hover:bg-white/25 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white active:scale-[0.98]"
+                class="inline-flex min-h-11 items-center gap-2 rounded-full border border-border bg-background px-4 text-base font-bold text-foreground transition hover:bg-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring active:scale-[0.98]"
             >
                 {cityName(currentCity)}
                 <ChevronDown class="size-4" aria-hidden="true" />
@@ -80,10 +82,14 @@
                     {#if weather}
                         <span
                             data-city={city.id}
-                            class="city-tint flex size-12 shrink-0 items-center justify-center rounded-full text-2xl"
+                            class="city-tint flex size-12 shrink-0 items-center justify-center rounded-full"
                             aria-hidden="true"
                         >
-                            {weather.icon}
+                            <WeatherIcon
+                                condition={(weather.condition ??
+                                    'clear') as WeatherCondition}
+                                class="size-7"
+                            />
                         </span>
                         <span class="min-w-0 flex-1">
                             <span
