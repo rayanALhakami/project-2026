@@ -39,6 +39,7 @@ class WeatherTest extends TestCase
             'icon' => '🔥',
             'high' => 43,
             'low' => 29,
+            'forecast' => $this->forecast(0, 43, 29, 'hot', 'Hot', '🔥'),
         ]);
 
         Http::assertSent(function (Request $request): bool {
@@ -46,9 +47,9 @@ class WeatherTest extends TestCase
                 && $request['latitude'] === '24.7136'
                 && $request['longitude'] === '46.6753'
                 && $request['current'] === 'temperature_2m,weather_code,wind_speed_10m,relative_humidity_2m'
-                && $request['daily'] === 'temperature_2m_max,temperature_2m_min'
+                && $request['daily'] === 'weather_code,temperature_2m_max,temperature_2m_min'
                 && $request['timezone'] === 'Asia/Riyadh'
-                && $request['forecast_days'] === 1;
+                && $request['forecast_days'] === 6;
         });
     }
 
@@ -132,6 +133,7 @@ class WeatherTest extends TestCase
                 'icon' => '⛅',
                 'high' => 38,
                 'low' => 29,
+                'forecast' => $this->forecast(1, 38, 29, 'partly-cloudy', 'Partly cloudy', '⛅'),
             ],
             [
                 'city' => 'الرياض',
@@ -143,6 +145,7 @@ class WeatherTest extends TestCase
                 'icon' => '🌫️',
                 'high' => 22,
                 'low' => 12,
+                'forecast' => $this->forecast(45, 22, 12, 'fog', 'Fog', '🌫️'),
             ],
         ]);
 
@@ -221,9 +224,32 @@ class WeatherTest extends TestCase
                 'relative_humidity_2m' => 12,
             ],
             'daily' => [
-                'temperature_2m_max' => [$high],
-                'temperature_2m_min' => [$low],
+                'time' => ['2026-10-15', '2026-10-16', '2026-10-17', '2026-10-18', '2026-10-19', '2026-10-20'],
+                'weather_code' => array_fill(0, 6, $code),
+                'temperature_2m_max' => array_fill(0, 6, $high),
+                'temperature_2m_min' => array_fill(0, 6, $low),
             ],
         ];
+    }
+
+    /**
+     * Build the expected six-day forecast for the test fixture.
+     *
+     * @return list<array<string, int|string>>
+     */
+    private function forecast(int $code, int $high, int $low, string $condition, string $conditionEn, string $icon): array
+    {
+        return array_map(
+            fn (string $date): array => [
+                'date' => $date,
+                'condition' => $condition,
+                'conditionEn' => $conditionEn,
+                'conditionCode' => $code,
+                'icon' => $icon,
+                'high' => $high,
+                'low' => $low,
+            ],
+            ['2026-10-15', '2026-10-16', '2026-10-17', '2026-10-18', '2026-10-19', '2026-10-20'],
+        );
     }
 }

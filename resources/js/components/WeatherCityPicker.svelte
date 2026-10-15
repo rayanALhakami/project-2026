@@ -53,10 +53,10 @@
                 {...props}
                 aria-label={t('weather.changeCity')}
                 title={t('weather.changeCity')}
-                class="inline-flex min-h-11 items-center gap-2 rounded-full border border-border bg-background px-4 text-base font-bold text-foreground transition hover:bg-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring active:scale-[0.98]"
+                class="inline-flex items-center gap-1.5 rounded-xl px-1 py-0.5 text-[22px] font-bold text-white transition hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white active:scale-[0.98]"
             >
                 {cityName(currentCity)}
-                <ChevronDown class="size-4" aria-hidden="true" />
+                <ChevronDown class="size-5 opacity-80" aria-hidden="true" />
             </button>
         {/snippet}
     </DialogTrigger>

@@ -9,7 +9,8 @@ use RuntimeException;
 use Throwable;
 
 /**
- * @phpstan-type WeatherReading array{city: string, cityEn: string, temperature: int, condition: string, conditionEn: string, conditionCode: int, icon: string, high: int, low: int}
+ * @phpstan-type WeatherForecastDay array{date: string, condition: string, conditionEn: string, conditionCode: int, icon: string, high: int, low: int}
+ * @phpstan-type WeatherReading array{city: string, cityEn: string, temperature: int, condition: string, conditionEn: string, conditionCode: int, icon: string, high: int, low: int, forecast: list<WeatherForecastDay>}
  */
 class WeatherService
 {
@@ -27,7 +28,7 @@ class WeatherService
     {
         /** @var WeatherReading $weather */
         $weather = Cache::remember(
-            "weather:city:{$city->id}",
+            "weather:v2:city:{$city->id}",
             self::CACHE_SECONDS,
             function () use ($city): array {
                 $readings = $this->fetch([$city]);
@@ -47,7 +48,7 @@ class WeatherService
     public function forAllCities(): array
     {
         /** @var array<int, WeatherReading> $weather */
-        $weather = Cache::remember('weather:all', self::CACHE_SECONDS, function (): array {
+        $weather = Cache::remember('weather:v2:all', self::CACHE_SECONDS, function (): array {
             $cities = City::query()->orderBy('id')->get();
 
             if ($cities->isEmpty()) {
@@ -75,9 +76,9 @@ class WeatherService
                     'latitude' => implode(',', array_map(fn (City $city): string => (string) $city->latitude, $cities)),
                     'longitude' => implode(',', array_map(fn (City $city): string => (string) $city->longitude, $cities)),
                     'current' => 'temperature_2m,weather_code,wind_speed_10m,relative_humidity_2m',
-                    'daily' => 'temperature_2m_max,temperature_2m_min',
+                    'daily' => 'weather_code,temperature_2m_max,temperature_2m_min',
                     'timezone' => 'Asia/Riyadh',
-                    'forecast_days' => 1,
+                    'forecast_days' => 6,
                 ]);
         } catch (Throwable $exception) {
             throw new RuntimeException('تعذر الاتصال بخدمة الطقس، حاول مرة أخرى بعد قليل.', 0, $exception);
@@ -112,9 +113,11 @@ class WeatherService
         $current = is_array($reading) && is_array($reading['current'] ?? null) ? $reading['current'] : [];
         $daily = is_array($reading) && is_array($reading['daily'] ?? null) ? $reading['daily'] : [];
 
+        $forecast = $this->forecastDays($daily);
+
         $temperature = (int) round((float) ($current['temperature_2m'] ?? 0));
-        $high = (int) round((float) ($daily['temperature_2m_max'][0] ?? $temperature));
-        $low = (int) round((float) ($daily['temperature_2m_min'][0] ?? $temperature));
+        $high = $forecast[0]['high'] ?? (int) round((float) ($daily['temperature_2m_max'][0] ?? $temperature));
+        $low = $forecast[0]['low'] ?? (int) round((float) ($daily['temperature_2m_min'][0] ?? $temperature));
         $code = (int) ($current['weather_code'] ?? 0);
 
         [$condition, $conditionEn, $icon] = $this->conditionFor($code, $temperature);
@@ -129,7 +132,44 @@ class WeatherService
             'icon' => $icon,
             'high' => $high,
             'low' => $low,
+            'forecast' => $forecast,
         ];
+    }
+
+    /**
+     * Map the daily Open-Meteo series onto six-day forecast entries.
+     *
+     * @param  array<string, mixed>  $daily
+     * @return list<array{date: string, condition: string, conditionEn: string, conditionCode: int, icon: string, high: int, low: int}>
+     */
+    private function forecastDays(array $daily): array
+    {
+        $dates = is_array($daily['time'] ?? null) ? $daily['time'] : [];
+        $codes = is_array($daily['weather_code'] ?? null) ? $daily['weather_code'] : [];
+        $highs = is_array($daily['temperature_2m_max'] ?? null) ? $daily['temperature_2m_max'] : [];
+        $lows = is_array($daily['temperature_2m_min'] ?? null) ? $daily['temperature_2m_min'] : [];
+
+        $forecast = [];
+
+        foreach ($dates as $index => $date) {
+            $high = (int) round((float) ($highs[$index] ?? 0));
+            $low = (int) round((float) ($lows[$index] ?? 0));
+            $code = (int) ($codes[$index] ?? 0);
+
+            [$condition, $conditionEn, $icon] = $this->conditionFor($code, $high);
+
+            $forecast[] = [
+                'date' => (string) $date,
+                'condition' => $condition,
+                'conditionEn' => $conditionEn,
+                'conditionCode' => $code,
+                'icon' => $icon,
+                'high' => $high,
+                'low' => $low,
+            ];
+        }
+
+        return $forecast;
     }
 
     /**

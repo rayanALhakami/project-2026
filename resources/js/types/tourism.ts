@@ -82,6 +82,16 @@ export type WeatherCondition =
     | 'dust'
     | 'hot';
 
+export interface WeatherForecastDay {
+    date: string;
+    condition: WeatherCondition;
+    conditionEn: string;
+    conditionCode: number;
+    icon: string;
+    high: number;
+    low: number;
+}
+
 export interface Weather {
     city: string;
     cityEn: string;
@@ -92,6 +102,7 @@ export interface Weather {
     icon: string;
     high: number;
     low: number;
+    forecast: WeatherForecastDay[];
 }
 
 export interface TripSummary {

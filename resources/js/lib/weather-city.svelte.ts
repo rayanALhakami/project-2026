@@ -1,9 +1,8 @@
+import { initializeCity, selectedCityId, setSelectedCity } from '@/lib/city.svelte';
 import { t } from '@/lib/i18n.svelte';
 import { cities } from '@/lib/tourism.svelte';
 import { index as weatherIndex, show as weatherShow } from '@/routes/weather';
-import type { Weather, WeatherCondition } from '@/types';
-
-const STORAGE_KEY = 'weather-city';
+import type { Weather, WeatherCondition, WeatherForecastDay } from '@/types';
 
 const conditions: WeatherCondition[] = [
     'clear',
@@ -17,12 +16,10 @@ const conditions: WeatherCondition[] = [
 ];
 
 const state = $state<{
-    id: number | null;
     weatherByCity: Record<number, Weather>;
     weatherLoading: boolean;
     weatherError: string | null;
 }>({
-    id: null,
     weatherByCity: {},
     weatherLoading: false,
     weatherError: null,
@@ -37,6 +34,36 @@ function isWeatherCondition(value: unknown): value is WeatherCondition {
         typeof value === 'string' &&
         conditions.includes(value as WeatherCondition)
     );
+}
+
+function toForecastDay(value: unknown): WeatherForecastDay | null {
+    if (typeof value !== 'object' || value === null) {
+        return null;
+    }
+
+    const row = value as Record<string, unknown>;
+
+    if (
+        typeof row.date !== 'string' ||
+        !isWeatherCondition(row.condition) ||
+        typeof row.conditionEn !== 'string' ||
+        typeof row.conditionCode !== 'number' ||
+        typeof row.icon !== 'string' ||
+        typeof row.high !== 'number' ||
+        typeof row.low !== 'number'
+    ) {
+        return null;
+    }
+
+    return {
+        date: row.date,
+        condition: row.condition,
+        conditionEn: row.conditionEn,
+        conditionCode: row.conditionCode,
+        icon: row.icon,
+        high: row.high,
+        low: row.low,
+    };
 }
 
 function toWeather(value: unknown): Weather | null {
@@ -61,6 +88,12 @@ function toWeather(value: unknown): Weather | null {
         return null;
     }
 
+    const forecast = Array.isArray(row.forecast)
+        ? row.forecast
+              .map(toForecastDay)
+              .filter((day): day is WeatherForecastDay => day !== null)
+        : [];
+
     return {
         city: row.city,
         cityEn: row.cityEn,
@@ -71,6 +104,7 @@ function toWeather(value: unknown): Weather | null {
         icon: row.icon,
         high: row.high,
         low: row.low,
+        forecast,
     };
 }
 
@@ -102,12 +136,12 @@ function readingsFrom(payload: unknown): unknown[] | null {
     return null;
 }
 
+/**
+ * The weather follows the app-wide selected city, so changing the city
+ * anywhere updates the weather card automatically.
+ */
 export function weatherCityId(): number {
-    if (state.id !== null && cities.some((city) => city.id === state.id)) {
-        return state.id;
-    }
-
-    return cities[0]?.id ?? 0;
+    return selectedCityId();
 }
 
 export function selectedWeather(): Weather | null {
@@ -127,27 +161,11 @@ export function weatherError(): string | null {
 }
 
 export function setWeatherCity(id: number): void {
-    if (!cities.some((city) => city.id === id)) {
-        return;
-    }
-
-    state.id = id;
-
-    if (typeof window !== 'undefined') {
-        localStorage.setItem(STORAGE_KEY, String(id));
-    }
+    setSelectedCity(id);
 }
 
 export function initializeWeatherCity(): void {
-    if (typeof window === 'undefined') {
-        return;
-    }
-
-    const stored = Number(localStorage.getItem(STORAGE_KEY));
-
-    if (Number.isFinite(stored)) {
-        state.id = stored;
-    }
+    initializeCity();
 }
 
 export async function loadAllWeather(force = false): Promise<void> {
