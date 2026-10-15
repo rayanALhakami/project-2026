@@ -47,7 +47,7 @@
     >
         <div class="flex min-w-0 items-center gap-2">
             <span
-                class="flex size-10 shrink-0 items-center justify-center rounded-2xl bg-primary text-primary-foreground"
+                class="flex size-10 shrink-0 items-center justify-center rounded-2xl bg-white"
             >
                 <AppLogoIcon class="size-6 fill-current" />
             </span>

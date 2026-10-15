@@ -397,11 +397,15 @@
             href={toUrl(home())}
             class="flex shrink-0 items-center gap-2.5 text-white"
         >
-            <img
-                src="/logo/mark-transparent.png"
-                alt=""
-                class="h-9 w-auto shrink-0"
-            />
+            <span
+                class="flex size-9 shrink-0 items-center justify-center rounded-xl bg-white"
+            >
+                <img
+                    src="/logo/mark-transparent.png"
+                    alt=""
+                    class="h-6 w-auto"
+                />
+            </span>
             <span
                 class="text-sm font-bold whitespace-nowrap sm:text-base"
             >

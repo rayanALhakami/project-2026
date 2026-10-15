@@ -1036,7 +1036,7 @@
                 <div>
                     <div class="flex items-center gap-2.5 text-white">
                         <span
-                            class="flex size-9 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-400 to-teal-700"
+                            class="flex size-9 items-center justify-center rounded-xl bg-white"
                         >
                             <AppLogoIcon class="size-5 fill-current" />
                         </span>
