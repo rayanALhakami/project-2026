@@ -188,7 +188,7 @@
 
     <div class="mx-auto -mt-8 w-full max-w-6xl px-4 md:px-6">
         <div
-            class="rounded-[20px] bg-card p-5 shadow-lg shadow-slate-900/5 ring-1 ring-border"
+            class="motion-view rounded-[20px] bg-card p-5 shadow-lg shadow-slate-900/5 ring-1 ring-border"
         >
             <h2 class="text-xs font-bold text-muted-foreground">
                 {t('places.byCategory')}

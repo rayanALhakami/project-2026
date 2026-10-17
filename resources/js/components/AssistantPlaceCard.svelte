@@ -27,7 +27,11 @@
     onclick={() => openPlaceSheet(place)}
     class="flex w-full items-center gap-3 rounded-xl bg-card p-2 text-start ring-1 ring-border transition hover:ring-emerald-300"
 >
-    <PlaceMedia place={place} class="size-16 shrink-0 rounded-lg" />
+    <PlaceMedia
+        place={place}
+        kenburns={false}
+        class="size-16 shrink-0 rounded-lg"
+    />
     <span class="min-w-0 flex-1">
         <span class="block truncate font-bold text-foreground">
             {placeName(place)}

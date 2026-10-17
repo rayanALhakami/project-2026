@@ -53,7 +53,7 @@
 
 <!-- svelte-ignore a11y_no_noninteractive_element_to_interactive_role -->
 <article
-    class="group flex cursor-pointer flex-col overflow-hidden rounded-[20px] bg-card shadow-sm ring-1 ring-border transition hover:-translate-y-1 hover:shadow-lg"
+    class="motion-view group flex cursor-pointer flex-col overflow-hidden rounded-[20px] bg-card shadow-sm ring-1 ring-border transition hover:-translate-y-1 hover:shadow-lg"
     role="button"
     tabindex="0"
     aria-label={t('place.openDetails', { name: placeName(place) })}

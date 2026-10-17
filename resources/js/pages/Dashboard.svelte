@@ -225,7 +225,7 @@
     <div class="mx-auto -mt-8 w-full max-w-6xl px-4 pb-20 md:px-6">
         <div class="grid gap-5 md:grid-cols-2">
             <div
-                class="relative flex min-h-[19rem] flex-col overflow-hidden rounded-[20px] text-white shadow-[0_24px_48px_-12px_rgba(8,19,31,0.45)]"
+                class="motion-view relative flex min-h-[19rem] flex-col overflow-hidden rounded-[20px] text-white shadow-[0_24px_48px_-12px_rgba(8,19,31,0.45)]"
             >
                 <img
                     src={cityImage(weatherCityId()) ?? ''}
@@ -348,7 +348,7 @@
 
             {#if savedTrip}
                 <div
-                    class="flex flex-col rounded-[20px] bg-card p-6 shadow-sm ring-1 ring-border"
+                    class="motion-view flex flex-col rounded-[20px] bg-card p-6 shadow-sm ring-1 ring-border"
                 >
                     <p class="text-sm font-bold text-muted-foreground">
                         {t('dashboard.upcomingTrip')}
@@ -414,7 +414,7 @@
                 </div>
             {:else}
                 <div
-                    class="flex flex-col rounded-[20px] bg-card p-6 shadow-sm ring-1 ring-border"
+                    class="motion-view flex flex-col rounded-[20px] bg-card p-6 shadow-sm ring-1 ring-border"
                 >
                     <p class="text-sm font-bold text-muted-foreground">
                         {t('dashboard.upcomingTrip')}
@@ -455,7 +455,7 @@
                     <div class="mt-4 grid grid-cols-2 gap-3 lg:grid-cols-4">
                         {#each analyticsStats as stat (stat.key)}
                             <div
-                                class="flex items-center gap-3 rounded-[18px] bg-card p-4 shadow-sm ring-1 ring-border"
+                                class="motion-view flex items-center gap-3 rounded-[18px] bg-card p-4 shadow-sm ring-1 ring-border"
                             >
                                 <span
                                     class="flex size-11 shrink-0 items-center justify-center rounded-xl bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-400 ring-1 ring-emerald-100 dark:ring-emerald-900/60"
@@ -480,7 +480,7 @@
 
                     {#if analytics.top_interests.length > 0}
                         <div
-                            class="mt-3 flex flex-wrap items-center gap-2 rounded-[18px] bg-card p-4 shadow-sm ring-1 ring-border"
+                            class="motion-view mt-3 flex flex-wrap items-center gap-2 rounded-[18px] bg-card p-4 shadow-sm ring-1 ring-border"
                         >
                             <span
                                 class="text-sm font-bold text-muted-foreground"
@@ -545,7 +545,7 @@
         </section>
 
         <section
-            class="mt-10 flex flex-col items-start gap-4 rounded-[24px] bg-[#0b1e33] p-6 text-white sm:flex-row sm:items-center sm:justify-between sm:p-8"
+            class="motion-view mt-10 flex flex-col items-start gap-4 rounded-[24px] bg-[#0b1e33] p-6 text-white sm:flex-row sm:items-center sm:justify-between sm:p-8"
         >
             <div class="flex items-center gap-4">
                 <span
@@ -589,13 +589,17 @@
                     <Link
                         href={places().url}
                         onclick={() => setSelectedCity(destination.id)}
-                        class="group relative h-36 overflow-hidden rounded-[18px] shadow-sm ring-1 ring-border transition hover:-translate-y-0.5 hover:shadow-md"
+                        class="motion-view group relative h-36 overflow-hidden rounded-[18px] shadow-sm ring-1 ring-border transition hover:-translate-y-0.5 hover:shadow-md"
                     >
                         {#if cityImage(destination.id)}
                             <img
                                 src={cityImage(destination.id)}
                                 alt={cityName(destination)}
-                                class="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                                class="motion-kenburns h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                                style="--kenburns-delay: -{(
+                                    (destination.id % 9) *
+                                    2.7
+                                ).toFixed(1)}s"
                                 loading="lazy"
                                 decoding="async"
                             />

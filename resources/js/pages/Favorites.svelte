@@ -57,7 +57,7 @@
             </div>
         {:else if favoritePlaces.length === 0}
             <div
-                class="rounded-[20px] border-2 border-dashed border-border bg-card p-10 text-center sm:p-12"
+                class="motion-view rounded-[20px] border-2 border-dashed border-border bg-card p-10 text-center sm:p-12"
             >
                 <span
                     class="mx-auto flex size-14 items-center justify-center rounded-full bg-rose-50 text-rose-500 dark:bg-rose-950/40 dark:text-rose-300"
@@ -80,7 +80,7 @@
             </div>
         {:else}
             <div
-                class="flex flex-wrap items-center justify-between gap-3 rounded-[20px] bg-card p-5 shadow-lg shadow-slate-900/5 ring-1 ring-border"
+                class="motion-view flex flex-wrap items-center justify-between gap-3 rounded-[20px] bg-card p-5 shadow-lg shadow-slate-900/5 ring-1 ring-border"
             >
                 <p class="text-sm font-bold text-muted-foreground">
                     {t('favorites.count', {

@@ -257,7 +257,7 @@
 
     <div class="mx-auto -mt-8 w-full max-w-4xl px-4 pb-20 md:px-6">
         <div
-            class="rounded-[20px] bg-card p-6 shadow-lg shadow-slate-900/5 ring-1 ring-border"
+            class="motion-view rounded-[20px] bg-card p-6 shadow-lg shadow-slate-900/5 ring-1 ring-border"
         >
             <div class="grid items-end gap-3 sm:grid-cols-[1fr_auto_1fr]">
                 <label class="flex flex-col gap-2">

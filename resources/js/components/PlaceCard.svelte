@@ -56,7 +56,7 @@
 
 <!-- svelte-ignore a11y_no_noninteractive_element_to_interactive_role -->
 <article
-    class="group flex cursor-pointer flex-col gap-3 rounded-[18px] border border-border bg-card p-4 transition hover:border-primary/40"
+    class="motion-view group flex cursor-pointer flex-col gap-3 rounded-[18px] border border-border bg-card p-4 transition hover:border-primary/40"
     role="button"
     tabindex="0"
     aria-label={t('place.openDetails', { name: placeName(place) })}

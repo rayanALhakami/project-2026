@@ -21,6 +21,8 @@
     const theme = $derived(cityTheme(cityId));
     let failed = $state(false);
     const showsImage = $derived(Boolean(image) && !failed);
+
+    const kenburnsDelay = $derived(`-${((cityId % 9) * 2.7).toFixed(1)}s`);
 </script>
 
 <div
@@ -31,7 +33,8 @@
         <img
             src={image ?? ''}
             alt=""
-            class="absolute inset-0 h-full w-full object-cover"
+            class="motion-kenburns absolute inset-0 h-full w-full object-cover"
+            style="--kenburns-delay: {kenburnsDelay}"
             loading="lazy"
             decoding="async"
             onerror={() => (failed = true)}

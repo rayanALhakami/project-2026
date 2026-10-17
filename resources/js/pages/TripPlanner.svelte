@@ -964,7 +964,7 @@
     <div class="mx-auto -mt-8 w-full max-w-3xl px-4 pb-20 md:px-6">
         {#if !generated}
             <div
-                class="flex flex-col gap-5 rounded-[20px] bg-card p-6 shadow-lg shadow-slate-900/5 ring-1 ring-border"
+                class="motion-view flex flex-col gap-5 rounded-[20px] bg-card p-6 shadow-lg shadow-slate-900/5 ring-1 ring-border"
             >
                 <div class="flex flex-col gap-2">
                     <div
@@ -1264,7 +1264,7 @@
 
             {#if shareState}
                 <div
-                    class="mt-5 rounded-[20px] bg-card p-5 shadow-sm ring-1 ring-border"
+                    class="motion-view mt-5 rounded-[20px] bg-card p-5 shadow-sm ring-1 ring-border"
                 >
                     <div class="flex items-start gap-3">
                         <span
@@ -1334,7 +1334,7 @@
 
             {#if draftPlaces.length > 0}
                 <div
-                    class="mt-5 rounded-[20px] bg-card p-5 shadow-sm ring-1 ring-border"
+                    class="motion-view mt-5 rounded-[20px] bg-card p-5 shadow-sm ring-1 ring-border"
                 >
                     <div class="flex items-center justify-between gap-3">
                         <h2 class="text-base font-bold text-foreground">
@@ -1381,7 +1381,7 @@
                     {@const dayCity =
                         day.cityId === null ? undefined : cityById(day.cityId)}
                     <div
-                        class="rounded-[20px] bg-card p-5 shadow-sm ring-1 ring-border"
+                        class="motion-view rounded-[20px] bg-card p-5 shadow-sm ring-1 ring-border"
                     >
                         <div class="flex items-center justify-between gap-3">
                             <div

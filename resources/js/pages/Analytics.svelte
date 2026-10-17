@@ -125,7 +125,7 @@
         <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {#each statsCards as card (card.key)}
                 <div
-                    class="rounded-[20px] bg-card p-5 shadow-lg shadow-slate-900/5 ring-1 ring-border"
+                    class="motion-view rounded-[20px] bg-card p-5 shadow-lg shadow-slate-900/5 ring-1 ring-border"
                 >
                     <div class="flex items-center gap-3">
                         <span
@@ -147,7 +147,7 @@
             {/each}
 
             <div
-                class="rounded-[20px] bg-card p-5 shadow-lg shadow-slate-900/5 ring-1 ring-border"
+                class="motion-view rounded-[20px] bg-card p-5 shadow-lg shadow-slate-900/5 ring-1 ring-border"
             >
                 <div class="flex items-center gap-3">
                     <span
@@ -187,7 +187,7 @@
                     {t('analytics.topInterests')}
                 </h2>
                 <div
-                    class="mt-4 rounded-[20px] bg-card p-5 shadow-lg shadow-slate-900/5 ring-1 ring-border"
+                    class="motion-view mt-4 rounded-[20px] bg-card p-5 shadow-lg shadow-slate-900/5 ring-1 ring-border"
                 >
                     <ul class="flex flex-col gap-4">
                         {#each stats.top_interests as interest (interest.interest)}
@@ -220,7 +220,7 @@
             </section>
         {:else if stats.trips_count === 0 && stats.favorite_places_count === 0}
             <div
-                class="mt-8 rounded-[20px] border-2 border-dashed border-border bg-card p-10 text-center sm:p-12"
+                class="motion-view mt-8 rounded-[20px] border-2 border-dashed border-border bg-card p-10 text-center sm:p-12"
             >
                 <span
                     class="mx-auto flex size-14 items-center justify-center rounded-full bg-emerald-50 text-emerald-600 dark:bg-emerald-950/40 dark:text-emerald-300"

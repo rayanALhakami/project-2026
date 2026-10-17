@@ -11,18 +11,24 @@
         class: className = '',
         overlay = false,
         eager = false,
+        kenburns = true,
         children,
     }: {
         place: Place;
         class?: string;
         overlay?: boolean;
         eager?: boolean;
+        kenburns?: boolean;
         children?: Snippet;
     } = $props();
 
     const theme = $derived(cityTheme(place.cityId));
     let failed = $state(false);
     const showImage = $derived(Boolean(place.image) && !failed);
+
+    const kenburnsDelay = $derived(
+        `-${((place.id % 9) * 2.7).toFixed(1)}s`,
+    );
 </script>
 
 <div
@@ -33,7 +39,11 @@
         <img
             src={place.image ?? ''}
             alt={placeName(place)}
-            class="h-full w-full object-cover"
+            class={cn(
+                'h-full w-full object-cover',
+                kenburns && 'motion-kenburns',
+            )}
+            style={kenburns ? `--kenburns-delay: ${kenburnsDelay}` : undefined}
             loading={eager ? 'eager' : 'lazy'}
             decoding="async"
             onerror={() => (failed = true)}

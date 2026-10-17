@@ -28,6 +28,7 @@
     import AssistantRichMessage from '@/components/AssistantRichMessage.svelte';
     import CityArt from '@/components/CityArt.svelte';
     import CityMotif from '@/components/CityMotif.svelte';
+    import CountUp from '@/components/CountUp.svelte';
     import GuestStartMenu from '@/components/GuestStartMenu.svelte';
     import InputError from '@/components/InputError.svelte';
     import PlaceMedia from '@/components/PlaceMedia.svelte';
@@ -36,6 +37,7 @@
     import { formatNumber, locales, t } from '@/lib/i18n.svelte';
     import type { MessageKey } from '@/lib/i18n/messages';
     import { cityName, placeDescription, placeName } from '@/lib/localize';
+    import { reveal } from '@/lib/motion';
     import { cities, places, placesByCity, topPlaces } from '@/lib/tourism.svelte';
     import { toUrl } from '@/lib/utils';
     import {
@@ -271,7 +273,7 @@
 
     <section
         id="top"
-        class="relative flex min-h-[92vh] items-center overflow-hidden text-white"
+        class="relative flex min-h-svh items-center overflow-hidden text-white"
     >
         <div
             class="absolute inset-0 bg-gradient-to-br from-[#16344f] via-[#0b2337] to-[#071523]"
@@ -297,24 +299,32 @@
             <CityMotif type="skyline" class="h-full w-full" />
         </div>
 
-        <div class="relative mx-auto w-full max-w-6xl px-4 pb-14 pt-32 md:px-6">
+        <div class="relative mx-auto w-full max-w-6xl px-4 pb-10 pt-28 md:px-6">
             <span
-                class="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1.5 text-xs font-bold text-emerald-200 ring-1 ring-white/15 backdrop-blur"
+                class="motion-rise inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1.5 text-xs font-bold text-emerald-200 ring-1 ring-white/15 backdrop-blur"
+                style="--rise-delay: 120ms"
             >
                 <Sparkles class="size-4" />
                 {t('preview.badge')}
             </span>
 
             <h1
-                class="mt-5 max-w-3xl text-4xl font-bold leading-[1.25] sm:text-5xl md:text-6xl"
+                class="motion-rise mt-5 max-w-3xl text-4xl font-bold leading-[1.25] sm:text-5xl md:text-6xl"
+                style="--rise-delay: 200ms"
             >
                 {t('welcome.title')}
             </h1>
-            <p class="mt-5 max-w-2xl text-base text-slate-200 sm:text-lg">
+            <p
+                class="motion-rise mt-5 max-w-2xl text-base text-slate-200 sm:text-lg"
+                style="--rise-delay: 280ms"
+            >
                 {t('preview.heroSubtitle')}
             </p>
 
-            <div class="mt-8 flex flex-wrap gap-3">
+            <div
+                class="motion-rise mt-8 flex flex-wrap gap-3"
+                style="--rise-delay: 360ms"
+            >
                 {#if auth.user}
                     <Link
                         href={startHref}
@@ -338,7 +348,10 @@
                 </a>
             </div>
 
-            <div class="mt-6 flex flex-wrap items-center gap-3">
+            <div
+                class="motion-rise mt-6 flex flex-wrap items-center gap-3"
+                style="--rise-delay: 460ms"
+            >
                 <div class="flex items-center gap-1.5">
                     {#each heroSlides as slide, index (slide.id)}
                         <button
@@ -353,21 +366,26 @@
                     {/each}
                 </div>
                 {#if currentHeroCity}
-                    <span class="text-xs font-semibold text-slate-200">
-                        {cityName(currentHeroCity)} · {currentHeroCity.nameEn}
-                    </span>
+                    {#key currentHeroCity.id}
+                        <span
+                            class="motion-fade text-xs font-semibold text-slate-200"
+                        >
+                            {cityName(currentHeroCity)} · {currentHeroCity.nameEn}
+                        </span>
+                    {/key}
                 {/if}
             </div>
 
             <dl
-                class="mt-14 grid grid-cols-2 gap-6 border-t border-white/15 pt-8 sm:grid-cols-4"
+                class="motion-rise mt-10 grid grid-cols-2 gap-6 border-t border-white/15 pt-8 sm:grid-cols-4"
+                style="--rise-delay: 560ms"
             >
                 <div>
                     <dt class="text-xs font-semibold text-slate-300">
                         {t('preview.statCities')}
                     </dt>
                     <dd class="text-3xl font-bold">
-                        {formatNumber(cities.length)}
+                        <CountUp value={cities.length} />
                     </dd>
                 </div>
                 <div>
@@ -375,7 +393,7 @@
                         {t('preview.statPlaces')}
                     </dt>
                     <dd class="text-3xl font-bold">
-                        +{formatNumber(places.length)}
+                        +<CountUp value={places.length} delay={150} />
                     </dd>
                 </div>
                 <div>
@@ -383,7 +401,7 @@
                         {t('preview.statLanguages')}
                     </dt>
                     <dd class="text-3xl font-bold">
-                        +{formatNumber(locales.length)}
+                        +<CountUp value={locales.length} delay={300} />
                     </dd>
                 </div>
                 <div>
@@ -402,7 +420,7 @@
         <div
             class="mx-auto grid max-w-6xl items-center gap-12 px-4 md:grid-cols-2 md:px-6"
         >
-            <div>
+            <div use:reveal>
                 <span
                     class="inline-flex items-center gap-2 rounded-full bg-emerald-50 dark:bg-emerald-950/50 px-3 py-1 text-xs font-bold text-emerald-700 dark:text-emerald-400 ring-1 ring-emerald-100 dark:ring-emerald-900/60"
                 >
@@ -435,7 +453,7 @@
                 </ul>
             </div>
 
-            <div class="relative">
+            <div class="relative" use:reveal={{ delay: 140 }}>
                 <img
                     src="/images/hero/3.jpg"
                     alt=""
@@ -467,7 +485,7 @@
 
     <section id="features" class="scroll-mt-20 bg-[#0b1e33] py-16 text-white sm:py-24">
         <div class="mx-auto max-w-6xl px-4 md:px-6">
-            <div class="mx-auto max-w-2xl text-center">
+            <div class="mx-auto max-w-2xl text-center" use:reveal>
                 <span
                     class="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs font-bold text-emerald-200 ring-1 ring-white/15"
                 >
@@ -481,8 +499,9 @@
             </div>
 
             <div class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-                {#each whyCards as card (card.title)}
+                {#each whyCards as card, index (card.title)}
                     <div
+                        use:reveal={{ delay: index * 90 }}
                         class="rounded-[20px] border border-white/10 bg-white/[0.04] p-6 transition hover:border-emerald-400/30 hover:bg-white/[0.07]"
                     >
                         <span
@@ -502,7 +521,7 @@
 
     <section id="destinations" class="scroll-mt-20 bg-muted/40 py-16 sm:py-24">
         <div class="mx-auto max-w-6xl px-4 md:px-6">
-            <div class="mx-auto max-w-2xl text-center">
+            <div class="mx-auto max-w-2xl text-center" use:reveal>
                 <span
                     class="inline-flex items-center gap-2 rounded-full bg-emerald-50 dark:bg-emerald-950/50 px-3 py-1 text-xs font-bold text-emerald-700 dark:text-emerald-400 ring-1 ring-emerald-100 dark:ring-emerald-900/60"
                 >
@@ -518,17 +537,25 @@
             </div>
 
             <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                {#each featuredCities as city (city.id)}
-                    <Link
-                        href={toUrl(placesRoute())}
-                        class="group overflow-hidden rounded-[20px] bg-card shadow-sm ring-1 ring-border transition hover:-translate-y-1 hover:shadow-lg"
+                {#each featuredCities as city, index (city.id)}
+                    <div
+                        use:reveal={{ delay: (index % 3) * 90 }}
+                        class="h-full"
                     >
+                        <Link
+                            href={toUrl(placesRoute())}
+                            class="group flex h-full flex-col overflow-hidden rounded-[20px] bg-card shadow-sm ring-1 ring-border transition hover:-translate-y-1 hover:shadow-lg"
+                        >
                         <div class="relative h-44 overflow-hidden">
                             {#if cityImage(city.id) && !failedCityImages[city.id]}
                                 <img
                                     src={cityImage(city.id) ?? ''}
                                     alt={cityName(city)}
-                                    class="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                                    class="motion-kenburns h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                                    style="--kenburns-delay: -{(
+                                        (city.id % 9) *
+                                        2.7
+                                    ).toFixed(1)}s"
                                     loading="lazy"
                                     decoding="async"
                                     onerror={() =>
@@ -573,7 +600,8 @@
                                 <ChevronLeft class="size-4 ltr:rotate-180" />
                             </span>
                         </div>
-                    </Link>
+                        </Link>
+                    </div>
                 {/each}
             </div>
         </div>
@@ -581,7 +609,7 @@
 
     <section class="bg-background py-16 sm:py-24">
         <div class="mx-auto max-w-6xl px-4 md:px-6">
-            <div class="mx-auto max-w-2xl text-center">
+            <div class="mx-auto max-w-2xl text-center" use:reveal>
                 <span
                     class="inline-flex items-center gap-2 rounded-full bg-emerald-50 dark:bg-emerald-950/50 px-3 py-1 text-xs font-bold text-emerald-700 dark:text-emerald-400 ring-1 ring-emerald-100 dark:ring-emerald-900/60"
                 >
@@ -595,8 +623,9 @@
             </div>
 
             <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-                {#each featuredPlaces as place (place.id)}
+                {#each featuredPlaces as place, index (place.id)}
                     <div
+                        use:reveal={{ delay: (index % 4) * 80 }}
                         class="overflow-hidden rounded-[20px] bg-card shadow-sm ring-1 ring-border transition hover:-translate-y-1 hover:shadow-lg"
                     >
                         <PlaceMedia place={place} class="h-40" overlay>
@@ -637,7 +666,7 @@
 
     <section id="plan" class="scroll-mt-20 bg-muted/40 py-16 sm:py-24">
         <div class="mx-auto max-w-3xl px-4 md:px-6">
-            <div class="text-center">
+            <div class="text-center" use:reveal>
                 <span
                     class="inline-flex items-center gap-2 rounded-full bg-emerald-50 dark:bg-emerald-950/50 px-3 py-1 text-xs font-bold text-emerald-700 dark:text-emerald-400 ring-1 ring-emerald-100 dark:ring-emerald-900/60"
                 >
@@ -651,6 +680,7 @@
             </div>
 
             <div
+                use:reveal={{ delay: 120 }}
                 class="mt-10 rounded-[24px] bg-card p-6 shadow-xl shadow-slate-900/5 ring-1 ring-border/70 sm:p-8"
             >
                 {#if submitted}
@@ -874,7 +904,7 @@
 
     <section class="bg-background py-16 sm:py-24">
         <div class="mx-auto max-w-6xl px-4 md:px-6">
-            <div class="mx-auto max-w-2xl text-center">
+            <div class="mx-auto max-w-2xl text-center" use:reveal>
                 <span
                     class="inline-flex items-center gap-2 rounded-full bg-emerald-50 dark:bg-emerald-950/50 px-3 py-1 text-xs font-bold text-emerald-700 dark:text-emerald-400 ring-1 ring-emerald-100 dark:ring-emerald-900/60"
                 >
@@ -890,8 +920,9 @@
             </div>
 
             <div class="mt-12 grid gap-6 md:grid-cols-3">
-                {#each testimonials as testimonial (testimonial.name)}
+                {#each testimonials as testimonial, index (testimonial.name)}
                     <figure
+                        use:reveal={{ delay: index * 100 }}
                         class="flex h-full flex-col rounded-[20px] bg-card p-6 shadow-sm ring-1 ring-border"
                     >
                         <div class="flex items-center gap-1">
@@ -927,7 +958,7 @@
 
     <section id="contact" class="scroll-mt-20 bg-muted/40 py-16 sm:py-24">
         <div class="mx-auto max-w-6xl px-4 md:px-6">
-            <div class="mx-auto max-w-2xl text-center">
+            <div class="mx-auto max-w-2xl text-center" use:reveal>
                 <span
                     class="inline-flex items-center gap-2 rounded-full bg-emerald-50 dark:bg-emerald-950/50 px-3 py-1 text-xs font-bold text-emerald-700 dark:text-emerald-400 ring-1 ring-emerald-100 dark:ring-emerald-900/60"
                 >
@@ -942,6 +973,7 @@
 
             <div class="mx-auto mt-12 max-w-2xl">
                 <div
+                    use:reveal={{ delay: 120 }}
                     class="flex flex-col justify-between rounded-[20px] bg-card p-6 shadow-sm ring-1 ring-border sm:p-8"
                 >
                     <ul class="flex flex-col gap-5">
