@@ -388,6 +388,7 @@ const en = {
     'preview.quickStartDesc':
         'Choose a scenario and open the assistant with a full starter prompt you can edit instantly.',
     'preview.quickStartAction': 'Start this plan',
+    'preview.orDivider': 'Or',
     'preview.quickStart1Title': 'Riyadh weekend',
     'preview.quickStart1Meta': '3 days · Family trip · Medium budget',
     'preview.quickStart1Prompt':
@@ -999,6 +1000,7 @@ const ar: Record<MessageKey, string> = {
     'preview.quickStartDesc':
         'اختر سيناريو جاهز وافتح المساعد مباشرة برسالة بداية كاملة تقدر تعدلها فوراً.',
     'preview.quickStartAction': 'ابدأ هذه الخطة',
+    'preview.orDivider': 'أو',
     'preview.quickStart1Title': 'ويكند الرياض',
     'preview.quickStart1Meta': '٣ أيام · رحلة عائلية · ميزانية متوسطة',
     'preview.quickStart1Prompt':
@@ -1848,6 +1850,7 @@ const fr: Partial<Record<MessageKey, string>> = {
     'preview.quickStartDesc':
         'Choisissez un scénario et ouvrez l’assistant avec une invite complète modifiable instantanément.',
     'preview.quickStartAction': 'Démarrer ce plan',
+    'preview.orDivider': 'Ou',
     'preview.quickStart1Title': 'Week-end à Riyad',
     'preview.quickStart1Meta': '3 jours · Voyage en famille · Budget moyen',
     'preview.quickStart1Prompt':
@@ -2476,6 +2479,7 @@ const es: Partial<Record<MessageKey, string>> = {
     'preview.quickStartDesc':
         'Elige un escenario y abre el asistente con una indicación completa que puedes editar al instante.',
     'preview.quickStartAction': 'Iniciar este plan',
+    'preview.orDivider': 'O',
     'preview.quickStart1Title': 'Fin de semana en Riad',
     'preview.quickStart1Meta': '3 días · Viaje familiar · Presupuesto medio',
     'preview.quickStart1Prompt':
@@ -3102,6 +3106,7 @@ const de: Partial<Record<MessageKey, string>> = {
     'preview.quickStartDesc':
         'Wähle ein Szenario und öffne den Assistenten mit einem vollständigen Prompt, den du sofort bearbeiten kannst.',
     'preview.quickStartAction': 'Diesen Plan starten',
+    'preview.orDivider': 'Oder',
     'preview.quickStart1Title': 'Wochenende in Riad',
     'preview.quickStart1Meta': '3 Tage · Familienreise · Mittleres Budget',
     'preview.quickStart1Prompt':
@@ -3721,6 +3726,7 @@ const ru: Partial<Record<MessageKey, string>> = {
     'preview.quickStartDesc':
         'Выберите сценарий и откройте ассистента с готовым запросом, который можно сразу изменить.',
     'preview.quickStartAction': 'Начать этот план',
+    'preview.orDivider': 'Или',
     'preview.quickStart1Title': 'Выходные в Эр-Рияде',
     'preview.quickStart1Meta': '3 дня · Семейная поездка · Средний бюджет',
     'preview.quickStart1Prompt':
@@ -4345,6 +4351,7 @@ const tr: Partial<Record<MessageKey, string>> = {
     'preview.quickStartDesc':
         'Bir senaryo seç ve asistanı, anında düzenleyebileceğin hazır bir komutla aç.',
     'preview.quickStartAction': 'Bu planı başlat',
+    'preview.orDivider': 'Ya da',
     'preview.quickStart1Title': 'Riyad hafta sonu',
     'preview.quickStart1Meta': '3 gün · Aile gezisi · Orta bütçe',
     'preview.quickStart1Prompt':
@@ -4936,6 +4943,7 @@ const zh: Partial<Record<MessageKey, string>> = {
     'preview.quickStartDesc':
         '选择一个场景，使用完整提示词打开助手，并可即时修改。',
     'preview.quickStartAction': '开始此计划',
+    'preview.orDivider': '或',
     'preview.quickStart1Title': '利雅得周末',
     'preview.quickStart1Meta': '3 天 · 家庭旅行 · 中等预算',
     'preview.quickStart1Prompt':
@@ -5540,6 +5548,7 @@ const hi: Partial<Record<MessageKey, string>> = {
     'preview.quickStartDesc':
         'एक परिदृश्य चुनें और पूरे शुरुआती प्रॉम्प्ट के साथ सहायक खोलें, जिसे आप तुरंत संपादित कर सकते हैं।',
     'preview.quickStartAction': 'यह योजना शुरू करें',
+    'preview.orDivider': 'या',
     'preview.quickStart1Title': 'रियाद वीकेंड',
     'preview.quickStart1Meta': '3 दिन · पारिवारिक यात्रा · मध्यम बजट',
     'preview.quickStart1Prompt':
@@ -6159,6 +6168,7 @@ const ur: Partial<Record<MessageKey, string>> = {
     'preview.quickStartDesc':
         'ایک منظر چنیں اور مکمل ابتدائی پرامپٹ کے ساتھ اسسٹنٹ کھولیں جسے آپ فوراً ترمیم کر سکتے ہیں۔',
     'preview.quickStartAction': 'یہ منصوبہ شروع کریں',
+    'preview.orDivider': 'یا',
     'preview.quickStart1Title': 'ریاض ویک اینڈ',
     'preview.quickStart1Meta': '3 دن · خاندانی سفر · درمیانہ بجٹ',
     'preview.quickStart1Prompt':

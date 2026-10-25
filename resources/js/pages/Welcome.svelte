@@ -946,14 +946,25 @@
                 {/if}
             </div>
         </div>
-    </section>
 
-    <section id="quick-start" class="bg-background py-16 sm:py-24">
-        <div class="mx-auto w-full max-w-6xl px-4 md:px-6">
+        <div class="mx-auto mt-12 w-full max-w-6xl px-4 md:px-6">
             <div
-                class="rounded-[24px] bg-card/95 p-5 shadow-2xl shadow-slate-950/20 ring-1 ring-border/80 backdrop-blur sm:p-8"
+                class="flex items-center gap-4"
+                role="separator"
+                aria-label={t('preview.orDivider')}
             >
-                <div class="max-w-2xl" use:reveal>
+                <span class="h-px flex-1 bg-border/70"></span>
+                <span class="text-xs font-bold text-muted-foreground">
+                    {t('preview.orDivider')}
+                </span>
+                <span class="h-px flex-1 bg-border/70"></span>
+            </div>
+
+            <div
+                use:reveal
+                class="mt-6 rounded-[24px] bg-card/95 p-5 shadow-2xl shadow-slate-950/20 ring-1 ring-border/80 backdrop-blur sm:p-8"
+            >
+                <div class="max-w-2xl">
                     <span
                         class="inline-flex items-center gap-2 rounded-full bg-emerald-50 dark:bg-emerald-950/50 px-3 py-1 text-xs font-bold text-emerald-700 dark:text-emerald-400 ring-1 ring-emerald-100 dark:ring-emerald-900/60"
                     >
