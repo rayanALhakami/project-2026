@@ -383,24 +383,6 @@ const en = {
     'preview.placesDesc':
         'The highest-rated landmarks and experiences — add them to your trip in one tap.',
     'preview.placeDetails': 'Details',
-    'preview.quickStartBadge': 'Quick start',
-    'preview.quickStartTitle': 'Start with a ready trip in one tap',
-    'preview.quickStartDesc':
-        'Choose a scenario and open the assistant with a full starter prompt you can edit instantly.',
-    'preview.quickStartAction': 'Start this plan',
-    'preview.orDivider': 'Or',
-    'preview.quickStart1Title': 'Riyadh weekend',
-    'preview.quickStart1Meta': '3 days · Family trip · Medium budget',
-    'preview.quickStart1Prompt':
-        'Plan a 3-day family trip in Riyadh with a medium budget. Include indoor alternatives if the weather is hot.',
-    'preview.quickStart2Title': 'AlUla culture route',
-    'preview.quickStart2Meta': '2 days · Landmarks + heritage · Calm pace',
-    'preview.quickStart2Prompt':
-        'Build me a 2-day cultural trip in AlUla focused on heritage sites and museums with light walking.',
-    'preview.quickStart3Title': 'Jeddah food evening',
-    'preview.quickStart3Meta': '1 day · Friends trip · Flexible budget',
-    'preview.quickStart3Prompt':
-        'Suggest a 1-day evening plan in Jeddah focused on local food and seaside spots with transportation tips.',
     'preview.formBadge': 'Free planning',
     'preview.formTitle': 'Plan your trip now',
     'preview.formDesc':
@@ -995,24 +977,6 @@ const ar: Record<MessageKey, string> = {
     'preview.placesDesc':
         'أعلى المعالم والتجارب تقييماً — أضفها إلى رحلتك بضغطة واحدة.',
     'preview.placeDetails': 'التفاصيل',
-    'preview.quickStartBadge': 'بداية سريعة',
-    'preview.quickStartTitle': 'ابدأ برحلة جاهزة بضغطة واحدة',
-    'preview.quickStartDesc':
-        'اختر سيناريو جاهز وافتح المساعد مباشرة برسالة بداية كاملة تقدر تعدلها فوراً.',
-    'preview.quickStartAction': 'ابدأ هذه الخطة',
-    'preview.orDivider': 'أو',
-    'preview.quickStart1Title': 'ويكند الرياض',
-    'preview.quickStart1Meta': '٣ أيام · رحلة عائلية · ميزانية متوسطة',
-    'preview.quickStart1Prompt':
-        'خطط لي رحلة عائلية لمدة ٣ أيام في الرياض بميزانية متوسطة، ومع بدائل داخلية إذا كان الجو حار.',
-    'preview.quickStart2Title': 'مسار العلا الثقافي',
-    'preview.quickStart2Meta': 'يومان · معالم وتراث · وتيرة هادئة',
-    'preview.quickStart2Prompt':
-        'ابنِ لي رحلة ثقافية لمدة يومين في العلا تركّز على المواقع التراثية والمتاحف مع مشي خفيف.',
-    'preview.quickStart3Title': 'مساء جدة الذواقة',
-    'preview.quickStart3Meta': 'يوم واحد · رحلة أصدقاء · ميزانية مرنة',
-    'preview.quickStart3Prompt':
-        'اقترح لي خطة مسائية ليوم واحد في جدة تركّز على الأكل المحلي والأماكن البحرية مع نصائح تنقل.',
     'preview.formBadge': 'تخطيط مجاني',
     'preview.formTitle': 'خطط رحلتك الآن',
     'preview.formDesc':
@@ -1845,24 +1809,6 @@ const fr: Partial<Record<MessageKey, string>> = {
         'Aucune date de mise à jour disponible pour le moment.',
     'places.freshnessHint':
         'Nous vérifions régulièrement les données touristiques auprès de sources fiables avant publication.',
-    'preview.quickStartBadge': 'Démarrage rapide',
-    'preview.quickStartTitle': 'Commencez avec un voyage prêt en un geste',
-    'preview.quickStartDesc':
-        'Choisissez un scénario et ouvrez l’assistant avec une invite complète modifiable instantanément.',
-    'preview.quickStartAction': 'Démarrer ce plan',
-    'preview.orDivider': 'Ou',
-    'preview.quickStart1Title': 'Week-end à Riyad',
-    'preview.quickStart1Meta': '3 jours · Voyage en famille · Budget moyen',
-    'preview.quickStart1Prompt':
-        'Planifie un voyage familial de 3 jours à Riyad avec un budget moyen. Inclus des alternatives en intérieur s’il fait chaud.',
-    'preview.quickStart2Title': 'Circuit culturel à AlUla',
-    'preview.quickStart2Meta': '2 jours · Sites + patrimoine · Rythme tranquille',
-    'preview.quickStart2Prompt':
-        'Prépare-moi un voyage culturel de 2 jours à AlUla axé sur les sites patrimoniaux et les musées, avec peu de marche.',
-    'preview.quickStart3Title': 'Soirée gourmande à Djeddah',
-    'preview.quickStart3Meta': '1 jour · Entre amis · Budget flexible',
-    'preview.quickStart3Prompt':
-        'Propose un plan d’une soirée à Djeddah axé sur la cuisine locale et les bords de mer, avec des conseils de transport.',
     'meta.description':
         'Votre guide de voyage intelligent pour l’Arabie saoudite : planifiez vos voyages, découvrez des sites, traduisez instantanément, consultez météo et prix — tout en un.',
     'meta.placesDescription':
@@ -2474,25 +2420,6 @@ const es: Partial<Record<MessageKey, string>> = {
         'Aún no hay fecha de actualización disponible.',
     'places.freshnessHint':
         'Revisamos periódicamente los datos turísticos de fuentes fiables antes de publicar.',
-    'preview.quickStartBadge': 'Inicio rápido',
-    'preview.quickStartTitle': 'Empieza con un viaje listo en un toque',
-    'preview.quickStartDesc':
-        'Elige un escenario y abre el asistente con una indicación completa que puedes editar al instante.',
-    'preview.quickStartAction': 'Iniciar este plan',
-    'preview.orDivider': 'O',
-    'preview.quickStart1Title': 'Fin de semana en Riad',
-    'preview.quickStart1Meta': '3 días · Viaje familiar · Presupuesto medio',
-    'preview.quickStart1Prompt':
-        'Planifica un viaje familiar de 3 días en Riad con presupuesto medio. Incluye alternativas interiores si hace calor.',
-    'preview.quickStart2Title': 'Ruta cultural de AlUla',
-    'preview.quickStart2Meta':
-        '2 días · Monumentos + patrimonio · Ritmo tranquilo',
-    'preview.quickStart2Prompt':
-        'Prepara un viaje cultural de 2 días en AlUla centrado en sitios patrimoniales y museos, con poca caminata.',
-    'preview.quickStart3Title': 'Tarde gastronómica en Yeda',
-    'preview.quickStart3Meta': '1 día · Con amigos · Presupuesto flexible',
-    'preview.quickStart3Prompt':
-        'Sugiere un plan de una tarde en Yeda centrado en comida local y la costa, con consejos de transporte.',
     'meta.description':
         'Tu guía de viaje inteligente para Arabia Saudita: planifica viajes, descubre lugares, traduce al instante y consulta el clima y los precios, todo en uno.',
     'meta.placesDescription':
@@ -3101,25 +3028,6 @@ const de: Partial<Record<MessageKey, string>> = {
         'Noch kein Aktualisierungszeitpunkt verfügbar.',
     'places.freshnessHint':
         'Wir prüfen Tourismusdaten regelmäßig anhand vertrauenswürdiger Quellen, bevor wir sie veröffentlichen.',
-    'preview.quickStartBadge': 'Schnellstart',
-    'preview.quickStartTitle': 'Starte mit einer fertigen Reise per Fingertipp',
-    'preview.quickStartDesc':
-        'Wähle ein Szenario und öffne den Assistenten mit einem vollständigen Prompt, den du sofort bearbeiten kannst.',
-    'preview.quickStartAction': 'Diesen Plan starten',
-    'preview.orDivider': 'Oder',
-    'preview.quickStart1Title': 'Wochenende in Riad',
-    'preview.quickStart1Meta': '3 Tage · Familienreise · Mittleres Budget',
-    'preview.quickStart1Prompt':
-        'Plane eine 3-tägige Familienreise in Riad mit mittlerem Budget. Füge Indoor-Alternativen hinzu, falls es heiß ist.',
-    'preview.quickStart2Title': 'Kulturroute AlUla',
-    'preview.quickStart2Meta':
-        '2 Tage · Sehenswürdigkeiten + Kulturerbe · Ruhiges Tempo',
-    'preview.quickStart2Prompt':
-        'Erstelle mir eine 2-tägige Kulturreise in AlUla mit Fokus auf Kulturerbestätten und Museen, mit wenig Fußweg.',
-    'preview.quickStart3Title': 'Kulinarik-Abend in Dschidda',
-    'preview.quickStart3Meta': '1 Tag · Freundesausflug · Flexibles Budget',
-    'preview.quickStart3Prompt':
-        'Schlage einen 1-Tages-Abendplan in Dschidda mit lokaler Küche und Küstenorten sowie Verkehrstipps vor.',
     'meta.description':
         'Dein intelligenter Reiseführer für Saudi-Arabien: Reisen planen, Sehenswürdigkeiten entdecken, sofort übersetzen, Wetter und Preise prüfen — alles an einem Ort.',
     'meta.placesDescription':
@@ -3721,25 +3629,6 @@ const ru: Partial<Record<MessageKey, string>> = {
     'places.freshnessMissing': 'Дата обновления пока недоступна.',
     'places.freshnessHint':
         'Мы регулярно проверяем туристические данные по надёжным источникам перед публикацией.',
-    'preview.quickStartBadge': 'Быстрый старт',
-    'preview.quickStartTitle': 'Начните с готовой поездки в один клик',
-    'preview.quickStartDesc':
-        'Выберите сценарий и откройте ассистента с готовым запросом, который можно сразу изменить.',
-    'preview.quickStartAction': 'Начать этот план',
-    'preview.orDivider': 'Или',
-    'preview.quickStart1Title': 'Выходные в Эр-Рияде',
-    'preview.quickStart1Meta': '3 дня · Семейная поездка · Средний бюджет',
-    'preview.quickStart1Prompt':
-        'Составь план семейной поездки на 3 дня в Эр-Рияд со средним бюджетом. Добавь крытые варианты на случай жары.',
-    'preview.quickStart2Title': 'Культурный маршрут Аль-Ула',
-    'preview.quickStart2Meta':
-        '2 дня · Достопримечательности + наследие · Спокойный темп',
-    'preview.quickStart2Prompt':
-        'Составь 2-дневное культурное путешествие в Аль-Улу с акцентом на объекты наследия и музеи, минимум ходьбы.',
-    'preview.quickStart3Title': 'Гастрономический вечер в Джидде',
-    'preview.quickStart3Meta': '1 день · С друзьями · Гибкий бюджет',
-    'preview.quickStart3Prompt':
-        'Предложи вечерний план на 1 день в Джидде: местная кухня и набережная, плюс советы по транспорту.',
     'meta.description':
         'Ваш умный путеводитель по Саудовской Аравии: планируйте поездки, открывайте места, переводите мгновенно, проверяйте погоду и цены — всё в одном.',
     'meta.placesDescription':
@@ -4346,24 +4235,6 @@ const tr: Partial<Record<MessageKey, string>> = {
     'places.freshnessMissing': 'Henüz güncelleme zamanı bilgisi yok.',
     'places.freshnessHint':
         'Yayınlamadan önce turizm verilerini güvenilir kaynaklardan düzenli olarak kontrol ediyoruz.',
-    'preview.quickStartBadge': 'Hızlı başlangıç',
-    'preview.quickStartTitle': 'Hazır bir geziyle tek dokunuşla başla',
-    'preview.quickStartDesc':
-        'Bir senaryo seç ve asistanı, anında düzenleyebileceğin hazır bir komutla aç.',
-    'preview.quickStartAction': 'Bu planı başlat',
-    'preview.orDivider': 'Ya da',
-    'preview.quickStart1Title': 'Riyad hafta sonu',
-    'preview.quickStart1Meta': '3 gün · Aile gezisi · Orta bütçe',
-    'preview.quickStart1Prompt':
-        'Riyad’da orta bütçeli 3 günlük bir aile gezisi planla. Hava sıcaksa kapalı mekân alternatifleri ekle.',
-    'preview.quickStart2Title': 'AlUla kültür rotası',
-    'preview.quickStart2Meta': '2 gün · Anıtlar + miras · Sakin tempo',
-    'preview.quickStart2Prompt':
-        'Bana AlUla’da miras alanları ve müzelere odaklı, az yürüyüşlü 2 günlük kültür gezisi hazırla.',
-    'preview.quickStart3Title': 'Cidde yemek akşamı',
-    'preview.quickStart3Meta': '1 gün · Arkadaşlarla · Esnek bütçe',
-    'preview.quickStart3Prompt':
-        'Cidde’de yerel yemekler ve sahil noktalarına odaklı, ulaşım ipuçlarıyla 1 günlük akşam planı öner.',
     'meta.description':
         'Suudi Arabistan için akıllı seyahat rehberin: gezileri planla, yerleri keşfet, anında çevir, hava durumunu ve fiyatları kontrol et — hepsi tek yerde.',
     'meta.placesDescription':
@@ -4938,24 +4809,6 @@ const zh: Partial<Record<MessageKey, string>> = {
     'places.freshnessUpdated': '最后更新：{date}',
     'places.freshnessMissing': '暂无更新时间信息。',
     'places.freshnessHint': '发布前我们会定期依据可靠来源复核旅游数据。',
-    'preview.quickStartBadge': '快速开始',
-    'preview.quickStartTitle': '一键开始现成行程',
-    'preview.quickStartDesc':
-        '选择一个场景，使用完整提示词打开助手，并可即时修改。',
-    'preview.quickStartAction': '开始此计划',
-    'preview.orDivider': '或',
-    'preview.quickStart1Title': '利雅得周末',
-    'preview.quickStart1Meta': '3 天 · 家庭旅行 · 中等预算',
-    'preview.quickStart1Prompt':
-        '请规划一个中等预算、为期 3 天的利雅得家庭旅行。若天气炎热，请加入室内替代方案。',
-    'preview.quickStart2Title': '欧拉文化路线',
-    'preview.quickStart2Meta': '2 天 · 地标 + 遗产 · 轻松节奏',
-    'preview.quickStart2Prompt':
-        '请为我规划为期 2 天的欧拉文化之旅，重点游览遗产地和博物馆，步行较少。',
-    'preview.quickStart3Title': '吉达美食之夜',
-    'preview.quickStart3Meta': '1 天 · 朋友出行 · 预算灵活',
-    'preview.quickStart3Prompt':
-        '请推荐吉达 1 天晚间行程，重点体验当地美食和海滨景点，并附交通建议。',
     'meta.description':
         '您的沙特阿拉伯智能旅行指南：规划行程、探索景点、即时翻译、查看天气与价格，一站式搞定。',
     'meta.placesDescription':
@@ -5543,24 +5396,6 @@ const hi: Partial<Record<MessageKey, string>> = {
     'places.freshnessMissing': 'अभी कोई अपडेट समय उपलब्ध नहीं है।',
     'places.freshnessHint':
         'हम प्रकाशन से पहले विश्वसनीय स्रोतों से पर्यटन डेटा की नियमित समीक्षा करते हैं।',
-    'preview.quickStartBadge': 'त्वरित शुरुआत',
-    'preview.quickStartTitle': 'एक टैप में तैयार यात्रा से शुरू करें',
-    'preview.quickStartDesc':
-        'एक परिदृश्य चुनें और पूरे शुरुआती प्रॉम्प्ट के साथ सहायक खोलें, जिसे आप तुरंत संपादित कर सकते हैं।',
-    'preview.quickStartAction': 'यह योजना शुरू करें',
-    'preview.orDivider': 'या',
-    'preview.quickStart1Title': 'रियाद वीकेंड',
-    'preview.quickStart1Meta': '3 दिन · पारिवारिक यात्रा · मध्यम बजट',
-    'preview.quickStart1Prompt':
-        'मध्यम बजट में रियाद की 3-दिन की पारिवारिक यात्रा की योजना बनाओ। गर्मी होने पर इनडोर विकल्प भी जोड़ो।',
-    'preview.quickStart2Title': 'अलउला सांस्कृतिक मार्ग',
-    'preview.quickStart2Meta': '2 दिन · स्थल + धरोहर · शांत गति',
-    'preview.quickStart2Prompt':
-        'मेरे लिए अलउला की 2-दिन की सांस्कृतिक यात्रा बनाओ, जिसमें धरोहर स्थल और संग्रहालय हों और कम पैदल चलना पड़े।',
-    'preview.quickStart3Title': 'जेद्दा फूड इवनिंग',
-    'preview.quickStart3Meta': '1 दिन · दोस्तों के साथ · लचीला बजट',
-    'preview.quickStart3Prompt':
-        'जेद्दा में स्थानीय भोजन और समुद्र किनारे पर केंद्रित 1-दिन की शाम की योजना सुझाओ, साथ में यातायात सुझाव।',
     'meta.description':
         'सऊदी अरब के लिए आपका स्मार्ट यात्रा गाइड: यात्राएँ प्लान करें, स्थल खोजें, तुरंत अनुवाद करें, मौसम और कीमतें देखें — सब एक जगह।',
     'meta.placesDescription':
@@ -6163,24 +5998,6 @@ const ur: Partial<Record<MessageKey, string>> = {
     'places.freshnessMissing': 'ابھی اپ ڈیٹ کا وقت دستیاب نہیں۔',
     'places.freshnessHint':
         'ہم اشاعت سے پہلے معتبر ذرائع سے سیاحتی ڈیٹا کا باقاعدگی سے جائزہ لیتے ہیں۔',
-    'preview.quickStartBadge': 'فوری آغاز',
-    'preview.quickStartTitle': 'ایک ٹیپ میں تیار سفر سے شروع کریں',
-    'preview.quickStartDesc':
-        'ایک منظر چنیں اور مکمل ابتدائی پرامپٹ کے ساتھ اسسٹنٹ کھولیں جسے آپ فوراً ترمیم کر سکتے ہیں۔',
-    'preview.quickStartAction': 'یہ منصوبہ شروع کریں',
-    'preview.orDivider': 'یا',
-    'preview.quickStart1Title': 'ریاض ویک اینڈ',
-    'preview.quickStart1Meta': '3 دن · خاندانی سفر · درمیانہ بجٹ',
-    'preview.quickStart1Prompt':
-        'درمیانے بجٹ میں ریاض کا 3 دن کا خاندانی سفر ترتیب دو۔ گرمی ہو تو اندرونی متبادل بھی شامل کرو۔',
-    'preview.quickStart2Title': 'العلا ثقافتی راستہ',
-    'preview.quickStart2Meta': '2 دن · مقامات + ورثہ · پرسکون رفتار',
-    'preview.quickStart2Prompt':
-        'میرے لیے العلا کا 2 دن کا ثقافتی سفر بناؤ جس میں ورثے کے مقامات اور عجائب گھر ہوں اور کم پیدل چلنا پڑے۔',
-    'preview.quickStart3Title': 'جدہ فوڈ شام',
-    'preview.quickStart3Meta': '1 دن · دوستوں کے ساتھ · لچکدار بجٹ',
-    'preview.quickStart3Prompt':
-        'جدہ میں مقامی کھانے اور ساحلی مقامات پر مرکوز 1 دن کا شام کا منصوبہ تجویز کرو، ساتھ میں آمدورفت کے مشورے۔',
     'meta.description':
         'سعودی عرب کے لیے آپ کا سمارٹ ٹریول گائیڈ: سفر کی منصوبہ بندی، مقامات کی دریافت، فوری ترجمہ، موسم اور قیمتیں — سب ایک جگہ۔',
     'meta.placesDescription':
@@ -6228,3 +6045,4 @@ export const messages: Partial<
     hi,
     ur,
 };
+
