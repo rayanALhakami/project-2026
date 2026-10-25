@@ -1833,6 +1833,65 @@ const fr: Partial<Record<MessageKey, string>> = {
     'admin.pending': 'En attente',
     'admin.markHandled': 'Marquer comme traité',
     'admin.markPending': 'Réouvrir',
+
+    'places.freshnessTitle': 'Fraîcheur des données',
+    'places.freshnessFresh': 'À jour',
+    'places.freshnessAging': 'À vérifier bientôt',
+    'places.freshnessStale': 'Mise à jour nécessaire',
+    'places.freshnessUpdated': 'Dernière mise à jour : {date}',
+    'places.freshnessMissing':
+        'Aucune date de mise à jour disponible pour le moment.',
+    'places.freshnessHint':
+        'Nous vérifions régulièrement les données touristiques auprès de sources fiables avant publication.',
+    'preview.quickStartBadge': 'Démarrage rapide',
+    'preview.quickStartTitle': 'Commencez avec un voyage prêt en un geste',
+    'preview.quickStartDesc':
+        'Choisissez un scénario et ouvrez l’assistant avec une invite complète modifiable instantanément.',
+    'preview.quickStartAction': 'Démarrer ce plan',
+    'preview.quickStart1Title': 'Week-end à Riyad',
+    'preview.quickStart1Meta': '3 jours · Voyage en famille · Budget moyen',
+    'preview.quickStart1Prompt':
+        'Planifie un voyage familial de 3 jours à Riyad avec un budget moyen. Inclus des alternatives en intérieur s’il fait chaud.',
+    'preview.quickStart2Title': 'Circuit culturel à AlUla',
+    'preview.quickStart2Meta': '2 jours · Sites + patrimoine · Rythme tranquille',
+    'preview.quickStart2Prompt':
+        'Prépare-moi un voyage culturel de 2 jours à AlUla axé sur les sites patrimoniaux et les musées, avec peu de marche.',
+    'preview.quickStart3Title': 'Soirée gourmande à Djeddah',
+    'preview.quickStart3Meta': '1 jour · Entre amis · Budget flexible',
+    'preview.quickStart3Prompt':
+        'Propose un plan d’une soirée à Djeddah axé sur la cuisine locale et les bords de mer, avec des conseils de transport.',
+    'meta.description':
+        'Votre guide de voyage intelligent pour l’Arabie saoudite : planifiez vos voyages, découvrez des sites, traduisez instantanément, consultez météo et prix — tout en un.',
+    'meta.placesDescription':
+        'Explorez les sites, musées, parcs, restaurants et lieux patrimoniaux les plus célèbres d’Arabie saoudite.',
+    'meta.assistantDescription':
+        'Demandez tout à votre guide intelligent : planification, recommandations, comparaisons, traductions et reconnaissance de sites à partir de photos.',
+    'meta.translateDescription':
+        'Traduisez mots et conversations instantanément entre l’arabe et des dizaines de langues.',
+    'meta.tripsDescription':
+        'Construisez votre itinéraire jour par jour en Arabie saoudite, estimez votre budget et partagez-le par lien ou PDF.',
+    'meta.dashboardDescription':
+        'Votre tableau de bord : météo, prochains voyages, recommandations et statistiques.',
+    'meta.favoritesDescription':
+        'Vos lieux favoris enregistrés à travers l’Arabie saoudite.',
+    'meta.analyticsDescription':
+        'Vos statistiques de voyage : voyages, lieux visités et centres d’intérêt.',
+    'meta.guideDescription':
+        'Informations pratiques pour l’Arabie saoudite : visa, cartes SIM, monnaie, phrases utiles, étiquette et numéros d’urgence.',
+    'nav.guide': 'Guide du voyageur',
+    'places.accessibilityTitle': 'Convient aux',
+    'places.accessibilityFamily': 'Familles',
+    'places.accessibilityWheelchair': 'Fauteuil roulant',
+    'places.accessibilityPrayer': 'Salle de prière',
+    'places.accessibilityIndoor': 'Intérieur uniquement',
+    'places.accessibilityActiveHint':
+        'Filtrage par {count} options d’accessibilité',
+    'guide.title': 'Guide du voyageur',
+    'guide.subtitle':
+        'Informations pratiques pour votre voyage en Arabie saoudite : entrée, connectivité, argent, phrases, étiquette et urgences.',
+    'guide.badge': 'Infos essentielles',
+    'guide.disclaimer':
+        'Informations indicatives — vérifiez toujours auprès des sources officielles avant de voyager.',
 };
 
 const es: Partial<Record<MessageKey, string>> = {
@@ -2402,6 +2461,66 @@ const es: Partial<Record<MessageKey, string>> = {
     'admin.pending': 'Pendiente',
     'admin.markHandled': 'Marcar como atendida',
     'admin.markPending': 'Reabrir',
+
+    'places.freshnessTitle': 'Actualidad de los datos',
+    'places.freshnessFresh': 'Reciente',
+    'places.freshnessAging': 'Revisar pronto',
+    'places.freshnessStale': 'Necesita actualización',
+    'places.freshnessUpdated': 'Última actualización: {date}',
+    'places.freshnessMissing':
+        'Aún no hay fecha de actualización disponible.',
+    'places.freshnessHint':
+        'Revisamos periódicamente los datos turísticos de fuentes fiables antes de publicar.',
+    'preview.quickStartBadge': 'Inicio rápido',
+    'preview.quickStartTitle': 'Empieza con un viaje listo en un toque',
+    'preview.quickStartDesc':
+        'Elige un escenario y abre el asistente con una indicación completa que puedes editar al instante.',
+    'preview.quickStartAction': 'Iniciar este plan',
+    'preview.quickStart1Title': 'Fin de semana en Riad',
+    'preview.quickStart1Meta': '3 días · Viaje familiar · Presupuesto medio',
+    'preview.quickStart1Prompt':
+        'Planifica un viaje familiar de 3 días en Riad con presupuesto medio. Incluye alternativas interiores si hace calor.',
+    'preview.quickStart2Title': 'Ruta cultural de AlUla',
+    'preview.quickStart2Meta':
+        '2 días · Monumentos + patrimonio · Ritmo tranquilo',
+    'preview.quickStart2Prompt':
+        'Prepara un viaje cultural de 2 días en AlUla centrado en sitios patrimoniales y museos, con poca caminata.',
+    'preview.quickStart3Title': 'Tarde gastronómica en Yeda',
+    'preview.quickStart3Meta': '1 día · Con amigos · Presupuesto flexible',
+    'preview.quickStart3Prompt':
+        'Sugiere un plan de una tarde en Yeda centrado en comida local y la costa, con consejos de transporte.',
+    'meta.description':
+        'Tu guía de viaje inteligente para Arabia Saudita: planifica viajes, descubre lugares, traduce al instante y consulta el clima y los precios, todo en uno.',
+    'meta.placesDescription':
+        'Explora los lugares, museos, parques, restaurantes y sitios patrimoniales más famosos de Arabia Saudita.',
+    'meta.assistantDescription':
+        'Pregunta lo que quieras a tu guía inteligente: planificación, recomendaciones, comparaciones, traducciones y reconocimiento de lugares desde fotos.',
+    'meta.translateDescription':
+        'Traduce palabras y conversaciones al instante entre árabe y decenas de idiomas.',
+    'meta.tripsDescription':
+        'Crea tu itinerario día a día en Arabia Saudita, estima tu presupuesto y compártelo por enlace o PDF.',
+    'meta.dashboardDescription':
+        'Tu panel de viaje: clima, próximos viajes, recomendaciones y análisis.',
+    'meta.favoritesDescription':
+        'Tus lugares favoritos guardados en Arabia Saudita.',
+    'meta.analyticsDescription':
+        'Tus estadísticas de viaje: viajes, lugares visitados e intereses.',
+    'meta.guideDescription':
+        'Información práctica para viajeros en Arabia Saudita: visa, tarjetas SIM, moneda, frases útiles, etiqueta y números de emergencia.',
+    'nav.guide': 'Guía del viajero',
+    'places.accessibilityTitle': 'Apto para',
+    'places.accessibilityFamily': 'Familias',
+    'places.accessibilityWheelchair': 'Silla de ruedas',
+    'places.accessibilityPrayer': 'Zona de oración',
+    'places.accessibilityIndoor': 'Solo interior',
+    'places.accessibilityActiveHint':
+        'Filtrando por {count} opciones de accesibilidad',
+    'guide.title': 'Guía del viajero',
+    'guide.subtitle':
+        'Información práctica para tu viaje a Arabia Saudita: entrada, conectividad, dinero, frases, etiqueta y emergencias.',
+    'guide.badge': 'Información esencial',
+    'guide.disclaimer':
+        'Información orientativa: verifica siempre las fuentes oficiales antes de viajar.',
 };
 
 const de: Partial<Record<MessageKey, string>> = {
@@ -2968,6 +3087,66 @@ const de: Partial<Record<MessageKey, string>> = {
     'admin.pending': 'Ausstehend',
     'admin.markHandled': 'Als bearbeitet markieren',
     'admin.markPending': 'Wieder öffnen',
+
+    'places.freshnessTitle': 'Datenaktualität',
+    'places.freshnessFresh': 'Aktuell',
+    'places.freshnessAging': 'Bald prüfen',
+    'places.freshnessStale': 'Update nötig',
+    'places.freshnessUpdated': 'Letzte Aktualisierung: {date}',
+    'places.freshnessMissing':
+        'Noch kein Aktualisierungszeitpunkt verfügbar.',
+    'places.freshnessHint':
+        'Wir prüfen Tourismusdaten regelmäßig anhand vertrauenswürdiger Quellen, bevor wir sie veröffentlichen.',
+    'preview.quickStartBadge': 'Schnellstart',
+    'preview.quickStartTitle': 'Starte mit einer fertigen Reise per Fingertipp',
+    'preview.quickStartDesc':
+        'Wähle ein Szenario und öffne den Assistenten mit einem vollständigen Prompt, den du sofort bearbeiten kannst.',
+    'preview.quickStartAction': 'Diesen Plan starten',
+    'preview.quickStart1Title': 'Wochenende in Riad',
+    'preview.quickStart1Meta': '3 Tage · Familienreise · Mittleres Budget',
+    'preview.quickStart1Prompt':
+        'Plane eine 3-tägige Familienreise in Riad mit mittlerem Budget. Füge Indoor-Alternativen hinzu, falls es heiß ist.',
+    'preview.quickStart2Title': 'Kulturroute AlUla',
+    'preview.quickStart2Meta':
+        '2 Tage · Sehenswürdigkeiten + Kulturerbe · Ruhiges Tempo',
+    'preview.quickStart2Prompt':
+        'Erstelle mir eine 2-tägige Kulturreise in AlUla mit Fokus auf Kulturerbestätten und Museen, mit wenig Fußweg.',
+    'preview.quickStart3Title': 'Kulinarik-Abend in Dschidda',
+    'preview.quickStart3Meta': '1 Tag · Freundesausflug · Flexibles Budget',
+    'preview.quickStart3Prompt':
+        'Schlage einen 1-Tages-Abendplan in Dschidda mit lokaler Küche und Küstenorten sowie Verkehrstipps vor.',
+    'meta.description':
+        'Dein intelligenter Reiseführer für Saudi-Arabien: Reisen planen, Sehenswürdigkeiten entdecken, sofort übersetzen, Wetter und Preise prüfen — alles an einem Ort.',
+    'meta.placesDescription':
+        'Entdecke die berühmtesten Sehenswürdigkeiten, Museen, Parks, Restaurants und Kulturerbestätten Saudi-Arabiens.',
+    'meta.assistantDescription':
+        'Frag deinen intelligenten Reiseführer alles: Reiseplanung, Empfehlungen, Vergleiche, Übersetzungen und Erkennung von Sehenswürdigkeiten per Foto.',
+    'meta.translateDescription':
+        'Übersetze Wörter und Gespräche sofort zwischen Arabisch und Dutzenden Sprachen.',
+    'meta.tripsDescription':
+        'Baue deinen Tagesplan für Saudi-Arabien, schätze dein Budget und teile ihn per Link oder PDF.',
+    'meta.dashboardDescription':
+        'Dein Reise-Dashboard: Wetter, bevorstehende Reisen, Empfehlungen und Statistiken.',
+    'meta.favoritesDescription':
+        'Deine gespeicherten Lieblingsorte in Saudi-Arabien.',
+    'meta.analyticsDescription':
+        'Deine Reisestatistiken: Reisen, besuchte Orte und Interessen.',
+    'meta.guideDescription':
+        'Praktische Saudi-Arabien-Reiseinfos: Visum, SIM-Karten, Währung, nützliche Sätze, Etikette und Notrufnummern.',
+    'nav.guide': 'Reiseführer',
+    'places.accessibilityTitle': 'Geeignet für',
+    'places.accessibilityFamily': 'Familien',
+    'places.accessibilityWheelchair': 'Rollstuhl',
+    'places.accessibilityPrayer': 'Gebetsräume',
+    'places.accessibilityIndoor': 'Nur innen',
+    'places.accessibilityActiveHint':
+        'Filterung nach {count} Barrierefreiheits-Optionen',
+    'guide.title': 'Reiseführer',
+    'guide.subtitle':
+        'Praktische Infos für deine Saudi-Arabien-Reise: Einreise, Konnektivität, Geld, Sätze, Etikette und Notfälle.',
+    'guide.badge': 'Wichtige Infos',
+    'guide.disclaimer':
+        'Angaben ohne Gewähr — prüfe vor der Reise immer offizielle Quellen.',
 };
 
 const ru: Partial<Record<MessageKey, string>> = {
@@ -3528,6 +3707,65 @@ const ru: Partial<Record<MessageKey, string>> = {
     'admin.pending': 'В ожидании',
     'admin.markHandled': 'Отметить обработанной',
     'admin.markPending': 'Открыть заново',
+
+    'places.freshnessTitle': 'Актуальность данных',
+    'places.freshnessFresh': 'Свежие',
+    'places.freshnessAging': 'Скоро проверка',
+    'places.freshnessStale': 'Требуется обновление',
+    'places.freshnessUpdated': 'Последнее обновление: {date}',
+    'places.freshnessMissing': 'Дата обновления пока недоступна.',
+    'places.freshnessHint':
+        'Мы регулярно проверяем туристические данные по надёжным источникам перед публикацией.',
+    'preview.quickStartBadge': 'Быстрый старт',
+    'preview.quickStartTitle': 'Начните с готовой поездки в один клик',
+    'preview.quickStartDesc':
+        'Выберите сценарий и откройте ассистента с готовым запросом, который можно сразу изменить.',
+    'preview.quickStartAction': 'Начать этот план',
+    'preview.quickStart1Title': 'Выходные в Эр-Рияде',
+    'preview.quickStart1Meta': '3 дня · Семейная поездка · Средний бюджет',
+    'preview.quickStart1Prompt':
+        'Составь план семейной поездки на 3 дня в Эр-Рияд со средним бюджетом. Добавь крытые варианты на случай жары.',
+    'preview.quickStart2Title': 'Культурный маршрут Аль-Ула',
+    'preview.quickStart2Meta':
+        '2 дня · Достопримечательности + наследие · Спокойный темп',
+    'preview.quickStart2Prompt':
+        'Составь 2-дневное культурное путешествие в Аль-Улу с акцентом на объекты наследия и музеи, минимум ходьбы.',
+    'preview.quickStart3Title': 'Гастрономический вечер в Джидде',
+    'preview.quickStart3Meta': '1 день · С друзьями · Гибкий бюджет',
+    'preview.quickStart3Prompt':
+        'Предложи вечерний план на 1 день в Джидде: местная кухня и набережная, плюс советы по транспорту.',
+    'meta.description':
+        'Ваш умный путеводитель по Саудовской Аравии: планируйте поездки, открывайте места, переводите мгновенно, проверяйте погоду и цены — всё в одном.',
+    'meta.placesDescription':
+        'Изучите самые известные достопримечательности, музеи, парки, рестораны и объекты наследия Саудовской Аравии.',
+    'meta.assistantDescription':
+        'Спросите умного гида о чём угодно: планирование, рекомендации, сравнения, переводы и распознавание мест по фото.',
+    'meta.translateDescription':
+        'Мгновенно переводите слова и разговоры между арабским и десятками языков.',
+    'meta.tripsDescription':
+        'Составьте маршрут по дням для Саудовской Аравии, оцените бюджет и поделитесь ссылкой или PDF.',
+    'meta.dashboardDescription':
+        'Ваша панель поездки: погода, предстоящие поездки, рекомендации и аналитика.',
+    'meta.favoritesDescription':
+        'Сохранённые любимые места по всей Саудовской Аравии.',
+    'meta.analyticsDescription':
+        'Ваша аналитика путешествий: поездки, посещённые места и интересы.',
+    'meta.guideDescription':
+        'Практическая информация для путешественников в Саудовскую Аравию: виза, SIM-карты, валюта, фразы, этикет и экстренные номера.',
+    'nav.guide': 'Путеводитель',
+    'places.accessibilityTitle': 'Подходит для',
+    'places.accessibilityFamily': 'Семей',
+    'places.accessibilityWheelchair': 'Инвалидных колясок',
+    'places.accessibilityPrayer': 'Молельные комнаты',
+    'places.accessibilityIndoor': 'Только в помещении',
+    'places.accessibilityActiveHint':
+        'Фильтр по {count} параметрам доступности',
+    'guide.title': 'Путеводитель',
+    'guide.subtitle':
+        'Практическая информация для поездки в Саудовскую Аравию: въезд, связь, деньги, фразы, этикет и экстренные случаи.',
+    'guide.badge': 'Важная информация',
+    'guide.disclaimer':
+        'Информация ориентировочная — всегда проверяйте официальные источники перед поездкой.',
 };
 
 const tr: Partial<Record<MessageKey, string>> = {
@@ -4093,6 +4331,64 @@ const tr: Partial<Record<MessageKey, string>> = {
     'admin.pending': 'Beklemede',
     'admin.markHandled': 'İşlendi olarak işaretle',
     'admin.markPending': 'Yeniden aç',
+
+    'places.freshnessTitle': 'Veri güncelliği',
+    'places.freshnessFresh': 'Güncel',
+    'places.freshnessAging': 'Yakında kontrol',
+    'places.freshnessStale': 'Güncelleme gerekli',
+    'places.freshnessUpdated': 'Son güncelleme: {date}',
+    'places.freshnessMissing': 'Henüz güncelleme zamanı bilgisi yok.',
+    'places.freshnessHint':
+        'Yayınlamadan önce turizm verilerini güvenilir kaynaklardan düzenli olarak kontrol ediyoruz.',
+    'preview.quickStartBadge': 'Hızlı başlangıç',
+    'preview.quickStartTitle': 'Hazır bir geziyle tek dokunuşla başla',
+    'preview.quickStartDesc':
+        'Bir senaryo seç ve asistanı, anında düzenleyebileceğin hazır bir komutla aç.',
+    'preview.quickStartAction': 'Bu planı başlat',
+    'preview.quickStart1Title': 'Riyad hafta sonu',
+    'preview.quickStart1Meta': '3 gün · Aile gezisi · Orta bütçe',
+    'preview.quickStart1Prompt':
+        'Riyad’da orta bütçeli 3 günlük bir aile gezisi planla. Hava sıcaksa kapalı mekân alternatifleri ekle.',
+    'preview.quickStart2Title': 'AlUla kültür rotası',
+    'preview.quickStart2Meta': '2 gün · Anıtlar + miras · Sakin tempo',
+    'preview.quickStart2Prompt':
+        'Bana AlUla’da miras alanları ve müzelere odaklı, az yürüyüşlü 2 günlük kültür gezisi hazırla.',
+    'preview.quickStart3Title': 'Cidde yemek akşamı',
+    'preview.quickStart3Meta': '1 gün · Arkadaşlarla · Esnek bütçe',
+    'preview.quickStart3Prompt':
+        'Cidde’de yerel yemekler ve sahil noktalarına odaklı, ulaşım ipuçlarıyla 1 günlük akşam planı öner.',
+    'meta.description':
+        'Suudi Arabistan için akıllı seyahat rehberin: gezileri planla, yerleri keşfet, anında çevir, hava durumunu ve fiyatları kontrol et — hepsi tek yerde.',
+    'meta.placesDescription':
+        'Suudi Arabistan’ın en ünlü anıtlarını, müzelerini, parklarını, restoranlarını ve miras alanlarını keşfet.',
+    'meta.assistantDescription':
+        'Akıllı rehberine her şeyi sor: gezi planlama, öneriler, karşılaştırmalar, çeviriler ve fotoğraftan yer tanıma.',
+    'meta.translateDescription':
+        'Kelimeleri ve konuşmaları Arapça ile onlarca dil arasında anında çevir.',
+    'meta.tripsDescription':
+        'Suudi Arabistan için gün gün planını oluştur, bütçeni tahmin et ve bağlantı veya PDF ile paylaş.',
+    'meta.dashboardDescription':
+        'Seyahat panelin: hava durumu, yaklaşan geziler, öneriler ve analizler.',
+    'meta.favoritesDescription':
+        'Suudi Arabistan genelinde kaydettiğin favori yerler.',
+    'meta.analyticsDescription':
+        'Seyahat analizlerin: geziler, ziyaret edilen yerler ve ilgi alanları.',
+    'meta.guideDescription':
+        'Suudi Arabistan için pratik bilgiler: vize, SIM kartları, para birimi, faydalı ifadeler, görgü kuralları ve acil durum numaraları.',
+    'nav.guide': 'Gezgin rehberi',
+    'places.accessibilityTitle': 'Uygun olduğu',
+    'places.accessibilityFamily': 'Aileler',
+    'places.accessibilityWheelchair': 'Tekerlekli sandalye',
+    'places.accessibilityPrayer': 'Namaz alanı',
+    'places.accessibilityIndoor': 'Yalnızca kapalı',
+    'places.accessibilityActiveHint':
+        '{count} erişilebilirlik seçeneğine göre filtreleniyor',
+    'guide.title': 'Gezgin rehberi',
+    'guide.subtitle':
+        'Suudi Arabistan seyahatiniz için pratik bilgiler: giriş, bağlantı, para, ifadeler, görgü kuralları ve acil durumlar.',
+    'guide.badge': 'Temel bilgiler',
+    'guide.disclaimer':
+        'Bilgiler bilgilendirme amaçlıdır — seyahatten önce resmî kaynaklardan kontrol edin.',
 };
 
 const zh: Partial<Record<MessageKey, string>> = {
@@ -4627,6 +4923,58 @@ const zh: Partial<Record<MessageKey, string>> = {
     'admin.pending': '待处理',
     'admin.markHandled': '标为已处理',
     'admin.markPending': '重新打开',
+
+    'places.freshnessTitle': '数据新鲜度',
+    'places.freshnessFresh': '最新',
+    'places.freshnessAging': '即将复核',
+    'places.freshnessStale': '需要更新',
+    'places.freshnessUpdated': '最后更新：{date}',
+    'places.freshnessMissing': '暂无更新时间信息。',
+    'places.freshnessHint': '发布前我们会定期依据可靠来源复核旅游数据。',
+    'preview.quickStartBadge': '快速开始',
+    'preview.quickStartTitle': '一键开始现成行程',
+    'preview.quickStartDesc':
+        '选择一个场景，使用完整提示词打开助手，并可即时修改。',
+    'preview.quickStartAction': '开始此计划',
+    'preview.quickStart1Title': '利雅得周末',
+    'preview.quickStart1Meta': '3 天 · 家庭旅行 · 中等预算',
+    'preview.quickStart1Prompt':
+        '请规划一个中等预算、为期 3 天的利雅得家庭旅行。若天气炎热，请加入室内替代方案。',
+    'preview.quickStart2Title': '欧拉文化路线',
+    'preview.quickStart2Meta': '2 天 · 地标 + 遗产 · 轻松节奏',
+    'preview.quickStart2Prompt':
+        '请为我规划为期 2 天的欧拉文化之旅，重点游览遗产地和博物馆，步行较少。',
+    'preview.quickStart3Title': '吉达美食之夜',
+    'preview.quickStart3Meta': '1 天 · 朋友出行 · 预算灵活',
+    'preview.quickStart3Prompt':
+        '请推荐吉达 1 天晚间行程，重点体验当地美食和海滨景点，并附交通建议。',
+    'meta.description':
+        '您的沙特阿拉伯智能旅行指南：规划行程、探索景点、即时翻译、查看天气与价格，一站式搞定。',
+    'meta.placesDescription':
+        '探索沙特阿拉伯最著名的地标、博物馆、公园、餐厅和遗产景点。',
+    'meta.assistantDescription':
+        '向智能向导提问任何问题：行程规划、推荐、比较、翻译，以及照片识别景点。',
+    'meta.translateDescription':
+        '在阿拉伯语与数十种语言之间即时翻译单词和对话。',
+    'meta.tripsDescription':
+        '打造您的沙特阿拉伯逐日行程，估算预算，并通过链接或 PDF 分享。',
+    'meta.dashboardDescription': '您的旅行面板：天气、即将到来的行程、推荐和分析。',
+    'meta.favoritesDescription': '您在沙特阿拉伯收藏的喜爱地点。',
+    'meta.analyticsDescription': '您的旅行分析：行程数、到访地点和兴趣。',
+    'meta.guideDescription':
+        '沙特阿拉伯实用旅行信息：签证、SIM 卡、货币、常用语、礼仪和紧急号码。',
+    'nav.guide': '旅行指南',
+    'places.accessibilityTitle': '适合',
+    'places.accessibilityFamily': '家庭',
+    'places.accessibilityWheelchair': '轮椅',
+    'places.accessibilityPrayer': '祈祷设施',
+    'places.accessibilityIndoor': '仅限室内',
+    'places.accessibilityActiveHint': '按 {count} 项无障碍选项筛选',
+    'guide.title': '旅行指南',
+    'guide.subtitle':
+        '沙特阿拉伯之行的实用信息：入境、通信、货币、常用语、礼仪和紧急情况。',
+    'guide.badge': '基本信息',
+    'guide.disclaimer': '信息仅供参考——出行前请务必核实官方来源。',
 };
 
 const hi: Partial<Record<MessageKey, string>> = {
@@ -5178,6 +5526,63 @@ const hi: Partial<Record<MessageKey, string>> = {
     'admin.pending': 'लंबित',
     'admin.markHandled': 'निपटाया चिह्नित करें',
     'admin.markPending': 'फिर से खोलें',
+
+    'places.freshnessTitle': 'डेटा ताज़गी',
+    'places.freshnessFresh': 'ताज़ा',
+    'places.freshnessAging': 'जल्द समीक्षा',
+    'places.freshnessStale': 'अपडेट आवश्यक',
+    'places.freshnessUpdated': 'अंतिम अपडेट: {date}',
+    'places.freshnessMissing': 'अभी कोई अपडेट समय उपलब्ध नहीं है।',
+    'places.freshnessHint':
+        'हम प्रकाशन से पहले विश्वसनीय स्रोतों से पर्यटन डेटा की नियमित समीक्षा करते हैं।',
+    'preview.quickStartBadge': 'त्वरित शुरुआत',
+    'preview.quickStartTitle': 'एक टैप में तैयार यात्रा से शुरू करें',
+    'preview.quickStartDesc':
+        'एक परिदृश्य चुनें और पूरे शुरुआती प्रॉम्प्ट के साथ सहायक खोलें, जिसे आप तुरंत संपादित कर सकते हैं।',
+    'preview.quickStartAction': 'यह योजना शुरू करें',
+    'preview.quickStart1Title': 'रियाद वीकेंड',
+    'preview.quickStart1Meta': '3 दिन · पारिवारिक यात्रा · मध्यम बजट',
+    'preview.quickStart1Prompt':
+        'मध्यम बजट में रियाद की 3-दिन की पारिवारिक यात्रा की योजना बनाओ। गर्मी होने पर इनडोर विकल्प भी जोड़ो।',
+    'preview.quickStart2Title': 'अलउला सांस्कृतिक मार्ग',
+    'preview.quickStart2Meta': '2 दिन · स्थल + धरोहर · शांत गति',
+    'preview.quickStart2Prompt':
+        'मेरे लिए अलउला की 2-दिन की सांस्कृतिक यात्रा बनाओ, जिसमें धरोहर स्थल और संग्रहालय हों और कम पैदल चलना पड़े।',
+    'preview.quickStart3Title': 'जेद्दा फूड इवनिंग',
+    'preview.quickStart3Meta': '1 दिन · दोस्तों के साथ · लचीला बजट',
+    'preview.quickStart3Prompt':
+        'जेद्दा में स्थानीय भोजन और समुद्र किनारे पर केंद्रित 1-दिन की शाम की योजना सुझाओ, साथ में यातायात सुझाव।',
+    'meta.description':
+        'सऊदी अरब के लिए आपका स्मार्ट यात्रा गाइड: यात्राएँ प्लान करें, स्थल खोजें, तुरंत अनुवाद करें, मौसम और कीमतें देखें — सब एक जगह।',
+    'meta.placesDescription':
+        'सऊदी अरब के सबसे प्रसिद्ध स्थल, संग्रहालय, पार्क, रेस्तरां और धरोहर स्थल खोजें।',
+    'meta.assistantDescription':
+        'अपने स्मार्ट गाइड से कुछ भी पूछें: यात्रा योजना, सुझाव, तुलना, अनुवाद और फोटो से स्थल पहचान।',
+    'meta.translateDescription':
+        'अरबी और दर्जनों भाषाओं के बीच शब्दों और बातचीत का तुरंत अनुवाद करें।',
+    'meta.tripsDescription':
+        'सऊदी अरब का दिन-दर-दिन कार्यक्रम बनाएँ, बजट का अनुमान लगाएँ और लिंक या PDF से साझा करें।',
+    'meta.dashboardDescription':
+        'आपका यात्रा डैशबोर्ड: मौसम, आगामी यात्राएँ, सुझाव और विश्लेषण।',
+    'meta.favoritesDescription':
+        'सऊदी अरब भर में आपके सहेजे गए पसंदीदा स्थल।',
+    'meta.analyticsDescription':
+        'आपके यात्रा विश्लेषण: यात्राएँ, देखे गए स्थल और रुचियाँ।',
+    'meta.guideDescription':
+        'सऊदी अरब की व्यावहारिक जानकारी: वीज़ा, सिम कार्ड, मुद्रा, उपयोगी वाक्य, शिष्टाचार और आपातकालीन नंबर।',
+    'nav.guide': 'यात्री गाइड',
+    'places.accessibilityTitle': 'के लिए उपयुक्त',
+    'places.accessibilityFamily': 'परिवार',
+    'places.accessibilityWheelchair': 'व्हीलचेयर',
+    'places.accessibilityPrayer': 'नमाज़ की सुविधा',
+    'places.accessibilityIndoor': 'केवल इनडोर',
+    'places.accessibilityActiveHint': '{count} एक्सेसिबिलिटी विकल्पों से फ़िल्टर',
+    'guide.title': 'यात्री गाइड',
+    'guide.subtitle':
+        'सऊदी अरब यात्रा की व्यावहारिक जानकारी: प्रवेश, कनेक्टिविटी, पैसा, वाक्य, शिष्टाचार और आपात स्थिति।',
+    'guide.badge': 'ज़रूरी जानकारी',
+    'guide.disclaimer':
+        'जानकारी सांकेतिक है — यात्रा से पहले आधिकारिक स्रोतों से पुष्टि करें।',
 };
 
 const ur: Partial<Record<MessageKey, string>> = {
@@ -5740,6 +6145,63 @@ const ur: Partial<Record<MessageKey, string>> = {
     'admin.pending': 'زیر التواء',
     'admin.markHandled': 'نمٹا ہوا نشان زد کریں',
     'admin.markPending': 'دوبارہ کھولیں',
+
+    'places.freshnessTitle': 'ڈیٹا کی تازگی',
+    'places.freshnessFresh': 'تازہ',
+    'places.freshnessAging': 'جلد جائزہ',
+    'places.freshnessStale': 'اپ ڈیٹ درکار',
+    'places.freshnessUpdated': 'آخری اپ ڈیٹ: {date}',
+    'places.freshnessMissing': 'ابھی اپ ڈیٹ کا وقت دستیاب نہیں۔',
+    'places.freshnessHint':
+        'ہم اشاعت سے پہلے معتبر ذرائع سے سیاحتی ڈیٹا کا باقاعدگی سے جائزہ لیتے ہیں۔',
+    'preview.quickStartBadge': 'فوری آغاز',
+    'preview.quickStartTitle': 'ایک ٹیپ میں تیار سفر سے شروع کریں',
+    'preview.quickStartDesc':
+        'ایک منظر چنیں اور مکمل ابتدائی پرامپٹ کے ساتھ اسسٹنٹ کھولیں جسے آپ فوراً ترمیم کر سکتے ہیں۔',
+    'preview.quickStartAction': 'یہ منصوبہ شروع کریں',
+    'preview.quickStart1Title': 'ریاض ویک اینڈ',
+    'preview.quickStart1Meta': '3 دن · خاندانی سفر · درمیانہ بجٹ',
+    'preview.quickStart1Prompt':
+        'درمیانے بجٹ میں ریاض کا 3 دن کا خاندانی سفر ترتیب دو۔ گرمی ہو تو اندرونی متبادل بھی شامل کرو۔',
+    'preview.quickStart2Title': 'العلا ثقافتی راستہ',
+    'preview.quickStart2Meta': '2 دن · مقامات + ورثہ · پرسکون رفتار',
+    'preview.quickStart2Prompt':
+        'میرے لیے العلا کا 2 دن کا ثقافتی سفر بناؤ جس میں ورثے کے مقامات اور عجائب گھر ہوں اور کم پیدل چلنا پڑے۔',
+    'preview.quickStart3Title': 'جدہ فوڈ شام',
+    'preview.quickStart3Meta': '1 دن · دوستوں کے ساتھ · لچکدار بجٹ',
+    'preview.quickStart3Prompt':
+        'جدہ میں مقامی کھانے اور ساحلی مقامات پر مرکوز 1 دن کا شام کا منصوبہ تجویز کرو، ساتھ میں آمدورفت کے مشورے۔',
+    'meta.description':
+        'سعودی عرب کے لیے آپ کا سمارٹ ٹریول گائیڈ: سفر کی منصوبہ بندی، مقامات کی دریافت، فوری ترجمہ، موسم اور قیمتیں — سب ایک جگہ۔',
+    'meta.placesDescription':
+        'سعودی عرب کے مشہور ترین مقامات، عجائب گھر، پارکس، ریستوران اور ورثے کے مقامات دریافت کریں۔',
+    'meta.assistantDescription':
+        'اپنے سمارٹ گائیڈ سے کچھ بھی پوچھیں: سفر کی منصوبہ بندی، تجاویز، موازنے، ترجمے اور تصویر سے مقام کی شناخت۔',
+    'meta.translateDescription':
+        'عربی اور درجنوں زبانوں کے درمیان الفاظ اور گفتگو کا فوری ترجمہ کریں۔',
+    'meta.tripsDescription':
+        'سعودی عرب کا دن بہ دن پروگرام بنائیں، بجٹ کا اندازہ لگائیں اور لنک یا PDF سے شیئر کریں۔',
+    'meta.dashboardDescription':
+        'آپ کا سفری ڈیش بورڈ: موسم، آنے والے سفر، تجاویز اور تجزیات۔',
+    'meta.favoritesDescription':
+        'سعودی عرب بھر میں آپ کے محفوظ کردہ پسندیدہ مقامات۔',
+    'meta.analyticsDescription':
+        'آپ کے سفری تجزیات: سفر، دیکھے گئے مقامات اور دلچسپیاں۔',
+    'meta.guideDescription':
+        'سعودی عرب کے لیے عملی معلومات: ویزا، سم کارڈ، کرنسی، مفید جملے، آداب اور ہنگامی نمبر۔',
+    'nav.guide': 'مسافر گائیڈ',
+    'places.accessibilityTitle': 'کے لیے موزوں',
+    'places.accessibilityFamily': 'خاندان',
+    'places.accessibilityWheelchair': 'وہیل چیئر',
+    'places.accessibilityPrayer': 'نماز کی سہولت',
+    'places.accessibilityIndoor': 'صرف اندرونی',
+    'places.accessibilityActiveHint': '{count} رسائی کے اختیارات سے فلٹرنگ',
+    'guide.title': 'مسافر گائیڈ',
+    'guide.subtitle':
+        'سعودی عرب کے سفر کے لیے عملی معلومات: داخلہ، رابطہ، پیسہ، جملے، آداب اور ہنگامی حالات۔',
+    'guide.badge': 'ضروری معلومات',
+    'guide.disclaimer':
+        'معلومات رہنمائی کے لیے ہیں — سفر سے پہلے سرکاری ذرائع سے تصدیق کریں۔',
 };
 
 export const messages: Partial<
