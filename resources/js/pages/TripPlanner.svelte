@@ -939,7 +939,7 @@
         'flex size-14 items-center justify-center rounded-full bg-card text-secondary-foreground ring-1 ring-border transition hover:ring-emerald-400 active:scale-95';
 </script>
 
-<AppHead title={t('trips.title')} />
+<AppHead title={t('trips.title')} description={t('meta.tripsDescription')} />
 
 <SiteHeader active="trips" transparent />
 

@@ -42,6 +42,7 @@
         assistant,
         dashboard,
         favorites,
+        guide,
         home,
         login,
         places as placesRoute,
@@ -57,7 +58,8 @@
         | 'assistant'
         | 'trips'
         | 'favorites'
-        | 'translate';
+        | 'translate'
+        | 'guide';
 
     interface NotificationData {
         trip_id?: number;
@@ -381,6 +383,11 @@
             key: 'translate' as const,
             label: t('nav.translate'),
             href: toUrl(translate()),
+        },
+        {
+            key: 'guide' as const,
+            label: t('nav.guide'),
+            href: toUrl(guide()),
         },
     ]);
 </script>

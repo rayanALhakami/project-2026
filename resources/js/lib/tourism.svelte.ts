@@ -41,6 +41,7 @@ type PlaceRow = {
     ticket_price?: number | string | null;
     rating?: number | string | null;
     opening_hours?: string | null;
+    updated_at?: string | null;
     tags?: string[] | null;
     best_time?: TimeCode | null;
     avg_visit_duration?: number | null;
@@ -88,6 +89,7 @@ function toPlace(row: PlaceRow): Place {
         image: row.image ?? null,
         bookingUrl: row.booking_url ?? null,
         tags: row.tags ?? [],
+        updatedAt: row.updated_at ?? null,
     };
 }
 
@@ -132,4 +134,39 @@ export function placesByCity(cityId: number): Place[] {
 
 export function topPlaces(limit = 6): Place[] {
     return [...places].sort((a, b) => b.rating - a.rating).slice(0, limit);
+}
+
+const DAY_IN_MS = 24 * 60 * 60 * 1000;
+
+export function placesFreshnessSummary(): {
+    level: 'fresh' | 'aging' | 'stale';
+    updatedAt: string | null;
+    daysOld: number | null;
+} {
+    const latestTimestamp = places
+        .map((place) => place.updatedAt)
+        .filter((value): value is string => typeof value === 'string')
+        .map((value) => Date.parse(value))
+        .filter((value) => Number.isFinite(value))
+        .reduce<number | null>(
+            (latest, value) => (latest === null || value > latest ? value : latest),
+            null,
+        );
+
+    if (latestTimestamp === null) {
+        return {
+            level: 'stale',
+            updatedAt: null,
+            daysOld: null,
+        };
+    }
+
+    const daysOld = Math.max(0, Math.floor((Date.now() - latestTimestamp) / DAY_IN_MS));
+    const level = daysOld <= 14 ? 'fresh' : daysOld <= 45 ? 'aging' : 'stale';
+
+    return {
+        level,
+        updatedAt: new Date(latestTimestamp).toISOString(),
+        daysOld,
+    };
 }

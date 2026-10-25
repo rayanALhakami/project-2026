@@ -51,6 +51,7 @@ export interface Place {
     image?: string | null;
     bookingUrl?: string | null;
     tags: string[];
+    updatedAt?: string | null;
 }
 
 export interface PrayerTimes {

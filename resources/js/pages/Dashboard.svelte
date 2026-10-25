@@ -162,7 +162,7 @@
     }
 </script>
 
-<AppHead title={t('nav.home')} />
+<AppHead title={t('nav.home')} description={t('meta.dashboardDescription')} />
 
 <SiteHeader active="home" transparent />
 

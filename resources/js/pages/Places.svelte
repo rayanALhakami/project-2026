@@ -1,9 +1,13 @@
 <script lang="ts">
+    import Accessibility from '@lucide/svelte/icons/accessibility';
+    import HandHeart from '@lucide/svelte/icons/hand-heart';
     import List from '@lucide/svelte/icons/list';
     import LocateFixed from '@lucide/svelte/icons/locate-fixed';
     import Map from '@lucide/svelte/icons/map';
     import MapPin from '@lucide/svelte/icons/map-pin';
     import Search from '@lucide/svelte/icons/search';
+    import Users from '@lucide/svelte/icons/users';
+    import Warehouse from '@lucide/svelte/icons/warehouse';
     import X from '@lucide/svelte/icons/x';
     import { toast } from 'svelte-sonner';
     import AppHead from '@/components/AppHead.svelte';
@@ -15,15 +19,30 @@
     import { Toaster } from '@/components/ui/sonner';
     import { selectedCityId, setSelectedCity } from '@/lib/city.svelte';
     import { nearestCity, sortPlacesByDistance } from '@/lib/geo';
-    import { formatNumber, t } from '@/lib/i18n.svelte';
+    import { formatDate, formatNumber, t } from '@/lib/i18n.svelte';
     import { cityName } from '@/lib/localize';
     import { openPlaceSheet } from '@/lib/place-sheet.svelte';
     import {
         categoryMeta,
         cities,
         places as allPlaces,
+        placesFreshnessSummary,
     } from '@/lib/tourism.svelte';
-    import type { Coordinates, PlaceCategory, PlaceWithDistance } from '@/types';
+    import type { Coordinates, Place, PlaceCategory, PlaceWithDistance } from '@/types';
+    import type { Component } from 'svelte';
+
+    type AccessibilityFilter =
+        | 'family'
+        | 'wheelchair'
+        | 'prayer'
+        | 'indoor';
+
+    interface AccessibilityOption {
+        key: AccessibilityFilter;
+        label: string;
+        icon: Component<{ class?: string }>;
+        matches: (place: Place) => boolean;
+    }
 
     let query = $state('');
     let activeCategory = $state<PlaceCategory | 'all'>('all');
@@ -31,11 +50,51 @@
     let coords = $state<Coordinates | null>(null);
     let locating = $state(false);
     let view = $state<'list' | 'map'>('list');
+    let activeAccessibility = $state<Set<AccessibilityFilter>>(new Set());
 
     const categories = Object.entries(categoryMeta) as [
         PlaceCategory,
         (typeof categoryMeta)[PlaceCategory],
     ][];
+
+    const accessibilityOptions: AccessibilityOption[] = [
+        {
+            key: 'family',
+            label: t('places.accessibilityFamily'),
+            icon: Users,
+            matches: (place) => place.familyFriendly === true,
+        },
+        {
+            key: 'wheelchair',
+            label: t('places.accessibilityWheelchair'),
+            icon: Accessibility,
+            matches: (place) => place.wheelchairAccessible === true,
+        },
+        {
+            key: 'prayer',
+            label: t('places.accessibilityPrayer'),
+            icon: HandHeart,
+            matches: (place) => place.hasPrayerFacilities === true,
+        },
+        {
+            key: 'indoor',
+            label: t('places.accessibilityIndoor'),
+            icon: Warehouse,
+            matches: (place) => place.isIndoor === true,
+        },
+    ];
+
+    function toggleAccessibility(key: AccessibilityFilter): void {
+        const next = new Set(activeAccessibility);
+
+        if (next.has(key)) {
+            next.delete(key);
+        } else {
+            next.add(key);
+        }
+
+        activeAccessibility = next;
+    }
 
     const filtered = $derived(
         allPlaces.filter((place) => {
@@ -49,8 +108,18 @@
                 activeCategory === 'all' || place.category === activeCategory;
             const matchesCity =
                 activeCity === 'all' || place.cityId === activeCity;
+            const matchesAccessibility = accessibilityOptions.every((option) =>
+                activeAccessibility.has(option.key)
+                    ? option.matches(place)
+                    : true,
+            );
 
-            return matchesQuery && matchesCategory && matchesCity;
+            return (
+                matchesQuery &&
+                matchesCategory &&
+                matchesCity &&
+                matchesAccessibility
+            );
         }),
     );
 
@@ -63,6 +132,57 @@
     });
 
     const hasCoords = $derived(coords !== null);
+    const freshness = $derived(placesFreshnessSummary());
+
+    const freshnessLabel = $derived.by((): string => {
+        if (freshness.level === 'fresh') {
+            return t('places.freshnessFresh');
+        }
+
+        if (freshness.level === 'aging') {
+            return t('places.freshnessAging');
+        }
+
+        return t('places.freshnessStale');
+    });
+
+    const freshnessCardTone = $derived.by((): string => {
+        if (freshness.level === 'fresh') {
+            return 'border-emerald-200 bg-emerald-50/60 dark:border-emerald-900/70 dark:bg-emerald-950/30';
+        }
+
+        if (freshness.level === 'aging') {
+            return 'border-amber-200 bg-amber-50/70 dark:border-amber-900/70 dark:bg-amber-950/30';
+        }
+
+        return 'border-red-200 bg-red-50/70 dark:border-red-900/70 dark:bg-red-950/30';
+    });
+
+    const freshnessPillTone = $derived.by((): string => {
+        if (freshness.level === 'fresh') {
+            return 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/60 dark:text-emerald-300';
+        }
+
+        if (freshness.level === 'aging') {
+            return 'bg-amber-100 text-amber-800 dark:bg-amber-900/60 dark:text-amber-300';
+        }
+
+        return 'bg-red-100 text-red-800 dark:bg-red-900/60 dark:text-red-300';
+    });
+
+    const freshnessUpdatedText = $derived.by((): string => {
+        if (freshness.updatedAt === null) {
+            return t('places.freshnessMissing');
+        }
+
+        return t('places.freshnessUpdated', {
+            date: formatDate(freshness.updatedAt, {
+                day: 'numeric',
+                month: 'short',
+                year: 'numeric',
+            }),
+        });
+    });
 
     function chooseCity(id: number | 'all'): void {
         activeCity = id;
@@ -117,7 +237,7 @@
         'min-h-10 rounded-full px-4 text-sm font-bold ring-1 transition active:scale-[0.98]';
 </script>
 
-<AppHead title={t('places.title')} />
+<AppHead title={t('places.title')} description={t('meta.placesDescription')} />
 
 <SiteHeader active="places" transparent />
 
@@ -242,6 +362,54 @@
                         {cityName(city)}
                     </button>
                 {/each}
+            </div>
+
+            <h2 class="mt-5 text-xs font-bold text-muted-foreground">
+                {t('places.accessibilityTitle')}
+            </h2>
+            <div class="mt-2 flex flex-wrap gap-2">
+                {#each accessibilityOptions as option (option.key)}
+                    {@const activeAccessibilityEntry =
+                        activeAccessibility.has(option.key)}
+                    <button
+                        type="button"
+                        aria-pressed={activeAccessibilityEntry}
+                        onclick={() => toggleAccessibility(option.key)}
+                        class="{chipBase} inline-flex items-center gap-1.5 {activeAccessibilityEntry
+                            ? 'bg-emerald-600 text-white ring-emerald-600'
+                            : 'bg-card text-secondary-foreground ring-border hover:ring-emerald-300'}"
+                    >
+                        <option.icon class="size-4" />
+                        {option.label}
+                    </button>
+                {/each}
+            </div>
+
+            {#if activeAccessibility.size > 0}
+                <p class="mt-2 text-xs font-semibold text-emerald-700 dark:text-emerald-300">
+                    {t('places.accessibilityActiveHint', {
+                        count: formatNumber(activeAccessibility.size),
+                    })}
+                </p>
+            {/if}
+
+            <div class="mt-5 rounded-2xl border px-4 py-3 {freshnessCardTone}">
+                <div class="flex items-center justify-between gap-2">
+                    <p class="text-xs font-bold uppercase tracking-[0.08em] text-muted-foreground">
+                        {t('places.freshnessTitle')}
+                    </p>
+                    <span
+                        class="rounded-full px-2.5 py-1 text-xs font-bold {freshnessPillTone}"
+                    >
+                        {freshnessLabel}
+                    </span>
+                </div>
+                <p class="mt-2 text-sm font-semibold text-foreground">
+                    {freshnessUpdatedText}
+                </p>
+                <p class="mt-1 text-xs text-muted-foreground">
+                    {t('places.freshnessHint')}
+                </p>
             </div>
         </div>
     </div>

@@ -111,6 +111,14 @@ const en = {
     'places.count': '{count} places',
     'places.noResults': 'No results',
     'places.noResultsHint': 'Try another keyword or filter.',
+    'places.freshnessTitle': 'Data freshness',
+    'places.freshnessFresh': 'Fresh',
+    'places.freshnessAging': 'Review soon',
+    'places.freshnessStale': 'Needs update',
+    'places.freshnessUpdated': 'Last update: {date}',
+    'places.freshnessMissing': 'No update timestamp is available yet.',
+    'places.freshnessHint':
+        'We review tourism data regularly from trusted sources before publishing updates.',
 
     'trips.title': 'Trip planner',
     'trips.subtitle':
@@ -375,6 +383,23 @@ const en = {
     'preview.placesDesc':
         'The highest-rated landmarks and experiences — add them to your trip in one tap.',
     'preview.placeDetails': 'Details',
+    'preview.quickStartBadge': 'Quick start',
+    'preview.quickStartTitle': 'Start with a ready trip in one tap',
+    'preview.quickStartDesc':
+        'Choose a scenario and open the assistant with a full starter prompt you can edit instantly.',
+    'preview.quickStartAction': 'Start this plan',
+    'preview.quickStart1Title': 'Riyadh weekend',
+    'preview.quickStart1Meta': '3 days · Family trip · Medium budget',
+    'preview.quickStart1Prompt':
+        'Plan a 3-day family trip in Riyadh with a medium budget. Include indoor alternatives if the weather is hot.',
+    'preview.quickStart2Title': 'AlUla culture route',
+    'preview.quickStart2Meta': '2 days · Landmarks + heritage · Calm pace',
+    'preview.quickStart2Prompt':
+        'Build me a 2-day cultural trip in AlUla focused on heritage sites and museums with light walking.',
+    'preview.quickStart3Title': 'Jeddah food evening',
+    'preview.quickStart3Meta': '1 day · Friends trip · Flexible budget',
+    'preview.quickStart3Prompt':
+        'Suggest a 1-day evening plan in Jeddah focused on local food and seaside spots with transportation tips.',
     'preview.formBadge': 'Free planning',
     'preview.formTitle': 'Plan your trip now',
     'preview.formDesc':
@@ -590,6 +615,41 @@ const en = {
     'admin.pending': 'Pending',
     'admin.markHandled': 'Mark handled',
     'admin.markPending': 'Reopen',
+
+    'meta.description':
+        'Your AI-powered travel guide for Saudi Arabia: plan trips, discover landmarks, translate instantly, check weather and prices — all in one place.',
+    'meta.placesDescription':
+        'Explore the most famous landmarks, museums, parks, restaurants and heritage sites across Saudi Arabia.',
+    'meta.assistantDescription':
+        'Ask your smart tour guide anything: trip planning, recommendations, comparisons, translations and landmark recognition from photos.',
+    'meta.translateDescription':
+        'Translate words and conversations instantly between Arabic and dozens of languages.',
+    'meta.tripsDescription':
+        'Build your day-by-day Saudi Arabia itinerary, estimate your budget and share it as a link or PDF.',
+    'meta.dashboardDescription':
+        'Your trip dashboard: weather, upcoming trips, recommendations and travel analytics.',
+    'meta.favoritesDescription': 'Your saved favorite places across Saudi Arabia.',
+    'meta.analyticsDescription':
+        'Your travel analytics: trips, places visited and interests.',
+    'meta.guideDescription':
+        'Practical Saudi Arabia traveler information: visa, SIM cards, currency, useful phrases, etiquette and emergency numbers.',
+
+    'nav.guide': 'Traveler guide',
+
+    'places.accessibilityTitle': 'Suitable for',
+    'places.accessibilityFamily': 'Families',
+    'places.accessibilityWheelchair': 'Wheelchair',
+    'places.accessibilityPrayer': 'Prayer facilities',
+    'places.accessibilityIndoor': 'Indoor only',
+    'places.accessibilityActiveHint':
+        'Filtering by {count} accessibility options',
+
+    'guide.title': 'Traveler guide',
+    'guide.subtitle':
+        'Practical information for your trip to Saudi Arabia: entry, connectivity, money, phrases, etiquette and emergencies.',
+    'guide.badge': 'Essential info',
+    'guide.disclaimer':
+        'Information is indicative — always verify with official sources before you travel.',
 };
 
 export type MessageKey = keyof typeof en;
@@ -670,6 +730,14 @@ const ar: Record<MessageKey, string> = {
     'places.count': '{count} مكان',
     'places.noResults': 'لا توجد نتائج',
     'places.noResultsHint': 'جرّب كلمة بحث أو فلتر آخر.',
+    'places.freshnessTitle': 'تحديث البيانات',
+    'places.freshnessFresh': 'محدثة',
+    'places.freshnessAging': 'تحتاج مراجعة قريباً',
+    'places.freshnessStale': 'تحتاج تحديث',
+    'places.freshnessUpdated': 'آخر تحديث: {date}',
+    'places.freshnessMissing': 'لا يوجد وقت تحديث مسجّل حالياً.',
+    'places.freshnessHint':
+        'نراجع بيانات السياحة بشكل دوري من مصادر موثوقة قبل نشر أي تحديث.',
     'places.viewList': 'قائمة',
     'places.viewMap': 'خريطة',
     'places.mapHint': 'اضغط على أي علامة لفتح تفاصيل المكان.',
@@ -926,6 +994,23 @@ const ar: Record<MessageKey, string> = {
     'preview.placesDesc':
         'أعلى المعالم والتجارب تقييماً — أضفها إلى رحلتك بضغطة واحدة.',
     'preview.placeDetails': 'التفاصيل',
+    'preview.quickStartBadge': 'بداية سريعة',
+    'preview.quickStartTitle': 'ابدأ برحلة جاهزة بضغطة واحدة',
+    'preview.quickStartDesc':
+        'اختر سيناريو جاهز وافتح المساعد مباشرة برسالة بداية كاملة تقدر تعدلها فوراً.',
+    'preview.quickStartAction': 'ابدأ هذه الخطة',
+    'preview.quickStart1Title': 'ويكند الرياض',
+    'preview.quickStart1Meta': '٣ أيام · رحلة عائلية · ميزانية متوسطة',
+    'preview.quickStart1Prompt':
+        'خطط لي رحلة عائلية لمدة ٣ أيام في الرياض بميزانية متوسطة، ومع بدائل داخلية إذا كان الجو حار.',
+    'preview.quickStart2Title': 'مسار العلا الثقافي',
+    'preview.quickStart2Meta': 'يومان · معالم وتراث · وتيرة هادئة',
+    'preview.quickStart2Prompt':
+        'ابنِ لي رحلة ثقافية لمدة يومين في العلا تركّز على المواقع التراثية والمتاحف مع مشي خفيف.',
+    'preview.quickStart3Title': 'مساء جدة الذواقة',
+    'preview.quickStart3Meta': 'يوم واحد · رحلة أصدقاء · ميزانية مرنة',
+    'preview.quickStart3Prompt':
+        'اقترح لي خطة مسائية ليوم واحد في جدة تركّز على الأكل المحلي والأماكن البحرية مع نصائح تنقل.',
     'preview.formBadge': 'تخطيط مجاني',
     'preview.formTitle': 'خطط رحلتك الآن',
     'preview.formDesc':
@@ -1138,6 +1223,41 @@ const ar: Record<MessageKey, string> = {
     'admin.pending': 'قيد الانتظار',
     'admin.markHandled': 'تحديد كمُعالج',
     'admin.markPending': 'إعادة فتح',
+
+    'meta.description':
+        'مرشدك السياحي الذكي للسعودية: خطط رحلتك، اكتشف المعالم، ترجم فورياً، واطلع على الطقس والأسعار — في منصة واحدة.',
+    'meta.placesDescription':
+        'استكشف أشهر المعالم والمتاحف والمنتزهات والمطاعم والمواقع التراثية في المملكة العربية السعودية.',
+    'meta.assistantDescription':
+        'اسأل مرشدك الذكي عن أي شيء: تخطيط الرحلات، التوصيات، المقارنات، الترجمة والتعرف على المعالم من الصور.',
+    'meta.translateDescription':
+        'ترجم الكلمات والمحادثات فورياً بين العربية وعشرات اللغات.',
+    'meta.tripsDescription':
+        'ابنِ جدول رحلتك في السعودية يوماً بيوم، قدّر ميزانيتك وشاركه برابط أو بصيغة PDF.',
+    'meta.dashboardDescription':
+        'لوحة رحلتك: الطقس، رحلتك القادمة، التوصيات وتحليلات السفر.',
+    'meta.favoritesDescription': 'أماكنك المفضلة المحفوظة في جميع أنحاء السعودية.',
+    'meta.analyticsDescription':
+        'تحليلات سفرك: عدد الرحلات، الأماكن المزارة واهتماماتك.',
+    'meta.guideDescription':
+        'معلومات عملية للسائح في السعودية: التأشيرة، شرائح الاتصال، العملة، عبارات مفيدة، الإتيكيت وأرقام الطوارئ.',
+
+    'nav.guide': 'دليل السائح',
+
+    'places.accessibilityTitle': 'مناسب لـ',
+    'places.accessibilityFamily': 'عائلات',
+    'places.accessibilityWheelchair': 'كراسي متحركة',
+    'places.accessibilityPrayer': 'مرافق صلاة',
+    'places.accessibilityIndoor': 'داخلي فقط',
+    'places.accessibilityActiveHint':
+        'التصفية حسب {count} خيارات وصول',
+
+    'guide.title': 'دليل السائح',
+    'guide.subtitle':
+        'معلومات عملية لرحلتك إلى السعودية: الدخول، الاتصال، المال، عبارات مفيدة، الإتيكيت والطوارئ.',
+    'guide.badge': 'معلومات أساسية',
+    'guide.disclaimer':
+        'المعلومات استرشادية — تحقق دائماً من المصادر الرسمية قبل سفرك.',
 };
 
 const fr: Partial<Record<MessageKey, string>> = {

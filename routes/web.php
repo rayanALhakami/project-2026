@@ -22,6 +22,26 @@ Route::inertia('welcome-classic', 'WelcomeClassic')->name('welcome-classic');
 Route::inertia('places', 'Places')->name('places');
 Route::inertia('translate', 'Translate')->name('translate');
 Route::inertia('assistant', 'Assistant')->name('assistant');
+Route::inertia('guide', 'Guide')->name('guide');
+
+Route::get('sitemap.xml', function () {
+    $pages = ['home', 'places', 'assistant', 'translate', 'guide'];
+
+    $urls = collect($pages)->map(fn (string $name): string => url()->route($name));
+
+    $xml = '<?xml version="1.0" encoding="UTF-8"?>'.PHP_EOL;
+    $xml .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'.PHP_EOL;
+
+    foreach ($urls as $url) {
+        $xml .= '    <url>'.PHP_EOL;
+        $xml .= '        <loc>'.e($url).'</loc>'.PHP_EOL;
+        $xml .= '    </url>'.PHP_EOL;
+    }
+
+    $xml .= '</urlset>'.PHP_EOL;
+
+    return response($xml, 200, ['Content-Type' => 'application/xml']);
+})->name('sitemap');
 
 Route::post('assistant/chat', [AssistantController::class, 'store'])
     ->middleware('throttle:20,1')

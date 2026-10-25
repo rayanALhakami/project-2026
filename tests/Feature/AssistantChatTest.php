@@ -112,18 +112,62 @@ class AssistantChatTest extends TestCase
         );
     }
 
-    public function test_provider_failures_return_a_generic_arabic_error(): void
+    public function test_provider_failures_return_a_fallback_reply_without_exposing_details(): void
     {
         TouristGuide::fake(fn () => throw new RuntimeException('Provider exploded with secret detail.'));
 
         $response = $this->postJson(route('assistant.chat'), ['message' => 'مرحبا']);
 
-        $response->assertStatus(503)
-            ->assertJsonStructure(['error'])
+        $response->assertOk()
+            ->assertJsonPath('meta.fallback', true)
+            ->assertJsonPath('meta.cached', false)
+            ->assertJsonStructure(['reply', 'meta' => ['cached', 'fallback', 'response_ms']])
             ->assertJsonMissingPaths(['exception', 'trace', 'file', 'line']);
 
         $this->assertStringNotContainsString('Provider exploded', $response->getContent());
         $this->assertStringNotContainsString('RuntimeException', $response->getContent());
+    }
+
+    public function test_duplicate_messages_are_served_from_short_lived_cache(): void
+    {
+        config(['ai.conversations.generate_title' => false]);
+
+        TouristGuide::fake(['رد أول']);
+
+        $first = $this->postJson(route('assistant.chat'), ['message' => 'وش أفضل مكان للقهوة في الرياض؟'])
+            ->assertOk()
+            ->assertJsonPath('meta.cached', false);
+
+        $conversationId = $first->json('conversation_id');
+
+        $this->assertIsString($conversationId);
+
+        $this->postJson(route('assistant.chat'), ['message' => 'وش أفضل مكان للقهوة في الرياض؟'])
+            ->assertOk()
+            ->assertJsonPath('reply', 'رد أول')
+            ->assertJsonPath('meta.cached', true)
+            ->assertJsonPath('meta.fallback', false)
+            ->assertJsonPath('conversation_id', $conversationId);
+
+        TouristGuide::assertPromptedTimes(1);
+    }
+
+    public function test_image_requests_still_return_service_unavailable_when_provider_fails(): void
+    {
+        TouristGuide::fake(fn () => throw new RuntimeException('Provider exploded with secret detail.'));
+
+        $response = $this->post(
+            route('assistant.chat'),
+            [
+                'message' => 'وش هذا المعلم؟',
+                'image' => UploadedFile::fake()->image('landmark.png'),
+            ],
+            ['Accept' => 'application/json'],
+        );
+
+        $response->assertStatus(503)
+            ->assertJsonStructure(['error'])
+            ->assertJsonPath('meta.fallback', true);
     }
 
     public function test_a_conversation_owned_by_another_user_forces_a_new_conversation(): void

@@ -97,7 +97,7 @@
     }
 </script>
 
-<AppHead title={t('analytics.title')} />
+<AppHead title={t('analytics.title')} description={t('meta.analyticsDescription')} />
 
 <SiteHeader active="" transparent />
 

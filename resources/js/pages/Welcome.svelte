@@ -79,6 +79,52 @@
     const featuredCities = cities;
     const featuredPlaces = topPlaces(4);
 
+    const quickStartCards = $derived.by(
+        (): {
+            id: string;
+            title: string;
+            meta: string;
+            prompt: string;
+            icon: Component<{ class?: string }>;
+            href: string;
+        }[] => {
+            const cards = [
+                {
+                    id: 'riyadh-weekend',
+                    title: t('preview.quickStart1Title'),
+                    meta: t('preview.quickStart1Meta'),
+                    prompt: t('preview.quickStart1Prompt'),
+                    icon: Route,
+                },
+                {
+                    id: 'alula-culture',
+                    title: t('preview.quickStart2Title'),
+                    meta: t('preview.quickStart2Meta'),
+                    prompt: t('preview.quickStart2Prompt'),
+                    icon: Sparkles,
+                },
+                {
+                    id: 'jeddah-food',
+                    title: t('preview.quickStart3Title'),
+                    meta: t('preview.quickStart3Meta'),
+                    prompt: t('preview.quickStart3Prompt'),
+                    icon: Wallet,
+                },
+            ];
+
+            return cards.map((card) => ({
+                ...card,
+                href: toUrl(
+                    assistant({
+                        query: {
+                            starter: card.prompt,
+                        },
+                    }),
+                ),
+            }));
+        },
+    );
+
     let failedCityImages = $state<Record<number, boolean>>({});
 
     const heroCityIds = [1, 2, 9, 4, 7, 8, 5, 3, 6];
@@ -266,7 +312,7 @@
     }
 </script>
 
-<AppHead title={t('welcome.title')} />
+<AppHead title={t('welcome.title')} description={t('meta.description')} />
 
 <div class="bg-background text-foreground">
     <SiteHeader active="home" bottomNav={false} transparent />
@@ -413,6 +459,58 @@
                     </dd>
                 </div>
             </dl>
+        </div>
+    </section>
+
+    <section id="quick-start" class="relative z-10 -mt-12 pb-10 sm:-mt-14 sm:pb-12">
+        <div class="mx-auto w-full max-w-6xl px-4 md:px-6">
+            <div
+                class="rounded-[24px] bg-card/95 p-5 shadow-2xl shadow-slate-950/20 ring-1 ring-border/80 backdrop-blur sm:p-8"
+            >
+                <div class="max-w-2xl" use:reveal>
+                    <span
+                        class="inline-flex items-center gap-2 rounded-full bg-emerald-50 dark:bg-emerald-950/50 px-3 py-1 text-xs font-bold text-emerald-700 dark:text-emerald-400 ring-1 ring-emerald-100 dark:ring-emerald-900/60"
+                    >
+                        <Sparkles class="size-4" />
+                        {t('preview.quickStartBadge')}
+                    </span>
+                    <h2 class="mt-4 text-2xl font-bold text-foreground sm:text-3xl">
+                        {t('preview.quickStartTitle')}
+                    </h2>
+                    <p class="mt-2 text-sm text-muted-foreground sm:text-base">
+                        {t('preview.quickStartDesc')}
+                    </p>
+                </div>
+
+                <div class="mt-6 grid gap-3 md:grid-cols-3">
+                    {#each quickStartCards as card, index (card.id)}
+                        <div use:reveal={{ delay: index * 90 }}>
+                            <Link
+                                href={card.href}
+                                class="group block rounded-2xl bg-muted/40 p-4 ring-1 ring-border transition hover:-translate-y-1 hover:shadow-lg hover:ring-emerald-300"
+                            >
+                                <span
+                                    class="inline-flex size-10 items-center justify-center rounded-xl bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-400 ring-1 ring-emerald-100 dark:ring-emerald-900/60"
+                                >
+                                    <card.icon class="size-5" />
+                                </span>
+                                <h3 class="mt-4 text-base font-bold text-foreground">
+                                    {card.title}
+                                </h3>
+                                <p class="mt-1 text-sm text-muted-foreground">
+                                    {card.meta}
+                                </p>
+                                <span
+                                    class="mt-4 inline-flex items-center gap-1 text-sm font-bold text-emerald-700 dark:text-emerald-300"
+                                >
+                                    {t('preview.quickStartAction')}
+                                    <ArrowLeft class="size-4 ltr:rotate-180" />
+                                </span>
+                            </Link>
+                        </div>
+                    {/each}
+                </div>
+            </div>
         </div>
     </section>
 

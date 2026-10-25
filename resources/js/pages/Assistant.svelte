@@ -61,6 +61,11 @@
         conversation_id: string | null;
         user_message_id: number | string | null;
         assistant_message_id: number | string | null;
+        meta?: {
+            cached?: boolean;
+            fallback?: boolean;
+            response_ms?: number;
+        };
     }
 
     interface ConversationSummary {
@@ -125,6 +130,7 @@
     ]);
     let conversationId = $state<string | null>(null);
     let conversations = $state<ConversationSummary[]>([]);
+    let assistantStatus = $state<string | null>(null);
     let historyOpen = $state(false);
     let historyLoading = $state(false);
     let conversationLoadingId = $state<string | null>(null);
@@ -221,6 +227,13 @@
         if (isValidConversationId(stored)) {
             conversationId = stored;
         }
+
+        const starterPrompt = consumeStarterPromptFromUrl();
+
+        if (starterPrompt !== null) {
+            startNewChat();
+            window.setTimeout(() => send(starterPrompt), 0);
+        }
     });
 
     onDestroy(() => {
@@ -238,6 +251,34 @@
         const user = authUser;
 
         return `assistant-conversation-${user ? user.id : 'guest'}`;
+    }
+
+    function consumeStarterPromptFromUrl(): string | null {
+        if (typeof window === 'undefined') {
+            return null;
+        }
+
+        const params = new URLSearchParams(window.location.search);
+        const starter = params.get('starter');
+
+        if (starter === null) {
+            return null;
+        }
+
+        params.delete('starter');
+
+        const query = params.toString();
+        const nextUrl = `${window.location.pathname}${query === '' ? '' : `?${query}`}${window.location.hash}`;
+
+        window.history.replaceState(window.history.state, '', nextUrl);
+
+        const prompt = starter.trim();
+
+        if (prompt === '' || prompt.length > 600) {
+            return null;
+        }
+
+        return prompt;
     }
 
     function persistConversation(id: string): void {
@@ -273,6 +314,7 @@
 
     function startNewChat(): void {
         conversationId = null;
+        assistantStatus = null;
 
         const key = conversationKey();
 
@@ -438,6 +480,7 @@
 
         stopSpeaking();
         http.clearErrors();
+        assistantStatus = null;
 
         const wasNewConversation = !isValidConversationId(conversationId);
         const userMessage: ChatMessage = {
@@ -453,6 +496,23 @@
             onSuccess: (response) => {
                 const reply =
                     typeof response?.reply === 'string' ? response.reply : '';
+                const meta = response?.meta;
+                const responseMs =
+                    typeof meta?.response_ms === 'number'
+                        ? Math.max(0, Math.round(meta.response_ms))
+                        : null;
+
+                if (meta?.fallback) {
+                    assistantStatus = isArabic
+                        ? `وضع سريع مؤقت بسبب الضغط${responseMs === null ? '' : ` (${responseMs}ms)`}.`
+                        : `Quick fallback mode due to high load${responseMs === null ? '' : ` (${responseMs}ms)`}.`;
+                } else if (meta?.cached) {
+                    assistantStatus = isArabic
+                        ? `تم استخدام رد محفوظ لتسريع الإجابة${responseMs === null ? '' : ` (${responseMs}ms)`}.`
+                        : `Used a cached reply for faster response${responseMs === null ? '' : ` (${responseMs}ms)`}.`;
+                } else {
+                    assistantStatus = null;
+                }
 
                 if (reply === '') {
                     appendError(failureText());
@@ -483,9 +543,11 @@
                 }
             },
             onHttpException: (response) => {
+                assistantStatus = null;
                 appendError(parseErrorResponse(response.data));
             },
             onNetworkError: () => {
+                assistantStatus = null;
                 appendError(failureText());
             },
         }).catch(() => {
@@ -617,7 +679,7 @@
     }
 </script>
 
-<AppHead title={t('assistant.title')} />
+<AppHead title={t('assistant.title')} description={t('meta.assistantDescription')} />
 
 <SiteHeader active="assistant" />
 
@@ -840,6 +902,13 @@
         <div
             class="flex min-h-0 flex-1 flex-col overflow-hidden rounded-[24px] bg-card shadow-sm ring-1 ring-border"
         >
+            {#if assistantStatus}
+                <div
+                    class="mx-3 mt-3 rounded-xl border border-emerald-200 bg-emerald-50/70 px-3 py-2 text-xs font-bold text-emerald-800 dark:border-emerald-900/70 dark:bg-emerald-950/40 dark:text-emerald-300 sm:mx-5"
+                >
+                    {assistantStatus}
+                </div>
+            {/if}
             <div
                 bind:this={container}
                 class="flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto p-3 sm:p-5"

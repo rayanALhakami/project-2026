@@ -20,7 +20,7 @@
     });
 </script>
 
-<AppHead title={t('favorites.title')} />
+<AppHead title={t('favorites.title')} description={t('meta.favoritesDescription')} />
 
 <SiteHeader active="favorites" transparent />
 

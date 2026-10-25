@@ -14,6 +14,18 @@
         <meta name="theme-color" content="#08131f">
         <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
+        <meta
+            name="description"
+            content="@lang('meta.description')"
+        >
+        <meta property="og:site_name" content="{{ config('app.name') }}">
+        <meta property="og:type" content="website">
+        <meta property="og:title" content="{{ config('app.name') }}">
+        <meta property="og:description" content="@lang('meta.description')">
+        <meta name="twitter:card" content="summary">
+        <meta name="twitter:title" content="{{ config('app.name') }}">
+        <meta name="twitter:description" content="@lang('meta.description')">
+
         @unless (file_exists(public_path('hot')))
             <script src="/build/registerSW.js" defer></script>
         @endunless
