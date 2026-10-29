@@ -24,7 +24,7 @@ class GetDirections implements Tool
      */
     public function description(): Stringable|string
     {
-        return 'Estimate the distance and travel time between two Saudi cities or landmarks: distance in km, car time, flight time when far, and the recommended travel mode (car or flight).';
+        return 'Estimate straight-line (great-circle) distance between Saudi cities or landmarks. Travel times use assumed speeds, not road routes, traffic or flight schedules. Always disclose these limitations.';
     }
 
     /**
@@ -52,7 +52,7 @@ class GetDirections implements Tool
             : '';
 
         $summary = sprintf(
-            'المسافة من %s إلى %s حوالي %s كم، وتستغرق بالسيارة %s%s.',
+            'المسافة بخط مستقيم من %s إلى %s حوالي %s كم. تقدير الوقت بسرعة مفترضة: بالسيارة %s%s. هذه ليست مسافة طريق أو مدة قيادة فعلية، ولا تشمل الزحام أو جداول الرحلات.',
             $directions['from']['name'],
             $directions['to']['name'],
             number_format($directions['distance_km'], 1),
@@ -60,7 +60,7 @@ class GetDirections implements Tool
             $flightNote,
         );
 
-        return json_encode([...$directions, 'summary' => $summary], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) ?: '{}';
+        return json_encode([...$directions, 'distance_type' => 'great_circle', 'is_estimate' => true, 'summary' => $summary], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) ?: '{}';
     }
 
     /**

@@ -74,6 +74,7 @@ class DatabaseSeederTest extends TestCase
             fn (Place $place): bool => $place->reviews_count >= 2 && $place->reviews_count <= 4
         ));
         $this->assertSame($places->sum('reviews_count'), Review::query()->whereNull('user_id')->count());
+        $this->assertSame($places->sum('reviews_count'), Review::query()->where('source', 'demo')->count());
     }
 
     public function test_admin_user_seeder_assigns_the_admin_role()

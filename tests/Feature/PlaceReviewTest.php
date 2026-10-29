@@ -5,6 +5,9 @@ namespace Tests\Feature;
 use App\Models\Place;
 use App\Models\Review;
 use App\Models\User;
+use Database\Seeders\CitySeeder;
+use Database\Seeders\PlaceSeeder;
+use Database\Seeders\ReviewSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -75,6 +78,48 @@ class PlaceReviewTest extends TestCase
             'rating' => 5,
             'content' => 'مكان رائع',
         ])->assertRedirect(route('login'));
+    }
+
+    public function test_demo_reviews_are_labelled_and_excluded_from_the_visitor_summary(): void
+    {
+        $place = Place::factory()->create();
+        Review::factory()->for($place)->create(['source' => 'demo', 'rating' => 5]);
+        Review::factory()->for($place)->create(['source' => 'demo_legacy', 'rating' => 5]);
+        Review::factory()->for($place)->create(['source' => 'manual', 'rating' => 2]);
+
+        $response = $this->getJson(route('places.reviews.index', $place))
+            ->assertJsonPath('count', 1)
+            ->assertJsonPath('average', 2)
+            ->assertJsonCount(3, 'reviews');
+
+        $this->assertCount(2, array_filter($response->json('reviews'), fn (array $review): bool => $review['is_demo']));
+    }
+
+    public function test_legacy_demo_migration_preserves_real_and_unmatched_reviews(): void
+    {
+        $this->seed(CitySeeder::class);
+        $this->seed(PlaceSeeder::class);
+        $this->seed(ReviewSeeder::class);
+        $sample = Review::query()->firstOrFail();
+        Review::query()->update(['source' => 'visitor']);
+        $real = Review::factory()->create([
+            'user_id' => User::factory(),
+            'source' => 'visitor',
+            'author' => $sample->author,
+            'content' => $sample->content,
+        ]);
+        $unmatched = Review::factory()->create(['source' => 'visitor', 'content' => 'Not a seeded review']);
+        $migration = require database_path('migrations/2026_10_29_170923_mark_seeded_reviews_as_demo.php');
+
+        $migration->up();
+
+        $this->assertSame('demo_legacy', $sample->fresh()->source);
+        $this->assertSame('visitor', $real->fresh()->source);
+        $this->assertSame('visitor', $unmatched->fresh()->source);
+
+        $migration->down();
+
+        $this->assertSame('visitor', $sample->fresh()->source);
     }
 
     public function test_authenticated_users_create_a_review(): void

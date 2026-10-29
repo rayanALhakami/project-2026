@@ -573,6 +573,7 @@ const en = {
     'admin.fields.closedFriday': 'Closed on Friday',
 
     'reviews.title': 'Reviews',
+    'reviews.demo': 'Demonstration review — not a real visitor experience',
     'reviews.empty': 'No reviews yet — be the first to share your experience.',
     'reviews.write': 'Write a review',
     'reviews.yourRating': 'Your rating',
@@ -587,9 +588,6 @@ const en = {
     'crowd.medium': 'Medium',
     'crowd.high': 'High',
     'crowd.advice': 'Early morning and late evening are usually quieter.',
-
-    'pwa.install': 'Install app',
-    'pwa.hint': 'Add the guide to your home screen for faster access.',
 
     'admin.requests': 'Planning requests',
     'admin.fields.phone': 'Phone',
@@ -611,7 +609,8 @@ const en = {
         'Build your day-by-day Saudi Arabia itinerary, estimate your budget and share it as a link or PDF.',
     'meta.dashboardDescription':
         'Your trip dashboard: weather, upcoming trips, recommendations and travel analytics.',
-    'meta.favoritesDescription': 'Your saved favorite places across Saudi Arabia.',
+    'meta.favoritesDescription':
+        'Your saved favorite places across Saudi Arabia.',
     'meta.analyticsDescription':
         'Your travel analytics: trips, places visited and interests.',
     'meta.guideDescription':
@@ -1164,6 +1163,7 @@ const ar: Record<MessageKey, string> = {
     'admin.fields.closedFriday': 'مغلق الجمعة',
 
     'reviews.title': 'المراجعات',
+    'reviews.demo': 'مراجعة تجريبية — لا تمثل تجربة زائر حقيقية',
     'reviews.empty': 'لا توجد مراجعات بعد — كن أول من يشارك تجربته.',
     'reviews.write': 'اكتب مراجعة',
     'reviews.yourRating': 'تقييمك',
@@ -1178,9 +1178,6 @@ const ar: Record<MessageKey, string> = {
     'crowd.medium': 'متوسط',
     'crowd.high': 'مرتفع',
     'crowd.advice': 'الصباح الباكر والمساء المتأخر عادة أهدأ.',
-
-    'pwa.install': 'ثبّت التطبيق',
-    'pwa.hint': 'أضف المرشد إلى شاشتك الرئيسية لوصول أسرع.',
 
     'admin.requests': 'طلبات التخطيط',
     'admin.fields.phone': 'الجوال',
@@ -1202,7 +1199,8 @@ const ar: Record<MessageKey, string> = {
         'ابنِ جدول رحلتك في السعودية يوماً بيوم، قدّر ميزانيتك وشاركه برابط أو بصيغة PDF.',
     'meta.dashboardDescription':
         'لوحة رحلتك: الطقس، رحلتك القادمة، التوصيات وتحليلات السفر.',
-    'meta.favoritesDescription': 'أماكنك المفضلة المحفوظة في جميع أنحاء السعودية.',
+    'meta.favoritesDescription':
+        'أماكنك المفضلة المحفوظة في جميع أنحاء السعودية.',
     'meta.analyticsDescription':
         'تحليلات سفرك: عدد الرحلات، الأماكن المزارة واهتماماتك.',
     'meta.guideDescription':
@@ -1215,8 +1213,7 @@ const ar: Record<MessageKey, string> = {
     'places.accessibilityWheelchair': 'كراسي متحركة',
     'places.accessibilityPrayer': 'مرافق صلاة',
     'places.accessibilityIndoor': 'داخلي فقط',
-    'places.accessibilityActiveHint':
-        'التصفية حسب {count} خيارات وصول',
+    'places.accessibilityActiveHint': 'التصفية حسب {count} خيارات وصول',
 
     'guide.title': 'دليل السائح',
     'guide.subtitle':
@@ -1355,6 +1352,7 @@ const fr: Partial<Record<MessageKey, string>> = {
     'analytics.completion': 'Taux d’achèvement',
 
     'reviews.title': 'Avis',
+    'reviews.demo': 'Avis de démonstration — pas une expérience réelle',
     'reviews.empty':
         'Pas encore d’avis — soyez le premier à partager votre expérience.',
     'reviews.write': 'Écrire un avis',
@@ -1371,10 +1369,6 @@ const fr: Partial<Record<MessageKey, string>> = {
     'crowd.high': 'Élevée',
     'crowd.advice':
         'Le début de matinée et la fin de soirée sont généralement plus calmes.',
-
-    'pwa.install': 'Installer l’application',
-    'pwa.hint':
-        'Ajoutez le guide à votre écran d’accueil pour un accès plus rapide.',
 
     'common.saudiFlag': 'Drapeau saoudien',
 
@@ -1970,6 +1964,7 @@ const es: Partial<Record<MessageKey, string>> = {
     'analytics.completion': 'Tasa de finalización',
 
     'reviews.title': 'Reseñas',
+    'reviews.demo': 'Reseña de demostración — no es una experiencia real',
     'reviews.empty':
         'Aún no hay reseñas: sé el primero en compartir tu experiencia.',
     'reviews.write': 'Escribir una reseña',
@@ -1986,10 +1981,6 @@ const es: Partial<Record<MessageKey, string>> = {
     'crowd.high': 'Alta',
     'crowd.advice':
         'A primera hora y al final del día suele haber menos gente.',
-
-    'pwa.install': 'Instalar aplicación',
-    'pwa.hint':
-        'Añade la guía a tu pantalla de inicio para un acceso más rápido.',
 
     'common.saudiFlag': 'Bandera de Arabia Saudita',
 
@@ -2416,8 +2407,7 @@ const es: Partial<Record<MessageKey, string>> = {
     'places.freshnessAging': 'Revisar pronto',
     'places.freshnessStale': 'Necesita actualización',
     'places.freshnessUpdated': 'Última actualización: {date}',
-    'places.freshnessMissing':
-        'Aún no hay fecha de actualización disponible.',
+    'places.freshnessMissing': 'Aún no hay fecha de actualización disponible.',
     'places.freshnessHint':
         'Revisamos periódicamente los datos turísticos de fuentes fiables antes de publicar.',
     'meta.description':
@@ -2578,6 +2568,7 @@ const de: Partial<Record<MessageKey, string>> = {
     'analytics.completion': 'Abschlussquote',
 
     'reviews.title': 'Bewertungen',
+    'reviews.demo': 'Beispielbewertung — kein echtes Besuchererlebnis',
     'reviews.empty':
         'Noch keine Bewertungen – teile als Erste(r) deine Erfahrung.',
     'reviews.write': 'Bewertung schreiben',
@@ -2593,9 +2584,6 @@ const de: Partial<Record<MessageKey, string>> = {
     'crowd.medium': 'Mittel',
     'crowd.high': 'Hoch',
     'crowd.advice': 'Frühmorgens und spätabends ist es meist ruhiger.',
-
-    'pwa.install': 'App installieren',
-    'pwa.hint': 'Füge den Guide zu deinem Startbildschirm hinzu.',
 
     'common.saudiFlag': 'Saudi-arabische Flagge',
 
@@ -3024,8 +3012,7 @@ const de: Partial<Record<MessageKey, string>> = {
     'places.freshnessAging': 'Bald prüfen',
     'places.freshnessStale': 'Update nötig',
     'places.freshnessUpdated': 'Letzte Aktualisierung: {date}',
-    'places.freshnessMissing':
-        'Noch kein Aktualisierungszeitpunkt verfügbar.',
+    'places.freshnessMissing': 'Noch kein Aktualisierungszeitpunkt verfügbar.',
     'places.freshnessHint':
         'Wir prüfen Tourismusdaten regelmäßig anhand vertrauenswürdiger Quellen, bevor wir sie veröffentlichen.',
     'meta.description':
@@ -3187,6 +3174,7 @@ const ru: Partial<Record<MessageKey, string>> = {
     'analytics.completion': 'Процент завершения',
 
     'reviews.title': 'Отзывы',
+    'reviews.demo': 'Демонстрационный отзыв — не реальный опыт посетителя',
     'reviews.empty': 'Отзывов пока нет — поделитесь опытом первым.',
     'reviews.write': 'Написать отзыв',
     'reviews.yourRating': 'Ваша оценка',
@@ -3201,9 +3189,6 @@ const ru: Partial<Record<MessageKey, string>> = {
     'crowd.medium': 'Средняя',
     'crowd.high': 'Высокая',
     'crowd.advice': 'Ранним утром и поздним вечером обычно спокойнее.',
-
-    'pwa.install': 'Установить приложение',
-    'pwa.hint': 'Добавьте гид на главный экран для быстрого доступа.',
 
     'common.saudiFlag': 'Флаг Саудовской Аравии',
 
@@ -3790,6 +3775,7 @@ const tr: Partial<Record<MessageKey, string>> = {
     'analytics.completion': 'Tamamlama oranı',
 
     'reviews.title': 'Değerlendirmeler',
+    'reviews.demo': 'Örnek yorum — gerçek bir ziyaretçi deneyimi değildir',
     'reviews.empty':
         'Henüz değerlendirme yok — deneyimini ilk paylaşan sen ol.',
     'reviews.write': 'Değerlendirme yaz',
@@ -3805,9 +3791,6 @@ const tr: Partial<Record<MessageKey, string>> = {
     'crowd.medium': 'Orta',
     'crowd.high': 'Yüksek',
     'crowd.advice': 'Sabah erken ve akşam geç saatler genelde daha sakindir.',
-
-    'pwa.install': 'Uygulamayı yükle',
-    'pwa.hint': 'Daha hızlı erişim için rehberi ana ekranına ekle.',
 
     'common.saudiFlag': 'Suudi Arabistan bayrağı',
 
@@ -4389,6 +4372,7 @@ const zh: Partial<Record<MessageKey, string>> = {
     'analytics.completion': '完成率',
 
     'reviews.title': '评价',
+    'reviews.demo': '演示评价——并非真实游客体验',
     'reviews.empty': '暂无评价——成为第一个分享体验的人。',
     'reviews.write': '写评价',
     'reviews.yourRating': '您的评分',
@@ -4403,9 +4387,6 @@ const zh: Partial<Record<MessageKey, string>> = {
     'crowd.medium': '中',
     'crowd.high': '高',
     'crowd.advice': '清晨和深夜通常更安静。',
-
-    'pwa.install': '安装应用',
-    'pwa.hint': '将向导添加到主屏幕，访问更快捷。',
 
     'common.saudiFlag': '沙特国旗',
 
@@ -4819,7 +4800,8 @@ const zh: Partial<Record<MessageKey, string>> = {
         '在阿拉伯语与数十种语言之间即时翻译单词和对话。',
     'meta.tripsDescription':
         '打造您的沙特阿拉伯逐日行程，估算预算，并通过链接或 PDF 分享。',
-    'meta.dashboardDescription': '您的旅行面板：天气、即将到来的行程、推荐和分析。',
+    'meta.dashboardDescription':
+        '您的旅行面板：天气、即将到来的行程、推荐和分析。',
     'meta.favoritesDescription': '您在沙特阿拉伯收藏的喜爱地点。',
     'meta.analyticsDescription': '您的旅行分析：行程数、到访地点和兴趣。',
     'meta.guideDescription':
@@ -4961,6 +4943,7 @@ const hi: Partial<Record<MessageKey, string>> = {
     'analytics.completion': 'पूर्णता दर',
 
     'reviews.title': 'समीक्षाएं',
+    'reviews.demo': 'प्रदर्शन समीक्षा — वास्तविक आगंतुक अनुभव नहीं',
     'reviews.empty':
         'अभी कोई समीक्षा नहीं — अपना अनुभव साझा करने वाले पहले व्यक्ति बनें।',
     'reviews.write': 'समीक्षा लिखें',
@@ -4976,9 +4959,6 @@ const hi: Partial<Record<MessageKey, string>> = {
     'crowd.medium': 'मध्यम',
     'crowd.high': 'अधिक',
     'crowd.advice': 'सुबह जल्दी और देर शाम आमतौर पर कम भीड़ होती है।',
-
-    'pwa.install': 'ऐप इंस्टॉल करें',
-    'pwa.hint': 'तेज़ पहुँच के लिए गाइड को अपनी होम स्क्रीन पर जोड़ें।',
 
     'common.saudiFlag': 'सऊदी झंडा',
 
@@ -5408,8 +5388,7 @@ const hi: Partial<Record<MessageKey, string>> = {
         'सऊदी अरब का दिन-दर-दिन कार्यक्रम बनाएँ, बजट का अनुमान लगाएँ और लिंक या PDF से साझा करें।',
     'meta.dashboardDescription':
         'आपका यात्रा डैशबोर्ड: मौसम, आगामी यात्राएँ, सुझाव और विश्लेषण।',
-    'meta.favoritesDescription':
-        'सऊदी अरब भर में आपके सहेजे गए पसंदीदा स्थल।',
+    'meta.favoritesDescription': 'सऊदी अरब भर में आपके सहेजे गए पसंदीदा स्थल।',
     'meta.analyticsDescription':
         'आपके यात्रा विश्लेषण: यात्राएँ, देखे गए स्थल और रुचियाँ।',
     'meta.guideDescription':
@@ -5554,6 +5533,7 @@ const ur: Partial<Record<MessageKey, string>> = {
     'analytics.completion': 'تکمیل کی شرح',
 
     'reviews.title': 'تبصرے',
+    'reviews.demo': 'نمونہ جائزہ — حقیقی سیاح کا تجربہ نہیں',
     'reviews.empty':
         'ابھی کوئی تبصرہ نہیں — اپنا تجربہ شیئر کرنے والے پہلے فرد بنیں۔',
     'reviews.write': 'تبصرہ لکھیں',
@@ -5569,9 +5549,6 @@ const ur: Partial<Record<MessageKey, string>> = {
     'crowd.medium': 'درمیانہ',
     'crowd.high': 'زیادہ',
     'crowd.advice': 'صبح سویرے اور رات گئے عموماً کم رش ہوتا ہے۔',
-
-    'pwa.install': 'ایپ انسٹال کریں',
-    'pwa.hint': 'تیز رسائی کے لیے گائیڈ کو اپنی ہوم اسکرین پر شامل کریں۔',
 
     'common.saudiFlag': 'سعودی پرچم',
 
@@ -6045,4 +6022,3 @@ export const messages: Partial<
     hi,
     ur,
 };
-

@@ -15,7 +15,6 @@
     import { onMount, untrack } from 'svelte';
     import BottomNav from '@/components/BottomNav.svelte';
     import GuestStartMenu from '@/components/GuestStartMenu.svelte';
-    import InstallPrompt from '@/components/InstallPrompt.svelte';
     import {
         DropdownMenu,
         DropdownMenuContent,
@@ -740,4 +739,3 @@
 {#if bottomNav}
     <BottomNav />
 {/if}
-<InstallPrompt />

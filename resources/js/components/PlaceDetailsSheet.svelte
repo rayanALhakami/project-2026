@@ -53,6 +53,7 @@
         author: string;
         rating: number;
         content: string | null;
+        is_demo: boolean;
         reviewed_at: string | null;
     }
 
@@ -702,6 +703,11 @@
                                             >
                                                 {review.author}
                                             </p>
+                                            {#if review.is_demo}
+                                                <p class="text-xs text-muted-foreground">
+                                                    {t('reviews.demo')}
+                                                </p>
+                                            {/if}
                                             <div
                                                 class="mt-1 flex items-center gap-0.5"
                                                 role="img"

@@ -9,7 +9,7 @@ use Illuminate\Database\Seeder;
 class ReviewSeeder extends Seeder
 {
     /**
-     * The names of the visitors who authored the seeded reviews.
+     * Fictional display names for demonstration reviews.
      *
      * @var array<int, string>
      */
@@ -37,7 +37,7 @@ class ReviewSeeder extends Seeder
     ];
 
     /**
-     * Seed realistic visitor reviews for every place in the catalogue.
+     * Seed clearly marked demonstration reviews for the catalogue.
      */
     public function run(): void
     {
@@ -46,6 +46,7 @@ class ReviewSeeder extends Seeder
 
         Review::query()
             ->whereNull('user_id')
+            ->whereIn('source', ['demo', 'demo_legacy'])
             ->whereIn('place_id', $placeIds)
             ->delete();
 
@@ -63,7 +64,7 @@ class ReviewSeeder extends Seeder
                     'author' => self::AUTHORS[array_rand(self::AUTHORS)],
                     'rating' => $this->rating(),
                     'content' => $content,
-                    'source' => 'visitor',
+                    'source' => 'demo',
                     'reviewed_at' => $now->copy()->subDays(random_int(3, 360)),
                     'created_at' => $now,
                     'updated_at' => $now,
@@ -111,7 +112,7 @@ class ReviewSeeder extends Seeder
     }
 
     /**
-     * Authentic visitor review lines per place category.
+     * Demonstration review text per place category.
      *
      * @return array<string, array<int, string>>
      */

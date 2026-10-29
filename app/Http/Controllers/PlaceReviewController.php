@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Place;
 use App\Models\Review;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -20,16 +21,20 @@ class PlaceReviewController extends Controller
             ->limit(20)
             ->get();
 
-        $average = $place->reviews()->avg('rating');
+        $visitorReviews = $place->reviews()->where(function (Builder $query): void {
+            $query->whereNull('source')->orWhereNotIn('source', ['demo', 'demo_legacy']);
+        });
+        $average = (clone $visitorReviews)->avg('rating');
 
         return response()->json([
-            'count' => $place->reviews()->count(),
+            'count' => $visitorReviews->count(),
             'average' => $average === null ? null : round((float) $average, 1),
             'reviews' => $reviews->map(fn (Review $review): array => [
                 'id' => $review->id,
                 'author' => $review->author,
                 'rating' => $review->rating,
                 'content' => $review->content,
+                'is_demo' => in_array($review->source, ['demo', 'demo_legacy'], true),
                 'reviewed_at' => $review->reviewed_at?->toDateString(),
             ])->all(),
         ]);
@@ -62,6 +67,7 @@ class PlaceReviewController extends Controller
                 'author' => $review->author,
                 'rating' => $review->rating,
                 'content' => $review->content,
+                'is_demo' => false,
                 'reviewed_at' => $review->reviewed_at?->toDateString(),
             ],
         ]);

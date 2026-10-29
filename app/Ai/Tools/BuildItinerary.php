@@ -146,16 +146,12 @@ class BuildItinerary implements Tool
             $planDays[] = ['day' => $day, 'items' => $items];
         }
 
-        $scheduledPlaceIds = collect($planDays)
-            ->flatMap(fn (array $day): array => $day['items'])
-            ->pluck('place_id')
-            ->filter()
-            ->unique();
+        $placesById = $allPlaces->keyBy('id');
 
         $ticketTotal = round(
-            $allPlaces
-                ->whereIn('id', $scheduledPlaceIds)
-                ->sum(fn (Place $place): float => $this->ticketPrice($place)),
+            collect($planDays)
+                ->flatMap(fn (array $day): array => $day['items'])
+                ->sum(fn (array $item): float => $this->ticketPrice($placesById[$item['place_id']]) * $travelers),
             2,
         );
 
@@ -186,8 +182,9 @@ class BuildItinerary implements Tool
                 'travelers' => $travelers,
                 'currency' => 'SAR',
                 'within_budget' => $budget === null ? null : $total <= $budget,
-                'notes' => $budgetNote,
+                'notes' => $budgetNote.' التذاكر تقديرية لكل مسافر ولكل زيارة مجدولة، بما فيها الزيارات المتكررة؛ لا تشمل خصومات الأطفال أو التذاكر متعددة الزيارات. السكن والوجبات والنقل تقديرات وليست عروض أسعار مباشرة.',
             ],
+            'planning_notes' => 'جدول مقترح حسب الاهتمامات والقرب الجغرافي؛ لم تُتحقق آلياً مواعيد العمل وإغلاقات الجمعة ورمضان أو الطقس وأوقات الصلاة لتواريخ الرحلة. تحقق منها قبل اعتماد الخطة.',
         ]);
     }
 

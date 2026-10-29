@@ -4,7 +4,6 @@ import { svelte } from '@sveltejs/vite-plugin-svelte';
 import tailwindcss from '@tailwindcss/vite';
 import laravel from 'laravel-vite-plugin';
 import { defineConfig, lazyPlugins } from 'vite-plus';
-import { VitePWA } from 'vite-plugin-pwa';
 
 const isSvelteCheck = process.argv.some((argument) =>
     argument.includes('svelte-check'),
@@ -26,26 +25,6 @@ export default defineConfig({
         wayfinder({
             formVariants: true,
         }),
-        VitePWA({
-            strategies: 'injectManifest',
-            registerType: 'autoUpdate',
-            injectRegister: 'auto',
-            manifest: false,
-            srcDir: 'resources/pwa',
-            outDir: 'public',
-            buildBase: '/',
-            filename: 'sw.ts',
-            scope: '/',
-            devOptions: {
-                enabled: false,
-            },
-            injectManifest: {
-                globPatterns: ['**/*.{js,css,html,svg,woff2}'],
-                dontCacheBustURLsMatching: /^build\/assets\//,
-                maximumFileSizeToCacheInBytes: 4 * 1024 * 1024,
-                minify: false,
-            },
-        }),
     ]),
     server: {
         watch: {
@@ -64,7 +43,6 @@ export default defineConfig({
             'node_modules/**',
             'public/**',
             'bootstrap/ssr/**',
-            'resources/pwa/**',
             'tailwind.config.js',
             'resources/js/actions/**',
             'resources/js/components/ui/*',

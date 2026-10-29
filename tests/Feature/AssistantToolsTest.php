@@ -12,6 +12,7 @@ use App\Ai\Tools\GetWeather;
 use App\Ai\Tools\ListEvents;
 use App\Ai\Tools\RecommendPlaces;
 use App\Ai\Tools\SearchPlaces;
+use App\Models\City;
 use App\Models\Event;
 use App\Models\Place;
 use Database\Seeders\CitySeeder;
@@ -167,6 +168,48 @@ class AssistantToolsTest extends TestCase
         );
     }
 
+    public function test_itinerary_charges_each_traveler_for_each_scheduled_visit(): void
+    {
+        $city = City::factory()->create(['name_en' => 'Budget City']);
+        Place::factory()->for($city)->create([
+            'category' => 'museum',
+            'ticket_price' => 50,
+        ]);
+
+        $result = json_decode((string) (new BuildItinerary)->handle(new ToolRequest([
+            'city' => 'Budget City',
+            'days' => 2,
+            'travelers' => 3,
+            'budget_sar' => 2800,
+        ])), true);
+
+        $this->assertEqualsWithDelta(300, $result['estimated_ticket_total'], 0.01);
+        $this->assertEqualsWithDelta(300, $result['estimated_budget']['tickets'], 0.01);
+        $this->assertEqualsWithDelta(2920, $result['estimated_budget']['total'], 0.01);
+        $this->assertEqualsWithDelta(973.33, $result['estimated_budget']['per_person_total'], 0.01);
+        $this->assertFalse($result['estimated_budget']['within_budget']);
+    }
+
+    public function test_free_visits_do_not_add_ticket_costs_and_exact_budget_is_allowed(): void
+    {
+        $city = City::factory()->create(['name_en' => 'Free City']);
+        Place::factory()->for($city)->create([
+            'category' => 'park',
+            'ticket_price' => 0,
+        ]);
+
+        $result = json_decode((string) (new BuildItinerary)->handle(new ToolRequest([
+            'city' => 'Free City',
+            'days' => 1,
+            'travelers' => 1,
+            'budget_sar' => 670,
+        ])), true);
+
+        $this->assertEqualsWithDelta(0, $result['estimated_ticket_total'], 0.01);
+        $this->assertEqualsWithDelta(670, $result['estimated_budget']['total'], 0.01);
+        $this->assertTrue($result['estimated_budget']['within_budget']);
+    }
+
     public function test_list_events_reports_no_upcoming_events_in_arabic(): void
     {
         $this->seed([CitySeeder::class, PlaceSeeder::class]);
@@ -247,6 +290,8 @@ class AssistantToolsTest extends TestCase
         $this->assertSame('flight', $result['recommended_mode']);
         $this->assertIsInt($result['car_minutes']);
         $this->assertIsInt($result['flight_minutes']);
+        $this->assertSame('great_circle', $result['distance_type']);
+        $this->assertTrue($result['is_estimate']);
     }
 
     public function test_get_directions_returns_an_arabic_not_found_message_for_an_unknown_destination(): void

@@ -69,3 +69,24 @@ initializeFontSize();
 
 // This will listen for flash toast data from the server...
 initializeFlashToast();
+
+// Update only the former Next Trip worker so returning visitors lose offline caching.
+if ('serviceWorker' in navigator) {
+    void navigator.serviceWorker
+        .getRegistrations()
+        .then(async (registrations) => {
+            for (const registration of registrations) {
+                const worker =
+                    registration.active ??
+                    registration.waiting ??
+                    registration.installing;
+                if (
+                    worker?.scriptURL ===
+                    new URL('/sw.js', window.location.origin).href
+                ) {
+                    await registration.update();
+                }
+            }
+        })
+        .catch(() => {});
+}
