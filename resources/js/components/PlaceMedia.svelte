@@ -41,6 +41,8 @@
             alt={placeName(place)}
             class={cn(
                 'h-full w-full object-cover',
+                place.image === '/images/places/al-saif-beach.jpg' &&
+                    'object-[50%_68%]',
                 kenburns && 'motion-kenburns',
             )}
             style={kenburns ? `--kenburns-delay: ${kenburnsDelay}` : undefined}
